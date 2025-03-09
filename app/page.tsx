@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import GetStartedButton from '@/components/GetStartedButton';
 
 export default function Home() {
   return (
@@ -16,12 +15,7 @@ export default function Home() {
             beautiful, comprehensive documentation for their GitHub repositories in minutes.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link
-              href="/login"
-              className="rounded-full bg-amber-500 px-8 py-3 text-white font-medium hover:bg-amber-600 dark:hover:bg-amber-400 transition-colors"
-            >
-              Get Started for Free
-            </Link>
+            <GetStartedButton />
             <a
               href="#features"
               className="rounded-full border border-gray-300 dark:border-gray-600 px-8 py-3 font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
@@ -137,12 +131,7 @@ export default function Home() {
             Join thousands of developers who have improved their project documentation with
             ReadmeChef.
           </p>
-          <Link
-            href="/login"
-            className="rounded-full bg-amber-500 px-8 py-3 text-white font-medium hover:bg-amber-600 dark:hover:bg-amber-400 transition-colors"
-          >
-            Get Started for Free
-          </Link>
+          <GetStartedButton />
         </div>
       </section>
 

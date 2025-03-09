@@ -1,12 +1,38 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function LoginPage() {
+  const { status } = useSession();
+
+  console.log(useSession());
+  const router = useRouter();
+
+  useEffect(() => {
+    // Redirect to dashboard if already authenticated
+    if (status === 'authenticated') {
+      router.push('/dashboard');
+    }
+  }, [status, router]);
+
   const handleGitHubLogin = () => {
-    signIn('github');
+    signIn('github', { callbackUrl: '/dashboard' });
   };
+
+  // Show loading state while checking authentication
+  if (status === 'loading') {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-slate-900">
+        <div className="text-center">
+          <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-amber-500 border-t-transparent mx-auto"></div>
+          <p className="text-gray-700 dark:text-gray-300">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-4 bg-gray-50 dark:bg-slate-900">
