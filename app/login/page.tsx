@@ -1,12 +1,11 @@
 'use client';
 
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 
 export default function LoginPage() {
   const handleGitHubLogin = () => {
-    // This would be replaced with actual GitHub OAuth implementation
-    console.log('GitHub login clicked');
-    // Redirect to GitHub OAuth flow
+    signIn('github');
   };
 
   return (
