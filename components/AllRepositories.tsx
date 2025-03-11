@@ -1,12 +1,15 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 function AllRepositories() {
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(true);
   const { data: session } = useSession();
+
+  const router = useRouter();
 
   useEffect(() => {
     if (!session?.user?.username) return; // Ensure session is fully available before fetching
@@ -37,13 +40,16 @@ function AllRepositories() {
       {repos.length > 0 ? (
         repos.map((repo: any) => (
           <div
+            onClick={() => {
+              router.push(`/dashboard/repository/${repo.id}`);
+            }}
             key={repo.id}
-            className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-slate-800"
+            className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-slate-800 flex flex-col justify-between"
           >
             <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
               {repo.name}
             </h2>
-            <p className="text-gray-700 dark:text-gray-300">
+            <p className="text-gray-700 dark:text-gray-300 truncate">
               {repo.description || 'No description available'}
             </p>
             <div className="mt-4 flex justify-between">
@@ -52,6 +58,9 @@ function AllRepositories() {
               </span>
               <span className="text-sm text-gray-500">⭐ {repo.stargazers_count}</span>
             </div>
+            <button className="w-full py-2 px-2 bg-white hover:bg-white/90 cursor-pointer text-black rounded-md mt-10">
+              Select
+            </button>
           </div>
         ))
       ) : (
