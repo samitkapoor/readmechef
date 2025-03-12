@@ -4,49 +4,145 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+interface GitHubRepo {
+  id: number;
+  name: string;
+  description: string | null;
+  language: string | null;
+  stargazers_count: number;
+}
+
 function AllRepositories() {
-  const [repos, setRepos] = useState([]);
+  const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [loading, setLoading] = useState(true);
   const { data: session } = useSession();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (!session?.user?.username) return; // Ensure session is fully available before fetching
+  const fetchRepos = async (pageNumber: number) => {
+    try {
+      setLoading(true);
 
-    const fetchRepos = async () => {
-      try {
-        setLoading(true);
-
-        const res = await fetch('https://api.github.com/user/repos', {
-          headers: {
-            Authorization: `Bearer ${session.user.accessToken}`,
-            Accept: 'application/vnd.github+json'
-          }
-        });
-        if (res.ok) {
-          setRepos(await res.json());
-        } else {
-          console.error('Failed to fetch repositories');
+      const res = await fetch(`https://api.github.com/user/repos?per_page=30&page=${pageNumber}`, {
+        headers: {
+          Authorization: `Bearer ${session?.user?.accessToken}`,
+          Accept: 'application/vnd.github+json'
         }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
+      });
+
+      // Get total count from GitHub API Link header
+      const linkHeader = res.headers.get('Link');
+      if (linkHeader) {
+        const lastPageMatch = linkHeader.match(/&page=(\d+)>; rel="last"/);
+        if (lastPageMatch) {
+          setTotalPages(parseInt(lastPageMatch[1]));
+        }
       }
-    };
 
-    fetchRepos();
-  }, [session?.user?.name]); // Only runs when session.user.name changes
+      if (res.ok) {
+        const newRepos = await res.json();
+        setRepos(newRepos);
+      } else {
+        console.error('Failed to fetch repositories');
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  if (loading) return <div>Loading...</div>;
+  useEffect(() => {
+    if (!session?.user?.username) return;
+    fetchRepos(currentPage);
+  }, [session?.user?.username, currentPage]);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const renderPaginationButtons = () => {
+    const buttons = [];
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+    // Adjust start page if we're near the end
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    // First page
+    if (startPage > 1) {
+      buttons.push(
+        <button
+          key={1}
+          onClick={() => handlePageChange(1)}
+          className="px-3 py-1 rounded-md text-gray-700 dark:text-gray-300 hover:bg-amber-100 dark:hover:bg-amber-900/30"
+        >
+          1
+        </button>
+      );
+      if (startPage > 2) {
+        buttons.push(
+          <span key="ellipsis1" className="px-2">
+            ...
+          </span>
+        );
+      }
+    }
+
+    // Page numbers
+    for (let i = startPage; i <= endPage; i++) {
+      buttons.push(
+        <button
+          key={i}
+          onClick={() => handlePageChange(i)}
+          className={`px-3 py-1 rounded-md ${
+            currentPage === i
+              ? 'bg-amber-500 text-white'
+              : 'text-gray-700 dark:text-gray-300 hover:bg-amber-100 dark:hover:bg-amber-900/30'
+          }`}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    // Last page
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        buttons.push(
+          <span key="ellipsis2" className="px-2">
+            ...
+          </span>
+        );
+      }
+      buttons.push(
+        <button
+          key={totalPages}
+          onClick={() => handlePageChange(totalPages)}
+          className="px-3 py-1 rounded-md text-gray-700 dark:text-gray-300 hover:bg-amber-100 dark:hover:bg-amber-900/30"
+        >
+          {totalPages}
+        </button>
+      );
+    }
+
+    return buttons;
+  };
+
+  if (loading && currentPage === 1) return <div>Loading...</div>;
 
   return (
     <div className="flex flex-col gap-5 w-full">
       <p>All Repositories ({repos.length})</p>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {repos.length > 0 ? (
-          repos.map((repo: any) => (
+          repos.map((repo) => (
             <div
               onClick={() => {
                 router.push(`/dashboard/repository/${repo.id}`);
@@ -85,6 +181,26 @@ function AllRepositories() {
           </div>
         )}
       </div>
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-6 gap-2">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1 || loading}
+            className="px-3 py-1 rounded-md text-gray-700 dark:text-gray-300 hover:bg-amber-100 dark:hover:bg-amber-900/30 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            ←
+          </button>
+          {renderPaginationButtons()}
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages || loading}
+            className="px-3 py-1 rounded-md text-gray-700 dark:text-gray-300 hover:bg-amber-100 dark:hover:bg-amber-900/30 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            →
+          </button>
+        </div>
+      )}
+      {loading && <div className="text-center mt-4">Loading...</div>}
     </div>
   );
 }
