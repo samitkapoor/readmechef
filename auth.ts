@@ -11,11 +11,13 @@ declare module 'next-auth' {
       email?: string | null;
       image?: string | null;
       username?: string | null;
+      accessToken?: string | null;
     };
   }
 
   interface User {
     username?: string | null;
+    accessToken?: string | null;
   }
 }
 
@@ -23,6 +25,7 @@ declare module 'next-auth' {
 declare module 'next-auth/jwt' {
   interface JWT {
     username?: string | null;
+    accessToken?: string | null;
   }
 }
 
@@ -42,12 +45,14 @@ interface ExtendedSession extends Session {
     email?: string | null;
     image?: string | null;
     username?: string | null;
+    accessToken?: string | null;
   };
 }
 
 // Define the token type
 interface ExtendedToken extends JWT {
   username?: string | null;
+  accessToken?: string | null;
 }
 
 const options: NextAuthOptions = {
@@ -57,15 +62,17 @@ const options: NextAuthOptions = {
       clientSecret: process.env.GITHUB_SECRET || '',
       authorization: {
         url: 'https://github.com/login/oauth/authorize',
-        params: { scope: 'read:user user:email user:username' }
+        params: { scope: 'read:user user:email repo	' }
       },
-      profile(profile) {
+      profile(profile, tokens) {
+        console.log(profile);
         return {
           id: profile.id.toString(),
           name: profile.name || profile.login,
           email: profile.email,
           image: profile.avatar_url,
-          username: profile.login // GitHub username
+          username: profile.login,
+          accessToken: tokens.access_token
         };
       }
     })
@@ -75,16 +82,20 @@ const options: NextAuthOptions = {
   },
   callbacks: {
     async session({ session, token }) {
-      // Add username to the session from token
-      if (session.user && token.username) {
+      // Add username and access token to the session from token
+      if (session.user) {
         session.user.username = token.username;
+        session.user.accessToken = token.accessToken;
       }
       return session;
     },
-    async jwt({ token, user }) {
-      // Add username to the token when user signs in
+    async jwt({ token, user, account }) {
+      // Add username and access token to the token when user signs in
       if (user) {
         token.username = user.username;
+      }
+      if (account) {
+        token.accessToken = account.access_token;
       }
       return token;
     },
