@@ -36,7 +36,7 @@ function AllRepositories() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
-  const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>('all');
+  const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>('public');
 
   const router = useRouter();
   const debouncedSearch = useDebounce(searchQuery, 300);
