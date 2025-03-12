@@ -64,14 +64,33 @@ function AllRepositories() {
           throw new Error('Failed to fetch repositories');
         }
 
+        const newRepos = await res.json();
+
         // Parse total pages from Link header
         const linkHeader = res.headers.get('Link');
         if (linkHeader) {
+          // Try to get last page from the Link header
           const lastPageMatch = linkHeader.match(/&page=(\d+)>; rel="last"/);
-          setTotalPages(lastPageMatch ? parseInt(lastPageMatch[1]) : 1);
+          if (lastPageMatch) {
+            setTotalPages(parseInt(lastPageMatch[1]));
+          } else {
+            // If no "last" reference (we're on last page), get it from "prev" reference
+            const prevPageMatch = linkHeader.match(/&page=(\d+)>; rel="prev"/);
+            if (prevPageMatch) {
+              // We're on the last page, so current page number is the total
+              setTotalPages(pageNumber);
+            }
+          }
+        } else if (newRepos.length === 30) {
+          // If no Link header but we got full page of results,
+          // there might be more pages
+          setTotalPages(pageNumber + 1);
+        } else {
+          // If we got partial page of results and no Link header,
+          // this must be the last page
+          setTotalPages(pageNumber);
         }
 
-        const newRepos = await res.json();
         setRepos(newRepos);
       } catch (err) {
         console.error('Error fetching repositories:', err);
