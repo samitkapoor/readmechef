@@ -67,7 +67,7 @@ const RepositoryPage = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-amber-500"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-indigo-500"></div>
       </div>
     );
   }
@@ -78,7 +78,7 @@ const RepositoryPage = () => {
         <p className="text-red-500">{error || 'Repository not found'}</p>
         <button
           onClick={() => router.back()}
-          className="px-4 py-2 bg-amber-500 text-white rounded-md hover:bg-amber-600 transition-colors"
+          className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
         >
           Go Back
         </button>
@@ -109,13 +109,13 @@ const RepositoryPage = () => {
               href={repository.html_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              className="px-4 py-2 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors"
             >
               View on GitHub
             </a>
             <button
               onClick={() => router.push(`/dashboard/repository/${params.id}/generate`)}
-              className="px-4 py-2 bg-amber-500 text-white rounded-md hover:bg-amber-600 dark:hover:bg-amber-400 transition-colors"
+              className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 dark:hover:bg-indigo-500 transition-colors"
             >
               Generate README
             </button>
@@ -151,15 +151,15 @@ const RepositoryPage = () => {
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Statistics</h2>
             <div className="grid grid-cols-3 gap-4">
               <div className="text-center">
-                <p className="text-2xl font-bold text-amber-500">{repository.stargazers_count}</p>
+                <p className="text-2xl font-bold text-indigo-500">{repository.stargazers_count}</p>
                 <p className="text-gray-600 dark:text-gray-400">Stars</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-amber-500">{repository.forks_count}</p>
+                <p className="text-2xl font-bold text-indigo-500">{repository.forks_count}</p>
                 <p className="text-gray-600 dark:text-gray-400">Forks</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-amber-500">{repository.watchers_count}</p>
+                <p className="text-2xl font-bold text-indigo-500">{repository.watchers_count}</p>
                 <p className="text-gray-600 dark:text-gray-400">Watchers</p>
               </div>
             </div>
