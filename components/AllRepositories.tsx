@@ -149,8 +149,10 @@ function AllRepositories() {
 
       <div className="flex items-center justify-between">
         <p className="text-gray-700 dark:text-gray-300">
-          {visibilityFilter === 'all' ? 'All' : visibilityFilter} Repositories (
-          {filteredRepos.length})
+          {visibilityFilter === 'all'
+            ? 'All'
+            : visibilityFilter.charAt(0).toUpperCase() + visibilityFilter.slice(1)}{' '}
+          Repositories ({filteredRepos.length})
         </p>
         {loading && <div className="text-sm text-gray-500">Refreshing...</div>}
       </div>

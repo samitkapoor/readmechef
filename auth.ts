@@ -62,7 +62,7 @@ const options: NextAuthOptions = {
       clientSecret: process.env.GITHUB_SECRET || '',
       authorization: {
         url: 'https://github.com/login/oauth/authorize',
-        params: { scope: 'read:user user:email repo	' }
+        params: { scope: 'read:user user:email repo' }
       },
       profile(profile, tokens) {
         console.log(profile);
