@@ -23,6 +23,12 @@ export default function Navbar() {
         </Link>
 
         <nav className="flex items-center gap-6">
+          <Link
+            href="/subscribe"
+            className="text-sm font-medium text-gray-700 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-400"
+          >
+            Subscribe
+          </Link>
           {status === 'authenticated' ? (
             <div className="flex items-center gap-4">
               {session.user?.image && (

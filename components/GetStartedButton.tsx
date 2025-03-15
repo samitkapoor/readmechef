@@ -14,7 +14,7 @@ export default function GetStartedButton() {
       href={href}
       className="rounded-full bg-amber-500 px-8 py-3 text-white font-medium hover:bg-amber-600 dark:hover:bg-amber-400 transition-colors"
     >
-      Get Started for Free
+      Get Started
     </Link>
   );
 }

@@ -24,6 +24,13 @@ export default function DashboardPage() {
     );
   }
 
+  if (session) {
+    fetch('/api/user', {
+      method: 'POST',
+      body: JSON.stringify(session)
+    });
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8 rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-slate-800">
