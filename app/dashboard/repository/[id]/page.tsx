@@ -1,5 +1,6 @@
 'use client';
 
+import Chatbox from '@/components/Chatbox';
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -174,6 +175,10 @@ const RepositoryPage = () => {
               </p>
             </div>
           </div>
+        </div>
+
+        <div className="h-full w-full flex items-start justify-center pt-20">
+          <Chatbox />
         </div>
       </div>
     </div>
