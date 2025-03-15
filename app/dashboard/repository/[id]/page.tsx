@@ -177,8 +177,8 @@ const RepositoryPage = () => {
           </div>
         </div>
 
-        <div className="h-full w-full flex items-start justify-center pt-20">
-          <Chatbox />
+        <div className="h-full w-full flex items-start justify-center">
+          <Chatbox repository={repository} />
         </div>
       </div>
     </div>
