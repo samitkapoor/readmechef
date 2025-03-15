@@ -3,7 +3,6 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import Pagination from './Pagination';
 import SearchAndFilter from './SearchAndFilter';
 import RepositoryCard from './RepositoryCard';
 
@@ -34,7 +33,7 @@ function AllRepositories() {
   const [loading, setLoading] = useState(true);
   const { data: session } = useSession();
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [hasMorePages, setHasMorePages] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>('public');
 
@@ -42,13 +41,13 @@ function AllRepositories() {
   const debouncedSearch = useDebounce(searchQuery, 300);
 
   const fetchRepos = useCallback(
-    async (pageNumber: number) => {
+    async (pageNumber: number, append: boolean = false) => {
       if (!session?.user?.accessToken) return;
 
       try {
         setLoading(true);
         const params = new URLSearchParams({
-          per_page: '30',
+          per_page: debouncedSearch ? '200' : '30',
           page: pageNumber.toString(),
           ...(visibilityFilter !== 'all' && { visibility: visibilityFilter })
         });
@@ -66,32 +65,19 @@ function AllRepositories() {
 
         const newRepos = await res.json();
 
-        // Parse total pages from Link header
+        // Check if there are more pages to load
         const linkHeader = res.headers.get('Link');
         if (linkHeader) {
-          // Try to get last page from the Link header
-          const lastPageMatch = linkHeader.match(/&page=(\d+)>; rel="last"/);
-          if (lastPageMatch) {
-            setTotalPages(parseInt(lastPageMatch[1]));
-          } else {
-            // If no "last" reference (we're on last page), get it from "prev" reference
-            const prevPageMatch = linkHeader.match(/&page=(\d+)>; rel="prev"/);
-            if (prevPageMatch) {
-              // We're on the last page, so current page number is the total
-              setTotalPages(pageNumber);
-            }
-          }
-        } else if (newRepos.length === 30) {
-          // If no Link header but we got full page of results,
-          // there might be more pages
-          setTotalPages(pageNumber + 1);
+          // If there's a "next" link, there are more pages
+          setHasMorePages(linkHeader.includes('rel="next"'));
         } else {
-          // If we got partial page of results and no Link header,
-          // this must be the last page
-          setTotalPages(pageNumber);
+          // If no Link header and we got less than the full page
+          // or no results, there are no more pages
+          setHasMorePages(newRepos.length === 30);
         }
 
-        setRepos(newRepos);
+        // Update repos - either append or replace based on parameter
+        setRepos((prevRepos) => (append ? [...prevRepos, ...newRepos] : newRepos));
       } catch (err) {
         console.error('Error fetching repositories:', err);
       } finally {
@@ -117,18 +103,15 @@ function AllRepositories() {
   useEffect(() => {
     if (session?.user?.username) {
       setCurrentPage(1);
-      fetchRepos(1);
+      fetchRepos(1, false);
     }
   }, [session?.user?.username, visibilityFilter, fetchRepos]);
 
-  const handlePageChange = useCallback(
-    (pageNumber: number) => {
-      setCurrentPage(pageNumber);
-      fetchRepos(pageNumber);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    },
-    [fetchRepos]
-  );
+  const handleLoadMore = useCallback(() => {
+    const nextPage = currentPage + 1;
+    setCurrentPage(nextPage);
+    fetchRepos(nextPage, true);
+  }, [currentPage, fetchRepos]);
 
   if (loading && currentPage === 1) {
     return (
@@ -171,13 +154,23 @@ function AllRepositories() {
         )}
       </div>
 
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-          loading={loading}
-        />
+      {hasMorePages && (
+        <div className="mt-6 flex justify-center">
+          <button
+            onClick={handleLoadMore}
+            disabled={loading}
+            className="rounded-md bg-amber-500 px-6 py-2 text-white hover:bg-amber-600 dark:hover:bg-amber-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            {loading ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-white"></div>
+                <span>Loading...</span>
+              </>
+            ) : (
+              'Load More'
+            )}
+          </button>
+        </div>
       )}
     </div>
   );
