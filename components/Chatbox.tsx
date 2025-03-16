@@ -32,6 +32,7 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
   const { data: session } = useSession();
   const [messages, setMessages] = useState<Message[]>([]);
   const [firstTime, setFirstTime] = useState(true);
+  const [loading, setLoading] = useState(false);
   const effectRan = useRef(false);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
 
   const handleSendMessage = async (message: string) => {
     try {
+      setLoading(true);
       setMessages((prev) => {
         if (messages.length + 1 === 1 && messages.length === 0) {
           return [...prev, { id: prev.length + 1, content: message, role: 'user', type: 'text' }];
@@ -73,7 +75,7 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
         { id: prev.length + 1, content: p?.message[0].text, role: 'assistant', type: 'markdown' }
       ]);
 
-      console.log(p);
+      setLoading(false);
     } catch (err) {
       console.error(err);
     }
@@ -100,6 +102,11 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
             {message.type === 'markdown' && <ReactMarkdown>{message.content}</ReactMarkdown>}
           </div>
         ))}
+        {loading && (
+          <div className="text-gray-700 dark:text-gray-300">
+            <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-gray-900 dark:border-white"></div>
+          </div>
+        )}
       </div>
       <div className="border-t border-gray-200 dark:border-gray-700 p-3">
         <textarea
