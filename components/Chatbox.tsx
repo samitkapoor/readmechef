@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react';
-import React, { MouseEventHandler, useEffect, useState } from 'react';
+import React, { MouseEventHandler, useEffect, useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 interface Repository {
   id: number;
@@ -31,19 +31,31 @@ interface Message {
 const Chatbox = ({ repository }: { repository: Repository }) => {
   const { data: session } = useSession();
   const [messages, setMessages] = useState<Message[]>([]);
+  const [firstTime, setFirstTime] = useState(true);
+  const effectRan = useRef(false);
 
   useEffect(() => {
-    const message = 'Generate a README.md file for this repository.';
+    if (effectRan.current === false) {
+      if (firstTime) {
+        const message = 'Generate a README.md file for this repository.';
 
-    handleSendMessage(message);
+        handleSendMessage(message);
+        setFirstTime(false);
+      }
+
+      effectRan.current = true;
+    }
   }, []);
 
   const handleSendMessage = async (message: string) => {
     try {
-      setMessages((prev) => [
-        ...prev,
-        { id: prev.length + 1, content: message, role: 'user', type: 'text' }
-      ]);
+      setMessages((prev) => {
+        if (messages.length + 1 === 1 && messages.length === 0) {
+          return [...prev, { id: prev.length + 1, content: message, role: 'user', type: 'text' }];
+        } else {
+          return [...prev, { id: prev.length + 1, content: message, role: 'user', type: 'text' }];
+        }
+      });
 
       const res = await fetch('/api/repo/create-readme', {
         method: 'POST',
