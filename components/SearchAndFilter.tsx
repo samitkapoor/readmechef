@@ -1,3 +1,5 @@
+import Dropdown from './ui/Dropdown';
+
 type VisibilityFilter = 'all' | 'public' | 'private';
 
 interface SearchAndFilterProps {
@@ -15,53 +17,28 @@ const SearchAndFilter = ({
 }: SearchAndFilterProps) => {
   return (
     <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-      <div className="w-full md:w-96">
+      <div className="w-full">
         <input
           type="text"
-          placeholder="Search repositories..."
+          placeholder="Find a repository..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full px-4 py-2 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+          className="w-full px-3 py-1 text-sm rounded-md border border-gray-700 bg-[var(--card)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--secondary)]"
         />
       </div>
-      <div className="flex gap-2">
-        <FilterButton
-          label="All"
-          isActive={visibilityFilter === 'all'}
-          onClick={() => onVisibilityChange('all')}
-        />
-        <FilterButton
-          label="Public"
-          isActive={visibilityFilter === 'public'}
-          onClick={() => onVisibilityChange('public')}
-        />
-        <FilterButton
-          label="Private"
-          isActive={visibilityFilter === 'private'}
-          onClick={() => onVisibilityChange('private')}
-        />
-      </div>
+      <Dropdown
+        onChange={(value) => onVisibilityChange(value as VisibilityFilter)}
+        value={visibilityFilter}
+        optionsHeading="Select Type"
+        options={[
+          { value: 'all', label: 'All' },
+          { value: 'public', label: 'Public' },
+          { value: 'private', label: 'Private' }
+        ]}
+        placeholder="Type"
+      />
     </div>
   );
 };
-
-interface FilterButtonProps {
-  label: string;
-  isActive: boolean;
-  onClick: () => void;
-}
-
-const FilterButton = ({ label, isActive, onClick }: FilterButtonProps) => (
-  <button
-    onClick={onClick}
-    className={`px-4 py-2 rounded-md transition-colors ${
-      isActive
-        ? 'bg-amber-500 text-white'
-        : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700'
-    }`}
-  >
-    {label}
-  </button>
-);
 
 export default SearchAndFilter;

@@ -2,11 +2,10 @@
 
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
-import Image from 'next/image';
 import { Github, LogOut } from 'lucide-react';
 
 export default function Navbar() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const handleLogout = () => {
     signOut({ callbackUrl: '/' });
@@ -25,16 +24,6 @@ export default function Navbar() {
           <nav className="flex items-center gap-6">
             {status === 'authenticated' ? (
               <div className="flex items-center gap-4">
-                {session.user?.image && (
-                  <div className="h-8 w-8 overflow-hidden rounded-full">
-                    <Image
-                      src={session.user.image}
-                      alt={session.user.name || 'User'}
-                      width={32}
-                      height={32}
-                    />
-                  </div>
-                )}
                 <button
                   onClick={handleLogout}
                   className="rounded-full bg-[var(--primary)] px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--primary)]/80 flex items-center gap-1 cursor-pointer"
