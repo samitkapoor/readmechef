@@ -1,12 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import Image from 'next/image';
+import { Github } from 'lucide-react';
 
 export default function Navbar() {
-  const pathname = usePathname();
   const { data: session, status } = useSession();
 
   const handleLogout = () => {
@@ -14,55 +13,52 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-black/10 bg-white/95 backdrop-blur-md dark:bg-slate-900/95 dark:border-white/10">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold text-gray-900 dark:text-white">
-            <span className="text-amber-500">Readme</span>Chef
-          </span>
-        </Link>
-
-        <nav className="flex items-center gap-6">
-          <Link
-            href="/subscribe"
-            className="text-sm font-medium text-gray-700 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-400"
-          >
-            Subscribe
+    <header className="fixed top-5 z-50 w-full flex items-center justify-center">
+      <div className="max-w-7xl w-full backdrop-blur-md bg-[var(--background)]/50 border border-[#FFFFFF27] mx-auto rounded-xl">
+        <div className="container mx-auto flex h-16 items-center justify-between px-4">
+          <Link href="/" className="flex items-center gap-2">
+            <span className="text-xl font-bold text-white">
+              <span className="text-[var(--primary)]">ReadMe</span>Chef
+            </span>
           </Link>
-          {status === 'authenticated' ? (
-            <div className="flex items-center gap-4">
-              {session.user?.image && (
-                <div className="h-8 w-8 overflow-hidden rounded-full">
-                  <Image
-                    src={session.user.image}
-                    alt={session.user.name || 'User'}
-                    width={32}
-                    height={32}
-                  />
-                </div>
-              )}
+
+          <nav className="flex items-center gap-6">
+            {status === 'authenticated' ? (
+              <div className="flex items-center gap-4">
+                {session.user?.image && (
+                  <div className="h-8 w-8 overflow-hidden rounded-full">
+                    <Image
+                      src={session.user.image}
+                      alt={session.user.name || 'User'}
+                      width={32}
+                      height={32}
+                    />
+                  </div>
+                )}
+                <Link
+                  href="/dashboard"
+                  className="text-sm font-medium text-gray-300 hover:text-amber-400"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="rounded-full bg-amber-500 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-amber-400"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
               <Link
-                href="/dashboard"
-                className="text-sm font-medium text-gray-700 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-400"
+                href="/login"
+                className="rounded-full bg-[var(--primary)] px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--primary)]/80 flex items-center gap-1"
               >
-                Dashboard
+                <Github size={17} />
+                <p>Login</p>
               </Link>
-              <button
-                onClick={handleLogout}
-                className="rounded-full bg-amber-500 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-amber-600 dark:hover:bg-amber-400"
-              >
-                Logout
-              </button>
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              className="rounded-full bg-amber-500 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-amber-600 dark:hover:bg-amber-400"
-            >
-              Login with GitHub
-            </Link>
-          )}
-        </nav>
+            )}
+          </nav>
+        </div>
       </div>
     </header>
   );
