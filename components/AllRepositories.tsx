@@ -154,17 +154,7 @@ function AllRepositories() {
         availableLanguages={availableLanguages}
       />
 
-      <div className="flex items-center justify-between">
-        <p className="text-gray-700 dark:text-gray-300">
-          {visibilityFilter === 'all'
-            ? 'All'
-            : visibilityFilter.charAt(0).toUpperCase() + visibilityFilter.slice(1)}{' '}
-          Repositories ({filteredRepos.length})
-        </p>
-        {loading && <div className="text-sm text-gray-500">Refreshing...</div>}
-      </div>
-
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-[1px] bg-slate-700 py-[1px]">
         {filteredRepos.length > 0 ? (
           filteredRepos.map((repo) => (
             <RepositoryCard
