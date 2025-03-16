@@ -2,27 +2,10 @@
 
 import AllRepositories from '@/components/AllRepositories';
 import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 
 export default function DashboardPage() {
-  const { data: session, status } = useSession();
-
-  if (status === 'unauthenticated') {
-    redirect('/login');
-  }
-
-  // Show loading state while checking authentication
-  if (status === 'loading') {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-amber-500 border-t-transparent mx-auto"></div>
-          <p className="text-gray-700 dark:text-gray-300">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+  const { data: session } = useSession();
 
   if (session) {
     fetch('/api/user', {
