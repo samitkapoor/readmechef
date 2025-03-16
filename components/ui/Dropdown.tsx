@@ -29,7 +29,7 @@ const Dropdown = ({ options, value, onChange, optionsHeading, placeholder }: Dro
       </div>
       {isOpen && (
         <div className="flex flex-col absolute top-full right-0 mt-2 rounded-md overflow-hidden bg-gray-700 border-[1px] border-gray-700 gap-[1px] w-[275px]">
-          <div className="px-4 py-1 flex items-center justify-between bg-[var(--card)]">
+          <div className="px-3 py-2 flex items-center justify-between bg-[var(--card)] font-semibold">
             <p className="text-sm text-white ">{optionsHeading}</p>
             <button
               type="button"
@@ -44,7 +44,7 @@ const Dropdown = ({ options, value, onChange, optionsHeading, placeholder }: Dro
               onClick={() => {
                 onChange(option.value);
               }}
-              className="w-full px-4 py-1 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[var(--secondary)] cursor-pointer bg-[var(--card)] hover:bg-[var(--card)]/70 flex items-center gap-2"
+              className="w-full px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-[var(--secondary)] cursor-pointer bg-[var(--card)] hover:bg-[var(--card)]/70 flex items-center gap-2"
               key={option.value}
             >
               {value === option.value ? (
@@ -60,7 +60,7 @@ const Dropdown = ({ options, value, onChange, optionsHeading, placeholder }: Dro
                   <Check size={14} className="opacity-0" />
                 </div>
               )}
-              <p className="text-sm text-white ">{option.label}</p>
+              <p className="text-xs text-white ">{option.label}</p>
             </div>
           ))}
         </div>
