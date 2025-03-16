@@ -1,7 +1,5 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
-import { JWT } from 'next-auth/jwt';
-import { Session } from 'next-auth';
 
 // Declare module augmentation for next-auth
 declare module 'next-auth' {
@@ -27,32 +25,6 @@ declare module 'next-auth/jwt' {
     username?: string | null;
     accessToken?: string | null;
   }
-}
-
-// Define custom user type with username
-type GithubProfile = {
-  id: number;
-  login: string;
-  name: string;
-  email: string;
-  avatar_url: string;
-};
-
-// Extend the Session type to include username
-interface ExtendedSession extends Session {
-  user: {
-    name?: string | null;
-    email?: string | null;
-    image?: string | null;
-    username?: string | null;
-    accessToken?: string | null;
-  };
-}
-
-// Define the token type
-interface ExtendedToken extends JWT {
-  username?: string | null;
-  accessToken?: string | null;
 }
 
 const options: NextAuthOptions = {
