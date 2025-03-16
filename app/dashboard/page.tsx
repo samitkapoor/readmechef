@@ -2,7 +2,6 @@
 
 import AllRepositories from '@/components/AllRepositories';
 import { useSession } from 'next-auth/react';
-import { Suspense } from 'react';
 
 export default function DashboardPage() {
   const { data: session } = useSession();
@@ -25,9 +24,7 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      <Suspense fallback={<div>Loading...</div>}>
-        <AllRepositories />
-      </Suspense>
+      <AllRepositories />
     </div>
   );
 }

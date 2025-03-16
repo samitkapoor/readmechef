@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import Image from 'next/image';
-import { Github } from 'lucide-react';
+import { Github, LogOut } from 'lucide-react';
 
 export default function Navbar() {
   const { data: session, status } = useSession();
@@ -35,17 +35,12 @@ export default function Navbar() {
                     />
                   </div>
                 )}
-                <Link
-                  href="/dashboard"
-                  className="text-sm font-medium text-gray-300 hover:text-amber-400"
-                >
-                  Dashboard
-                </Link>
                 <button
                   onClick={handleLogout}
-                  className="rounded-full bg-amber-500 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-amber-400"
+                  className="rounded-full bg-[var(--primary)] px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--primary)]/80 flex items-center gap-1 cursor-pointer"
                 >
-                  Logout
+                  <LogOut size={17} />
+                  <p>Logout</p>
                 </button>
               </div>
             ) : (
