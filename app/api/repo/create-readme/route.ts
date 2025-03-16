@@ -17,8 +17,6 @@ const fetchRepoFiles = async (
 export const POST = async (request: NextRequest, response: NextResponse) => {
   const { message, repository, accessToken } = await request.json();
 
-  console.log({ repository, message, accessToken });
-
   const packageJson = await fetchRepoFiles(
     repository.owner.login,
     repository.name,
@@ -26,20 +24,17 @@ export const POST = async (request: NextRequest, response: NextResponse) => {
     'package.json'
   );
 
-  console.log({ packageJson, accessToken });
-
   const prompt = `
     You are an expert in writing README files. Based on the following project details:
     - Repository Name: ${repository.name}
     - Description: ${repository.description}
     - Package.json: ${JSON.stringify(packageJson)}
+    - Message: ${message}
 
     Generate a professional, well-structured README.md file.
     `;
 
   const res = await getGeminiReponse(prompt);
 
-  console.log({ res: res.candidates[0].content.parts });
-
-  return NextResponse.json({ message: 'Hello, world!' });
+  return NextResponse.json({ message: res.candidates[0].content.parts });
 };
