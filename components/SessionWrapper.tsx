@@ -8,7 +8,7 @@ const Loader = () => {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="text-center">
-        <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-amber-500 border-t-transparent mx-auto"></div>
+        <div className="h-8 w-8 animate-spin rounded-full border-[var(--primary)] border-t-2 mx-auto"></div>
         <p className="text-gray-700 dark:text-gray-300">Loading...</p>
       </div>
     </div>

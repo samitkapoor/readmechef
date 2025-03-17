@@ -1,12 +1,13 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import SearchAndFilter from './SearchAndFilter';
 import RepositoryCard from './RepositoryCard';
 import { VisibilityFilter } from '@/types/filters.types';
 import { GitHubRepo } from '@/types/github.types';
+import { Github } from 'lucide-react';
 
 const useDebounce = <T,>(value: T, delay: number): T => {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
@@ -129,7 +130,7 @@ function AllRepositories() {
   if (loading && currentPage === 1) {
     return (
       <div className="flex justify-center items-center min-h-[200px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-amber-500"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-[var(--primary)]"></div>
       </div>
     );
   }
@@ -146,7 +147,7 @@ function AllRepositories() {
         availableLanguages={availableLanguages}
       />
 
-      <div className="grid grid-cols-1 gap-[1px] bg-slate-700 py-[1px]">
+      <div className="grid grid-cols-1 gap-[1px] bg-slate-900 border-y-[1px] border-slate-800">
         {filteredRepos.length > 0 ? (
           filteredRepos.map((repo) => (
             <RepositoryCard
@@ -165,7 +166,7 @@ function AllRepositories() {
           <button
             onClick={handleLoadMore}
             disabled={loading}
-            className="rounded-md bg-amber-500 px-6 py-2 text-white hover:bg-amber-600 dark:hover:bg-amber-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="rounded-md bg-[var(--primary)] px-6 py-2 text-white hover:bg-[var(--primary)]/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
           >
             {loading ? (
               <>
@@ -183,13 +184,18 @@ function AllRepositories() {
 }
 
 const EmptyState = () => (
-  <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-slate-800">
-    <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Your Projects</h2>
+  <div className="bg-[var(--background)] py-6">
     <p className="text-gray-700 dark:text-gray-300">
-      You haven't created any projects yet. Get started by creating your first README.
+      You don't have any repositories yet. Get started by creating your first repository.
     </p>
-    <button className="mt-4 rounded-md bg-amber-500 px-4 py-2 text-white hover:bg-amber-600 dark:hover:bg-amber-400 transition-colors">
-      Create New Project
+    <button
+      onClick={() => {
+        redirect('https://github.com/');
+      }}
+      className="mt-4 rounded-md bg-[var(--secondary)] px-4 py-2 text-white hover:bg-[var(--secondary)]/60 cursor-pointer transition-colors flex items-center gap-1"
+    >
+      <Github size={16} />
+      <p>Go to GitHub</p>
     </button>
   </div>
 );

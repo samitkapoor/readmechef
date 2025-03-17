@@ -21,7 +21,7 @@ const SearchAndFilter = ({
   availableLanguages
 }: SearchAndFilterProps) => {
   return (
-    <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+    <div className="flex gap-2 items-center justify-between">
       <div className="w-full">
         <input
           type="text"
