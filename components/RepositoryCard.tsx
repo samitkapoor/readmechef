@@ -24,7 +24,7 @@ const RepositoryCard = ({ repo, onClick }: RepositoryCardProps) => {
   };
 
   return (
-    <div className="py-6 border-b border-gray-800 bg-[#0d1117]">
+    <div className="py-6 border-b border-gray-800">
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-1 mb-1">
           <div className="flex items-center">
@@ -48,7 +48,7 @@ const RepositoryCard = ({ repo, onClick }: RepositoryCardProps) => {
               return (
                 <div
                   key={i + Date.now() + topic}
-                  className="rounded-full px-2 py-0.5 bg-[var(--primary)]/20 text-[var(--primary)]"
+                  className="rounded-full px-2 py-0.5 bg-[var(--primary)]/5 text-[var(--primary)]"
                 >
                   {topic}
                 </div>

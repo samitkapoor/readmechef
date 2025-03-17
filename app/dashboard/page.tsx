@@ -32,8 +32,8 @@ export default function DashboardPage() {
           </div>
           <p className="text-xl font-bold mt-5">{session?.user?.name}</p>
           <p className="text-xl text-white/70">{session?.user?.username}</p>
-          <div className="bg-[var(--card)] rounded-md p-4 w-full shadow-md mt-5">
-            <p className="text-xs">
+          <div className="mt-3">
+            <p className="text-xs text-[var(--info)]">
               Select a repository to generate a professional README with our AI-powered
               documentation tool. We'll analyze your code and create tailored documentation in
               seconds.

@@ -147,7 +147,7 @@ function AllRepositories() {
         availableLanguages={availableLanguages}
       />
 
-      <div className="grid grid-cols-1 gap-[1px] bg-[var(--card)] border-y-[1px] border-slate-800">
+      <div className="grid grid-cols-1 gap-[1px] border-t-[1px] border-slate-800">
         {filteredRepos.length > 0 ? (
           filteredRepos.map((repo) => (
             <RepositoryCard
