@@ -6,15 +6,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import SearchAndFilter from './SearchAndFilter';
 import RepositoryCard from './RepositoryCard';
 import { VisibilityFilter } from '@/types/filters.types';
-
-interface GitHubRepo {
-  id: number;
-  name: string;
-  description: string | null;
-  language: string | null;
-  stargazers_count: number;
-  private: boolean;
-}
+import { GitHubRepo } from '@/types/github.types';
 
 const useDebounce = <T,>(value: T, delay: number): T => {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
