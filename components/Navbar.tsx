@@ -12,8 +12,8 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-5 z-50 w-full flex items-center justify-center">
-      <div className="max-w-7xl w-full backdrop-blur-md bg-[var(--background)]/50 border border-[#FFFFFF27] mx-auto rounded-xl">
+    <header className="fixed top-0 z-50 w-full flex items-center justify-center">
+      <div className="w-full backdrop-blur-md bg-[var(--background)]/50 border border-[#FFFFFF27] mx-auto">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-xl font-bold text-white">

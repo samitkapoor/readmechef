@@ -32,11 +32,13 @@ export default function DashboardPage() {
           </div>
           <p className="text-xl font-bold mt-5">{session?.user?.name}</p>
           <p className="text-xl text-white/70">{session?.user?.username}</p>
-          <p className="text-sm text-white/80 mt-5">
-            Welcome to your ReadMeChef dashboard! Choose a repository from the list to generate a
-            professional README tailored to your project. Our AI chef will analyze your code and
-            cook up the perfect documentation.
-          </p>
+          <div className="bg-[var(--card)] rounded-md p-4 w-full shadow-md mt-5">
+            <p className="text-xs">
+              Select a repository to generate a professional README with our AI-powered
+              documentation tool. We'll analyze your code and create tailored documentation in
+              seconds.
+            </p>
+          </div>
         </div>
       </div>
       <div className="col-span-3">
