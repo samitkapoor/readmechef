@@ -1,12 +1,14 @@
 import { GitFork, Scale, Star } from 'lucide-react';
 import { GitHubRepo } from '../types/github.types';
 import dayjs from 'dayjs';
-interface RepositoryCardProps {
+import { DetailedHTMLProps, HTMLAttributes } from 'react';
+
+type RepositoryCardProps = {
   repo: GitHubRepo;
   onClick: () => void;
-}
+} & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
-const RepositoryCard = ({ repo, onClick }: RepositoryCardProps) => {
+const RepositoryCard = ({ repo, onClick, ...props }: RepositoryCardProps) => {
   const getTimeAgo = (date: string) => {
     const now = dayjs();
     const updatedAt = dayjs(date);
@@ -24,7 +26,7 @@ const RepositoryCard = ({ repo, onClick }: RepositoryCardProps) => {
   };
 
   return (
-    <div className="py-6 border-b border-gray-800">
+    <div className="py-6 border-b border-gray-800" {...props}>
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-1 mb-1">
           <div className="flex items-center">

@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { redirect, useRouter } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import SearchAndFilter from './SearchAndFilter';
 import RepositoryCard from './RepositoryCard';
 import { VisibilityFilter } from '@/types/filters.types';
@@ -11,14 +11,17 @@ import { Github } from 'lucide-react';
 import useDebounce from '@/hooks/useDebounce';
 
 function AllRepositories() {
+  const { data: session } = useSession();
+
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [loading, setLoading] = useState(true);
-  const { data: session } = useSession();
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMorePages, setHasMorePages] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>('public');
   const [languageFilter, setLanguageFilter] = useState('all');
+
+  const lastComponent = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
   const debouncedSearch = useDebounce(searchQuery, 300);
@@ -117,6 +120,29 @@ function AllRepositories() {
     }
   }, [session?.user?.username, visibilityFilter, languageFilter, fetchRepos]);
 
+  // Load more repos when the last component is in view
+  useEffect(() => {
+    if (lastComponent.current && !loading && hasMorePages) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const [entry] = entries;
+          if (entry.isIntersecting) {
+            handleLoadMore();
+          }
+        },
+        {
+          root: null,
+          rootMargin: '20px',
+          threshold: 0.1
+        }
+      );
+
+      observer.observe(lastComponent.current);
+
+      return () => observer.disconnect();
+    }
+  }, [lastComponent, loading, hasMorePages]);
+
   const handleLoadMore = useCallback(() => {
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
@@ -143,13 +169,22 @@ function AllRepositories() {
         <>
           <div className="grid grid-cols-1 gap-[1px] border-t-[1px] border-slate-800">
             {filteredRepos.length > 0 ? (
-              filteredRepos.map((repo) => (
-                <RepositoryCard
-                  key={repo.id}
-                  repo={repo}
-                  onClick={() => router.push(`/dashboard/repository/${repo.id}`)}
-                />
-              ))
+              filteredRepos.map((repo, i) =>
+                i === filteredRepos.length - 1 ? (
+                  <RepositoryCard
+                    ref={lastComponent}
+                    key={repo.id}
+                    repo={repo}
+                    onClick={() => router.push(`/dashboard/repository/${repo.id}`)}
+                  />
+                ) : (
+                  <RepositoryCard
+                    key={repo.id}
+                    repo={repo}
+                    onClick={() => router.push(`/dashboard/repository/${repo.id}`)}
+                  />
+                )
+              )
             ) : (
               <EmptyState />
             )}
