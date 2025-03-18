@@ -8,17 +8,7 @@ import RepositoryCard from './RepositoryCard';
 import { VisibilityFilter } from '@/types/filters.types';
 import { GitHubRepo } from '@/types/github.types';
 import { Github } from 'lucide-react';
-
-const useDebounce = <T,>(value: T, delay: number): T => {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedValue(value), delay);
-    return () => clearTimeout(timer);
-  }, [value, delay]);
-
-  return debouncedValue;
-};
+import useDebounce from '@/hooks/useDebounce';
 
 function AllRepositories() {
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
