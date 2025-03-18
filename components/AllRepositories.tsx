@@ -44,7 +44,7 @@ function AllRepositories() {
         setLoading(true);
         const params = new URLSearchParams({
           ...(debouncedSearch && { q: debouncedSearch }),
-          per_page: debouncedSearch ? '100' : '30',
+          per_page: debouncedSearch ? '100' : '10',
           page: pageNumber.toString(),
           ...(visibilityFilter !== 'all' && { visibility: visibilityFilter }),
           ...(languageFilter !== 'all' && { language: languageFilter })
