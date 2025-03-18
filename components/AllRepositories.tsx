@@ -1,44 +1,40 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { redirect, useRouter } from 'next/navigation';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import SearchAndFilter from './SearchAndFilter';
 import RepositoryCard from './RepositoryCard';
-
-interface GitHubRepo {
-  id: number;
-  name: string;
-  description: string | null;
-  language: string | null;
-  stargazers_count: number;
-  private: boolean;
-}
-
-type VisibilityFilter = 'all' | 'public' | 'private';
-
-const useDebounce = <T,>(value: T, delay: number): T => {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedValue(value), delay);
-    return () => clearTimeout(timer);
-  }, [value, delay]);
-
-  return debouncedValue;
-};
+import { VisibilityFilter } from '@/types/filters.types';
+import { GitHubRepo } from '@/types/github.types';
+import { Github } from 'lucide-react';
+import useDebounce from '@/hooks/useDebounce';
 
 function AllRepositories() {
+  const { data: session } = useSession();
+
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [loading, setLoading] = useState(true);
-  const { data: session } = useSession();
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMorePages, setHasMorePages] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>('public');
+  const [languageFilter, setLanguageFilter] = useState('all');
+
+  const lastComponent = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
   const debouncedSearch = useDebounce(searchQuery, 300);
+
+  // Extract unique languages from repos
+  const availableLanguages = useMemo(() => {
+    const languages = repos
+      .map((repo) => repo.language)
+      .filter((language): language is string => !!language);
+
+    const uniqueLanguages = [...new Set(languages)];
+    return uniqueLanguages.sort().map((lang) => ({ value: lang, label: lang }));
+  }, [repos]);
 
   const fetchRepos = useCallback(
     async (pageNumber: number, append: boolean = false) => {
@@ -47,9 +43,11 @@ function AllRepositories() {
       try {
         setLoading(true);
         const params = new URLSearchParams({
-          per_page: debouncedSearch ? '200' : '30',
+          ...(debouncedSearch && { q: debouncedSearch }),
+          per_page: debouncedSearch ? '100' : '10',
           page: pageNumber.toString(),
-          ...(visibilityFilter !== 'all' && { visibility: visibilityFilter })
+          ...(visibilityFilter !== 'all' && { visibility: visibilityFilter }),
+          ...(languageFilter !== 'all' && { language: languageFilter })
         });
 
         const res = await fetch(`https://api.github.com/user/repos?${params}`, {
@@ -84,20 +82,35 @@ function AllRepositories() {
         setLoading(false);
       }
     },
-    [session?.user?.accessToken, visibilityFilter]
+    [session?.user?.accessToken, visibilityFilter, languageFilter, debouncedSearch]
   );
 
-  // Filter repos based on search query
+  // Filter repos based on search query and language
   const filteredRepos = useMemo(() => {
-    if (!debouncedSearch) return repos;
+    let filtered = repos;
 
-    const searchLower = debouncedSearch.toLowerCase();
-    return repos.filter(
-      (repo) =>
-        repo.name.toLowerCase().includes(searchLower) ||
-        (repo.description?.toLowerCase() || '').includes(searchLower)
-    );
-  }, [repos, debouncedSearch]);
+    // Apply search filter
+    if (debouncedSearch) {
+      const searchLower = debouncedSearch.toLowerCase();
+      filtered = filtered.filter(
+        (repo) =>
+          repo.name.toLowerCase().includes(searchLower) ||
+          (repo.description?.toLowerCase() || '').includes(searchLower)
+      );
+    }
+
+    // Apply language filter
+    if (languageFilter !== 'all') {
+      filtered = filtered.filter((repo) => repo.language === languageFilter);
+    }
+
+    // Apply visibility filter
+    if (visibilityFilter !== 'all') {
+      filtered = filtered.filter((repo) => repo.visibility === visibilityFilter);
+    }
+
+    return filtered;
+  }, [repos, debouncedSearch, languageFilter]);
 
   // Fetch repos when dependencies change
   useEffect(() => {
@@ -105,21 +118,36 @@ function AllRepositories() {
       setCurrentPage(1);
       fetchRepos(1, false);
     }
-  }, [session?.user?.username, visibilityFilter, fetchRepos]);
+  }, [session?.user?.username, visibilityFilter, languageFilter, fetchRepos]);
+
+  // Load more repos when the last component is in view
+  useEffect(() => {
+    if (lastComponent.current && !loading && hasMorePages) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const [entry] = entries;
+          if (entry.isIntersecting) {
+            handleLoadMore();
+          }
+        },
+        {
+          root: null,
+          rootMargin: '20px',
+          threshold: 0.1
+        }
+      );
+
+      observer.observe(lastComponent.current);
+
+      return () => observer.disconnect();
+    }
+  }, [lastComponent, loading, hasMorePages]);
 
   const handleLoadMore = useCallback(() => {
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
     fetchRepos(nextPage, true);
   }, [currentPage, fetchRepos]);
-
-  if (loading && currentPage === 1) {
-    return (
-      <div className="flex justify-center items-center min-h-[200px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-amber-500"></div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col gap-5 w-full">
@@ -128,62 +156,77 @@ function AllRepositories() {
         onSearchChange={setSearchQuery}
         visibilityFilter={visibilityFilter}
         onVisibilityChange={setVisibilityFilter}
+        languageFilter={languageFilter}
+        onLanguageChange={setLanguageFilter}
+        availableLanguages={availableLanguages}
       />
 
-      <div className="flex items-center justify-between">
-        <p className="text-gray-700 dark:text-gray-300">
-          {visibilityFilter === 'all'
-            ? 'All'
-            : visibilityFilter.charAt(0).toUpperCase() + visibilityFilter.slice(1)}{' '}
-          Repositories ({filteredRepos.length})
-        </p>
-        {loading && <div className="text-sm text-gray-500">Refreshing...</div>}
-      </div>
-
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {filteredRepos.length > 0 ? (
-          filteredRepos.map((repo) => (
-            <RepositoryCard
-              key={repo.id}
-              repo={repo}
-              onClick={() => router.push(`/dashboard/repository/${repo.id}`)}
-            />
-          ))
-        ) : (
-          <EmptyState />
-        )}
-      </div>
-
-      {hasMorePages && (
-        <div className="mt-6 flex justify-center">
-          <button
-            onClick={handleLoadMore}
-            disabled={loading}
-            className="rounded-md bg-amber-500 px-6 py-2 text-white hover:bg-amber-600 dark:hover:bg-amber-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-          >
-            {loading ? (
-              <>
-                <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-white"></div>
-                <span>Loading...</span>
-              </>
-            ) : (
-              'Load More'
-            )}
-          </button>
+      {loading && currentPage === 1 ? (
+        <div className="flex justify-center items-center min-h-[200px]">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-[var(--primary)]"></div>
         </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 gap-[1px] border-t-[1px] border-slate-800">
+            {filteredRepos.length > 0 ? (
+              filteredRepos.map((repo, i) =>
+                i === filteredRepos.length - 1 ? (
+                  <RepositoryCard
+                    ref={lastComponent}
+                    key={repo.id}
+                    repo={repo}
+                    onClick={() => router.push(`/dashboard/repository/${repo.id}`)}
+                  />
+                ) : (
+                  <RepositoryCard
+                    key={repo.id}
+                    repo={repo}
+                    onClick={() => router.push(`/dashboard/repository/${repo.id}`)}
+                  />
+                )
+              )
+            ) : (
+              <EmptyState />
+            )}
+          </div>
+
+          {hasMorePages && (
+            <div className="mt-6 flex justify-center">
+              <button
+                onClick={handleLoadMore}
+                disabled={loading}
+                className="rounded-md bg-[var(--primary)] px-6 py-2 text-white hover:bg-[var(--primary)]/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
+              >
+                {loading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-white"></div>
+                    <span>Loading...</span>
+                  </>
+                ) : (
+                  'Load More'
+                )}
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
 }
 
 const EmptyState = () => (
-  <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-slate-800">
-    <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Your Projects</h2>
+  <div className="py-6">
     <p className="text-gray-700 dark:text-gray-300">
-      You haven't created any projects yet. Get started by creating your first README.
+      You don't have any repositories yet. Get started by creating your first repository.
     </p>
-    <button className="mt-4 rounded-md bg-amber-500 px-4 py-2 text-white hover:bg-amber-600 dark:hover:bg-amber-400 transition-colors">
-      Create New Project
+    <button
+      onClick={() => {
+        redirect('https://github.com/');
+      }}
+      className="mt-4 rounded-md bg-[var(--secondary)] px-4 py-2 text-white hover:bg-[var(--secondary)]/60 cursor-pointer transition-colors flex items-center gap-1"
+    >
+      <Github size={16} />
+      <p>Go to GitHub</p>
     </button>
   </div>
 );
