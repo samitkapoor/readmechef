@@ -50,7 +50,8 @@ function AllRepositories() {
       try {
         setLoading(true);
         const params = new URLSearchParams({
-          per_page: debouncedSearch ? '200' : '30',
+          ...(debouncedSearch && { q: debouncedSearch }),
+          per_page: debouncedSearch ? '100' : '30',
           page: pageNumber.toString(),
           ...(visibilityFilter !== 'all' && { visibility: visibilityFilter }),
           ...(languageFilter !== 'all' && { language: languageFilter })
@@ -88,7 +89,7 @@ function AllRepositories() {
         setLoading(false);
       }
     },
-    [session?.user?.accessToken, visibilityFilter, languageFilter]
+    [session?.user?.accessToken, visibilityFilter, languageFilter, debouncedSearch]
   );
 
   // Filter repos based on search query and language
@@ -132,14 +133,6 @@ function AllRepositories() {
     fetchRepos(nextPage, true);
   }, [currentPage, fetchRepos]);
 
-  if (loading && currentPage === 1) {
-    return (
-      <div className="flex justify-center items-center min-h-[200px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-[var(--primary)]"></div>
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col gap-5 w-full">
       <SearchAndFilter
@@ -152,37 +145,45 @@ function AllRepositories() {
         availableLanguages={availableLanguages}
       />
 
-      <div className="grid grid-cols-1 gap-[1px] border-t-[1px] border-slate-800">
-        {filteredRepos.length > 0 ? (
-          filteredRepos.map((repo) => (
-            <RepositoryCard
-              key={repo.id}
-              repo={repo}
-              onClick={() => router.push(`/dashboard/repository/${repo.id}`)}
-            />
-          ))
-        ) : (
-          <EmptyState />
-        )}
-      </div>
-
-      {hasMorePages && (
-        <div className="mt-6 flex justify-center">
-          <button
-            onClick={handleLoadMore}
-            disabled={loading}
-            className="rounded-md bg-[var(--primary)] px-6 py-2 text-white hover:bg-[var(--primary)]/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
-          >
-            {loading ? (
-              <>
-                <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-white"></div>
-                <span>Loading...</span>
-              </>
-            ) : (
-              'Load More'
-            )}
-          </button>
+      {loading && currentPage === 1 ? (
+        <div className="flex justify-center items-center min-h-[200px]">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-[var(--primary)]"></div>
         </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 gap-[1px] border-t-[1px] border-slate-800">
+            {filteredRepos.length > 0 ? (
+              filteredRepos.map((repo) => (
+                <RepositoryCard
+                  key={repo.id}
+                  repo={repo}
+                  onClick={() => router.push(`/dashboard/repository/${repo.id}`)}
+                />
+              ))
+            ) : (
+              <EmptyState />
+            )}
+          </div>
+
+          {hasMorePages && (
+            <div className="mt-6 flex justify-center">
+              <button
+                onClick={handleLoadMore}
+                disabled={loading}
+                className="rounded-md bg-[var(--primary)] px-6 py-2 text-white hover:bg-[var(--primary)]/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
+              >
+                {loading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-white"></div>
+                    <span>Loading...</span>
+                  </>
+                ) : (
+                  'Load More'
+                )}
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
