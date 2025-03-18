@@ -12,4 +12,14 @@ export type GitHubRepo = {
     name: string;
   };
   updated_at: string;
+  visibility:
+    | 'all'
+    | 'public'
+    | 'private'
+    | 'sources'
+    | 'forks'
+    | 'archived'
+    | 'can_be_sponsored'
+    | 'mirrors'
+    | 'templates';
 };

@@ -110,6 +110,11 @@ function AllRepositories() {
       filtered = filtered.filter((repo) => repo.language === languageFilter);
     }
 
+    // Apply visibility filter
+    if (visibilityFilter !== 'all') {
+      filtered = filtered.filter((repo) => repo.visibility === visibilityFilter);
+    }
+
     return filtered;
   }, [repos, debouncedSearch, languageFilter]);
 
@@ -184,7 +189,7 @@ function AllRepositories() {
 }
 
 const EmptyState = () => (
-  <div className="bg-[var(--background)] py-6">
+  <div className="py-6">
     <p className="text-gray-700 dark:text-gray-300">
       You don't have any repositories yet. Get started by creating your first repository.
     </p>
