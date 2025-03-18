@@ -1,22 +1,30 @@
 'use client';
 
+import { DropdownProps } from '@/types/component.types';
 import { Check, ChevronDown, X } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
-
-type DropdownProps = {
-  options: { value: string; label: string }[];
-  onChange: (value: string) => void;
-  optionsHeading: string;
-  placeholder: string;
-  value: string;
-};
 
 const Dropdown = ({ options, value, onChange, optionsHeading, placeholder }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className="relative select-none">
+    <div ref={dropdownRef} className="relative select-none">
       <div
         onClick={() => setIsOpen(!isOpen)}
         className={twMerge(
