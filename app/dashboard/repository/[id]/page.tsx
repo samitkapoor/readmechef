@@ -102,14 +102,14 @@ const RepositoryPage = () => {
   }
 
   return (
-    <div className="h-screen w-screen overflow-hidden px-4 py-20 relative">
+    <div className="h-screen w-screen overflow-hidden pt-[70px] relative">
       <div
         style={{
           gridTemplateColumns: '300px 1fr'
         }}
         className="grid grid-cols-2 items-start gap-6 h-full w-full"
       >
-        <div className="flex flex-col pt-3 pl-2">
+        <div className="flex flex-col pt-5 pl-8">
           <div className="flex items-start gap-4">
             <img
               src={repository.owner.avatar_url}
@@ -176,7 +176,7 @@ const RepositoryPage = () => {
           </div>
         </div>
 
-        <div className="h-full w-full flex items-start justify-center overflow-y-auto">
+        <div className="h-full w-full flex items-start justify-center overflow-y-auto border-l-[1px] border-neutral-700">
           <Chatbox repository={repository} />
         </div>
       </div>
