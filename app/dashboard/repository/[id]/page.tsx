@@ -1,7 +1,9 @@
 'use client';
 
 import Chatbox from '@/components/Chatbox';
+import Hyperlink from '@/components/ui/Hyperlink';
 import IconDetail from '@/components/ui/IconDetail';
+import Loader from '@/components/ui/Loader';
 import {
   ArrowUpRight,
   Eye,
@@ -82,7 +84,7 @@ const RepositoryPage = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-indigo-500"></div>
+        <Loader />
       </div>
     );
   }
@@ -90,10 +92,10 @@ const RepositoryPage = () => {
   if (error || !repository) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-4">
-        <p className="text-red-500">{error || 'Repository not found'}</p>
+        <p className="text-[var(--error)]">{error || 'Repository not found'}</p>
         <button
           onClick={() => router.back()}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+          className="px-4 py-2 bg-[var(--secondary)]/40 text-white rounded-md hover:bg-[var(--secondary)]/80 transition-colors cursor-pointer"
         >
           Go Back
         </button>
@@ -120,19 +122,11 @@ const RepositoryPage = () => {
               <h1 className="text-xl font-bold leading-none">{repository.name}</h1>
               <p className="text-gray-400">{repository.full_name}</p>
               <div className="flex gap-4">
-                <a
+                <Hyperlink
                   href={repository.html_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors flex items-center hover:text-white group hover:border-b-[1px] pt-1"
-                >
-                  <Github size={16} className="mr-0.5" />
-                  <p className="group-hover:text-white transition-all group-hover:ml-0.5">GitHub</p>
-                  <ArrowUpRight
-                    size={18}
-                    className="group-hover:ml-1 group-hover:rotate-45 transition-all duration-150"
-                  />
-                </a>
+                  prefixIcon={<Github size={16} className="mr-0.5" />}
+                  text="GitHub"
+                />
               </div>
             </div>
           </div>

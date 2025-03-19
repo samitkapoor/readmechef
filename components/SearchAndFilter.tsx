@@ -28,7 +28,7 @@ const SearchAndFilter = ({
           placeholder="Find a repository..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full px-3 py-1 text-sm rounded-md border border-gray-700 bg-[var(--card)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+          className="w-full px-3 py-1 text-sm rounded-md border border-gray-700 bg-[var(--card)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--secondary)]"
         />
       </div>
       <div className="flex flex-col sm:flex-row gap-2">

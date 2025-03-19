@@ -6,12 +6,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <SessionWrapper>
       <div className="relative">
-        <div
-          style={{
-            background: 'linear-gradient(135deg, transparent, #77C14E14, transparent)'
-          }}
-          className="fixed h-screen w-screen top-0 z-0"
-        />
+        <div className="fixed h-screen w-screen top-0 z-0" />
         <div className="relative z-10">{children}</div>
       </div>
     </SessionWrapper>

@@ -28,8 +28,8 @@ const Dropdown = ({ options, value, onChange, optionsHeading, placeholder }: Dro
       <div
         onClick={() => setIsOpen(!isOpen)}
         className={twMerge(
-          'w-full px-3 py-1 text-sm rounded-md border border-gray-700 bg-[var(--card)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--primary)] cursor-pointer flex items-center gap-1',
-          isOpen && 'ring-2 ring-[var(--primary)]'
+          'w-full px-3 py-1 text-sm rounded-md border border-gray-700 bg-[var(--card)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--secondary)] cursor-pointer flex items-center gap-1',
+          isOpen && 'ring-2 ring-[var(--secondary)]'
         )}
       >
         <p>{placeholder}</p>
