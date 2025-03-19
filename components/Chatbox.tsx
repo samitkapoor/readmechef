@@ -87,7 +87,7 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
       style={{ gridTemplateRows: '1fr 155px' }}
       className="w-full h-full border-gray-700 grid grid-cols-1 shadow-md relative"
     >
-      <div className="flex flex-col flex-nowrap shrink-0 gap-4 px-4 overflow-y-auto">
+      <div className="flex flex-col flex-nowrap shrink-0 gap-4 px-4 pb-4 overflow-y-auto">
         {messages.map((message, i) => (
           <div
             key={message.id}
@@ -108,7 +108,7 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
         ))}
         {loading && (
           <div className="text-gray-700 dark:text-gray-300">
-            <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-l-2 border-gray-900 dark:border-white" />
+            <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-l-2 border-[var(--secondary)]" />
           </div>
         )}
       </div>
