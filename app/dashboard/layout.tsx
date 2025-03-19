@@ -5,7 +5,7 @@ import SessionWrapper from '@/components/SessionWrapper';
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <SessionWrapper>
-      <div className="px-4 py-20 relative">
+      <div className="relative">
         <div
           style={{
             background: 'linear-gradient(135deg, transparent, #77C14E14, transparent)'

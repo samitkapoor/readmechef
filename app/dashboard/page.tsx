@@ -15,7 +15,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="container mx-auto py-8 max-w-7xl grid grid-cols-4 gap-10">
+    <div className="container mx-auto max-w-7xl grid grid-cols-4 gap-10 px-4 py-28">
       <div className="col-span-1 flex flex-col items-start justify-start relative">
         <div className="flex flex-col items-start justify-start sticky top-28">
           <div>

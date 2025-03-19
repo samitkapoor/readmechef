@@ -1,6 +1,19 @@
 'use client';
 
 import Chatbox from '@/components/Chatbox';
+import IconDetail from '@/components/ui/IconDetail';
+import {
+  ArrowUpRight,
+  Eye,
+  EyeOff,
+  GitBranch,
+  GitFork,
+  Github,
+  Glasses,
+  Languages,
+  NotebookText,
+  Star
+} from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -29,6 +42,7 @@ const RepositoryPage = () => {
   const params = useParams();
   const router = useRouter();
   const { data: session } = useSession();
+
   const [repository, setRepository] = useState<Repository | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -88,96 +102,81 @@ const RepositoryPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col gap-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
+    <div className="h-screen w-screen overflow-hidden px-4 py-20 relative">
+      <div
+        style={{
+          gridTemplateColumns: '300px 1fr'
+        }}
+        className="grid grid-cols-2 items-start gap-6 h-full w-full"
+      >
+        <div className="flex flex-col pt-3 pl-2">
+          <div className="flex items-start gap-4">
             <img
               src={repository.owner.avatar_url}
               alt={repository.owner.login}
-              className="w-12 h-12 rounded-full"
+              className="w-12 h-12 rounded-full mt-2 hover:animate-spin "
             />
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {repository.name}
-              </h1>
-              <p className="text-gray-600 dark:text-gray-400">{repository.full_name}</p>
-            </div>
-          </div>
-          <div className="flex gap-4">
-            <a
-              href={repository.html_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors"
-            >
-              View on GitHub
-            </a>
-            <button
-              onClick={() => router.push(`/dashboard/repository/${params.id}/generate`)}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 dark:hover:bg-indigo-500 transition-colors"
-            >
-              Generate README
-            </button>
-          </div>
-        </div>
-
-        {/* Repository Info */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              Repository Details
-            </h2>
-            <div className="space-y-3">
-              <p className="text-gray-700 dark:text-gray-300">
-                <span className="font-medium">Description:</span>{' '}
-                {repository.description || 'No description available'}
-              </p>
-              <p className="text-gray-700 dark:text-gray-300">
-                <span className="font-medium">Visibility:</span>{' '}
-                {repository.private ? 'Private' : 'Public'}
-              </p>
-              <p className="text-gray-700 dark:text-gray-300">
-                <span className="font-medium">Default Branch:</span> {repository.default_branch}
-              </p>
-              <p className="text-gray-700 dark:text-gray-300">
-                <span className="font-medium">Language:</span>{' '}
-                {repository.language || 'Not specified'}
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Statistics</h2>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-indigo-500">{repository.stargazers_count}</p>
-                <p className="text-gray-600 dark:text-gray-400">Stars</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-indigo-500">{repository.forks_count}</p>
-                <p className="text-gray-600 dark:text-gray-400">Forks</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-indigo-500">{repository.watchers_count}</p>
-                <p className="text-gray-600 dark:text-gray-400">Watchers</p>
+            <div className="flex flex-col mt-1">
+              <h1 className="text-xl font-bold leading-none">{repository.name}</h1>
+              <p className="text-gray-400">{repository.full_name}</p>
+              <div className="flex gap-4">
+                <a
+                  href={repository.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors flex items-center hover:text-white group hover:border-b-[1px] pt-1"
+                >
+                  <Github size={16} className="mr-0.5" />
+                  <p className="group-hover:text-white transition-all group-hover:ml-0.5">GitHub</p>
+                  <ArrowUpRight
+                    size={18}
+                    className="group-hover:ml-1 group-hover:rotate-45 transition-all duration-150"
+                  />
+                </a>
               </div>
             </div>
-            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-              <p className="text-gray-700 dark:text-gray-300">
-                <span className="font-medium">Created:</span>{' '}
-                {new Date(repository.created_at).toLocaleDateString()}
-              </p>
-              <p className="text-gray-700 dark:text-gray-300">
-                <span className="font-medium">Last Updated:</span>{' '}
-                {new Date(repository.updated_at).toLocaleDateString()}
-              </p>
+          </div>
+          <div className="rounded-lg mt-4">
+            <div className="flex flex-col ml-1 mt-1">
+              <IconDetail
+                icon={<NotebookText size={16} className="text-white" />}
+                value={repository.description}
+              />
+              <IconDetail
+                icon={
+                  repository.private ? (
+                    <EyeOff size={16} className="text-white" />
+                  ) : (
+                    <Eye size={16} className="text-white" />
+                  )
+                }
+                value={repository.private ? 'Private' : 'Public'}
+              />
+              <IconDetail
+                icon={<GitBranch size={16} className="text-white" />}
+                value={repository.default_branch}
+              />
+              <IconDetail
+                icon={<Languages size={16} className="text-white" />}
+                value={repository.language}
+              />
+              <IconDetail
+                icon={<Star size={16} className="text-white" />}
+                value={repository.stargazers_count}
+              />
+              <IconDetail
+                icon={<GitFork size={16} className="text-white" />}
+                value={repository.forks_count}
+              />
+              <IconDetail
+                icon={<Glasses size={16} className="text-white" />}
+                value={repository.watchers_count}
+              />
             </div>
           </div>
         </div>
 
-        <div className="h-full w-full flex items-start justify-center">
+        <div className="h-full w-full flex items-start justify-center overflow-y-auto">
           <Chatbox repository={repository} />
         </div>
       </div>
