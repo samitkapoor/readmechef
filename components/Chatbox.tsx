@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+import { Send } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React, { MouseEventHandler, useEffect, useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -82,15 +84,21 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
   };
 
   return (
-    <div className="w-full h-full border border-gray-200 dark:border-gray-700 rounded-lg flex flex-col bg-white dark:bg-slate-800 shadow-md">
-      <div className="flex-1 p-4 overflow-y-auto">
-        {messages.map((message) => (
+    <div
+      style={{ gridTemplateRows: '1fr 155px' }}
+      className="w-full h-full border-gray-700 grid grid-cols-1 shadow-md relative"
+    >
+      <div className="flex flex-col flex-nowrap shrink-0 pb-4 overflow-y-auto w-full relative">
+        <div className="w-full flex items-center justify-start mt-10 text-white/70 px-4 text-sm mb-1">
+          {dayjs().format('DD/MM/YYYY hh:mm:ss A')}
+        </div>
+        {messages.map((message, i) => (
           <div
             key={message.id}
-            className={`mb-4 p-3 rounded-lg max-w-[80%] overflow-x-auto ${
+            className={`p-3 rounded-lg mx-4 mb-4 overflow-x-auto shrink-0 ${
               message.role === 'user'
-                ? 'bg-amber-50 dark:bg-amber-900/30 ml-auto'
-                : 'bg-gray-50 dark:bg-slate-700'
+                ? 'bg-neutral-800/40 ml-auto max-w-[50%]'
+                : 'bg-[#300E0E]/50 max-w-[75%]'
             }`}
           >
             <div className="text-sm font-semibold mb-1 text-gray-900 dark:text-white">
@@ -103,28 +111,38 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
           </div>
         ))}
         {loading && (
-          <div className="text-gray-700 dark:text-gray-300">
-            <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-gray-900 dark:border-white"></div>
+          <div className="text-gray-700 dark:text-gray-300 ml-4">
+            <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-l-2 border-[var(--secondary)]" />
           </div>
         )}
       </div>
-      <div className="border-t border-gray-200 dark:border-gray-700 p-3">
-        <textarea
-          id="message"
-          className="w-full p-2 border border-gray-200 dark:border-gray-700 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-slate-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
-          placeholder="Type your message here..."
-          rows={3}
-        ></textarea>
-        <div className="mt-2 flex justify-end">
+
+      {/* Chat Input */}
+      <div className="border-t-[1px] border-[var(--primary)]/10 p-3 backdrop-blur-3xl sticky bottom-0">
+        <div
+          style={{
+            boxShadow: '-5px -5px 10px 0px rgba(255, 0, 0, 0.15)'
+          }}
+          className="flex items-end gap-4 rounded-lg backdrop-blur-3xl bg-gradient-to-r from-transparent to-red-900/10 border-[1px] border-[var(--primary)]/70"
+        >
+          <textarea
+            id="message"
+            className="w-full m-4 border border-gray-700 resize-none outline-none border-none text-white placeholder-gray-400 h-[100px]"
+            placeholder="Type your message here..."
+          ></textarea>
+
           <button
             onClick={(e) => {
               e.preventDefault();
               const message = document.getElementById('message') as HTMLTextAreaElement;
               handleSendMessage(message.value);
             }}
-            className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 dark:hover:bg-amber-400 transition-colors"
+            className="p-4 bg-[var(--secondary)]/50 text-white rounded-lg hover:bg-[var(--secondary)]/70 transition-colors mr-4 mb-4 group cursor-pointer"
           >
-            Send
+            <Send
+              size={20}
+              className="group-hover:rotate-45 group-hover:mr-1 transition-all duration-150"
+            />
           </button>
         </div>
       </div>

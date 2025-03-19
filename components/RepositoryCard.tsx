@@ -82,7 +82,7 @@ const RepositoryCard = ({ repo, onClick, ...props }: RepositoryCardProps) => {
 
           {repo.language && (
             <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-[var(--primary)]"></span>
+              <span className="w-3 h-3 rounded-full bg-[var(--secondary)]"></span>
               <span>{repo.language}</span>
             </div>
           )}

@@ -150,7 +150,14 @@ function AllRepositories() {
   }, [currentPage, fetchRepos]);
 
   return (
-    <div className="flex flex-col gap-5 w-full">
+    <div className="flex flex-col gap-1 w-full">
+      <div>
+        <p className="text-base text-[var(--text)]">
+          Select a repository to generate a professional README with our AI-powered documentation
+          tool.
+        </p>
+      </div>
+
       <SearchAndFilter
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -162,12 +169,10 @@ function AllRepositories() {
       />
 
       {loading && currentPage === 1 ? (
-        <div className="flex justify-center items-center min-h-[200px]">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-[var(--primary)]"></div>
-        </div>
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-l-2 border-[var(--secondary)] mt-5"></div>
       ) : (
         <>
-          <div className="grid grid-cols-1 gap-[1px] border-t-[1px] border-slate-800">
+          <div className="grid grid-cols-1 gap-[1px] border-slate-800">
             {filteredRepos.length > 0 ? (
               filteredRepos.map((repo, i) =>
                 i === filteredRepos.length - 1 ? (

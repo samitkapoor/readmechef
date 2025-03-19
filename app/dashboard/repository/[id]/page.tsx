@@ -1,7 +1,23 @@
 'use client';
 
 import Chatbox from '@/components/Chatbox';
+import Hyperlink from '@/components/ui/Hyperlink';
+import IconDetail from '@/components/ui/IconDetail';
+import Loader from '@/components/ui/Loader';
+import {
+  ArrowUpRight,
+  Eye,
+  EyeOff,
+  GitBranch,
+  GitFork,
+  Github,
+  Glasses,
+  Languages,
+  NotebookText,
+  Star
+} from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
@@ -29,6 +45,7 @@ const RepositoryPage = () => {
   const params = useParams();
   const router = useRouter();
   const { data: session } = useSession();
+
   const [repository, setRepository] = useState<Repository | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -68,7 +85,7 @@ const RepositoryPage = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-indigo-500"></div>
+        <Loader />
       </div>
     );
   }
@@ -76,10 +93,10 @@ const RepositoryPage = () => {
   if (error || !repository) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-4">
-        <p className="text-red-500">{error || 'Repository not found'}</p>
+        <p className="text-[var(--error)]">{error || 'Repository not found'}</p>
         <button
           onClick={() => router.back()}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+          className="px-4 py-2 bg-[var(--secondary)]/40 text-white rounded-md hover:bg-[var(--secondary)]/80 transition-colors cursor-pointer"
         >
           Go Back
         </button>
@@ -88,96 +105,39 @@ const RepositoryPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col gap-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <img
-              src={repository.owner.avatar_url}
-              alt={repository.owner.login}
-              className="w-12 h-12 rounded-full"
-            />
+    <div className="h-screen w-screen overflow-hidden relative flex items-center justify-center">
+      <div className="container mx-auto px-4 pt-[70px] grid grid-cols-4 items-start gap-6 h-full max-w-7xl w-full">
+        <div className="col-span-1 flex flex-col items-start justify-start relative pt-[70px]">
+          <div className="flex flex-col items-start justify-start sticky top-[100px]">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {repository.name}
-              </h1>
-              <p className="text-gray-600 dark:text-gray-400">{repository.full_name}</p>
+              {session?.user?.image && (
+                <div className="h-full w-full overflow-hidden rounded-full hover:animate-spin p-1 border-[10px] border-neutral-900 ">
+                  <Image
+                    src={session.user.image}
+                    alt={session.user.name || 'User'}
+                    width={1080}
+                    height={1080}
+                    className="rounded-full"
+                  />
+                </div>
+              )}
             </div>
-          </div>
-          <div className="flex gap-4">
-            <a
-              href={repository.html_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors"
-            >
-              View on GitHub
-            </a>
-            <button
-              onClick={() => router.push(`/dashboard/repository/${params.id}/generate`)}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 dark:hover:bg-indigo-500 transition-colors"
-            >
-              Generate README
-            </button>
-          </div>
-        </div>
-
-        {/* Repository Info */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              Repository Details
-            </h2>
-            <div className="space-y-3">
-              <p className="text-gray-700 dark:text-gray-300">
-                <span className="font-medium">Description:</span>{' '}
-                {repository.description || 'No description available'}
-              </p>
-              <p className="text-gray-700 dark:text-gray-300">
-                <span className="font-medium">Visibility:</span>{' '}
-                {repository.private ? 'Private' : 'Public'}
-              </p>
-              <p className="text-gray-700 dark:text-gray-300">
-                <span className="font-medium">Default Branch:</span> {repository.default_branch}
-              </p>
-              <p className="text-gray-700 dark:text-gray-300">
-                <span className="font-medium">Language:</span>{' '}
-                {repository.language || 'Not specified'}
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Statistics</h2>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-indigo-500">{repository.stargazers_count}</p>
-                <p className="text-gray-600 dark:text-gray-400">Stars</p>
+            <div className="flex flex-col items-start justify-start ml-[10px]">
+              <p className="text-xl font-bold mt-5 leading-none">{session?.user?.name}</p>
+              <p className="text-xl text-white/70">{session?.user?.username}</p>
+              <p className="text-white mt-5 text-xl">{repository.name}</p>
+              <div className="mt-5">
+                <Hyperlink
+                  href={'https://github.com/' + session?.user?.username + '/' + repository.name}
+                  prefixIcon={<Github size={16} className="mr-0.5" />}
+                  text="Open"
+                />
               </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-indigo-500">{repository.forks_count}</p>
-                <p className="text-gray-600 dark:text-gray-400">Forks</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-indigo-500">{repository.watchers_count}</p>
-                <p className="text-gray-600 dark:text-gray-400">Watchers</p>
-              </div>
-            </div>
-            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-              <p className="text-gray-700 dark:text-gray-300">
-                <span className="font-medium">Created:</span>{' '}
-                {new Date(repository.created_at).toLocaleDateString()}
-              </p>
-              <p className="text-gray-700 dark:text-gray-300">
-                <span className="font-medium">Last Updated:</span>{' '}
-                {new Date(repository.updated_at).toLocaleDateString()}
-              </p>
             </div>
           </div>
         </div>
 
-        <div className="h-full w-full flex items-start justify-center">
+        <div className="col-span-3 border-l-[1px] border-[var(--primary)]/10 h-full overflow-y-auto">
           <Chatbox repository={repository} />
         </div>
       </div>
