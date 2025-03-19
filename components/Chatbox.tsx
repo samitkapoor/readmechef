@@ -111,7 +111,7 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
           </div>
         ))}
         {loading && (
-          <div className="text-gray-700 dark:text-gray-300">
+          <div className="text-gray-700 dark:text-gray-300 ml-4">
             <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-l-2 border-[var(--secondary)]" />
           </div>
         )}
