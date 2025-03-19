@@ -87,15 +87,15 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
       style={{ gridTemplateRows: '1fr 155px' }}
       className="w-full h-full border-gray-700 grid grid-cols-1 shadow-md relative"
     >
-      <div className="flex flex-col flex-nowrap shrink-0 gap-4 p-4 overflow-y-auto">
-        {messages.map((message) => (
+      <div className="flex flex-col flex-nowrap shrink-0 gap-4 px-4 overflow-y-auto">
+        {messages.map((message, i) => (
           <div
             key={message.id}
             className={`p-3 rounded-lg overflow-x-auto shrink-0 ${
               message.role === 'user'
-                ? 'bg-neutral-700/40 ml-auto max-w-[50%]'
-                : 'bg-green-700/10 max-w-[75%]'
-            }`}
+                ? 'bg-neutral-800/40 ml-auto max-w-[50%]'
+                : 'bg-[var(--secondary)]/10 max-w-[75%]'
+            } ${i === 0 && 'mt-10'}`}
           >
             <div className="text-sm font-semibold mb-1 text-gray-900 dark:text-white">
               {message.role === 'user' ? 'You' : 'ReadmeChef'}
@@ -114,12 +114,12 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
       </div>
 
       {/* Chat Input */}
-      <div className="border-t border-neutral-700 p-3 backdrop-blur-3xl sticky bottom-0">
+      <div className="border-t-[1px] border-[var(--primary)]/10 p-3 backdrop-blur-3xl sticky bottom-0">
         <div
           style={{
-            boxShadow: '-5px -5px 10px 0px rgba(0, 255, 0, 0.15)'
+            boxShadow: '-5px -5px 10px 0px rgba(255, 0, 0, 0.15)'
           }}
-          className="flex items-end gap-4 rounded-lg backdrop-blur-3xl bg-gradient-to-r from-transparent to-neutral-800 border-[1px] border-neutral-700"
+          className="flex items-end gap-4 rounded-lg backdrop-blur-3xl bg-gradient-to-r from-transparent to-red-900/10 border-[1px] border-[var(--primary)]/70"
         >
           <textarea
             id="message"
@@ -133,11 +133,11 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
               const message = document.getElementById('message') as HTMLTextAreaElement;
               handleSendMessage(message.value);
             }}
-            className="p-4 bg-green-600 text-white rounded-lg hover:bg-green-500 transition-colors mr-4 mb-4 group cursor-pointer"
+            className="p-4 bg-[var(--secondary)]/50 text-white rounded-lg hover:bg-[var(--secondary)]/70 transition-colors mr-4 mb-4 group cursor-pointer"
           >
             <Send
               size={20}
-              className="mr-1 group-hover:rotate-45 group-hover:mr-2 transition-all duration-150"
+              className="group-hover:rotate-45 group-hover:mr-1 transition-all duration-150"
             />
           </button>
         </div>
