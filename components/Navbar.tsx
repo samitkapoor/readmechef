@@ -13,7 +13,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 z-50 w-full flex items-center justify-center h-[70px]">
-      <div className="w-full backdrop-blur-md bg-[var(--background)]/50 border-b-[1px] border-[var(--primary)]/20 shadow-lg shadow-white/5 mx-auto">
+      <div className="w-full backdrop-blur-md border-b-[1px] border-[var(--primary)]/20 shadow-lg shadow-white/5 mx-auto">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-xl font-bold text-white">

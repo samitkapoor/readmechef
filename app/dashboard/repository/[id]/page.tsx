@@ -137,7 +137,7 @@ const RepositoryPage = () => {
           </div>
         </div>
 
-        <div className="h-full w-full flex items-start justify-center overflow-y-auto border-l-[1px] border-[var(--primary)]/10 col-span-3 pt-[10px]">
+        <div className="col-span-3 border-l-[1px] border-[var(--primary)]/10 h-full overflow-y-auto">
           <Chatbox repository={repository} />
         </div>
       </div>

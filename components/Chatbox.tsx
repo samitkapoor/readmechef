@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { Send } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React, { MouseEventHandler, useEffect, useState, useRef } from 'react';
@@ -87,15 +88,18 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
       style={{ gridTemplateRows: '1fr 155px' }}
       className="w-full h-full border-gray-700 grid grid-cols-1 shadow-md relative"
     >
-      <div className="flex flex-col flex-nowrap shrink-0 gap-4 px-4 pb-4 overflow-y-auto">
+      <div className="flex flex-col flex-nowrap shrink-0 pb-4 overflow-y-auto w-full relative">
+        <div className="w-full flex items-center justify-start mt-10 text-white/70 px-4 text-sm mb-1">
+          {dayjs().format('DD/MM/YYYY hh:mm:ss A')}
+        </div>
         {messages.map((message, i) => (
           <div
             key={message.id}
-            className={`p-3 rounded-lg overflow-x-auto shrink-0 ${
+            className={`p-3 rounded-lg mx-4 mb-4 overflow-x-auto shrink-0 ${
               message.role === 'user'
                 ? 'bg-neutral-800/40 ml-auto max-w-[50%]'
-                : 'bg-[var(--secondary)]/10 max-w-[75%]'
-            } ${i === 0 && 'mt-10'}`}
+                : 'bg-[#300E0E]/50 max-w-[75%]'
+            }`}
           >
             <div className="text-sm font-semibold mb-1 text-gray-900 dark:text-white">
               {message.role === 'user' ? 'You' : 'ReadmeChef'}
