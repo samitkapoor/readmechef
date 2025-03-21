@@ -1,8 +1,9 @@
 import dayjs from 'dayjs';
 import { Send } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import React, { MouseEventHandler, useEffect, useState, useRef } from 'react';
-import ReactMarkdown from 'react-markdown';
+import React, { useEffect, useState, useRef } from 'react';
+import MarkdownRenderer from './ui/MarkdownRenderer';
+
 interface Repository {
   id: number;
   name: string;
@@ -100,8 +101,8 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
             key={message.id}
             className={`p-3 rounded-lg mx-4 mb-4 overflow-x-auto shrink-0 ${
               message.role === 'user'
-                ? 'bg-neutral-800/40 ml-auto max-w-[50%]'
-                : 'bg-[#300E0E]/50 max-w-[75%]'
+                ? 'bg-neutral-700/90 ml-auto max-w-[50%]'
+                : 'bg-neutral-800/80 max-w-[75%]'
             }`}
           >
             <div className="text-sm font-semibold mb-1 text-gray-900 dark:text-white">
@@ -110,7 +111,13 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
             {message.type === 'text' && (
               <div className="text-gray-700 dark:text-gray-300">{message.content}</div>
             )}
-            {message.type === 'markdown' && <ReactMarkdown>{message.content}</ReactMarkdown>}
+            {message.type === 'markdown' && (
+              <MarkdownRenderer
+                content={message.content
+                  .split('```markdown')[1]
+                  .substring(0, message.content.split('```markdown')[1].length - 4)}
+              />
+            )}
           </div>
         ))}
         {loading && (
