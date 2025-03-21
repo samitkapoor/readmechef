@@ -139,6 +139,7 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
               e.preventDefault();
               const message = document.getElementById('message') as HTMLTextAreaElement;
               handleSendMessage(message.value);
+              (document.getElementById('message') as HTMLTextAreaElement).value = '';
             }}
             className="p-4 bg-[var(--secondary)]/50 text-white rounded-lg hover:bg-[var(--secondary)]/70 transition-colors mr-4 mb-4 group cursor-pointer"
           >
