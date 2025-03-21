@@ -70,7 +70,7 @@ const MarkdownRenderer = ({ content }: { content: string }) => {
           content: (
             <CodeBlock code={codeBlockLines.join('\n')} language={codeLanguage}>
               <CodeBlock.Code
-                className={`bg-[#2f2f2f6f] overflow-auto p-6 rounded-xl shadow-lg max-w-[800px] h-auto hide-scrollbar`}
+                className={`bg-[#2f2f2f6f] overflow-auto p-4 rounded-xl shadow-lg max-w-[800px] h-auto hide-scrollbar`}
               >
                 <div className="table-row">
                   <CodeBlock.LineContent className="table-cell text-sm">
@@ -161,7 +161,7 @@ const MarkdownRenderer = ({ content }: { content: string }) => {
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col">
       {tokens.map((token, index) => (
         <RenderToken key={index} token={token} />
       ))}
@@ -245,44 +245,44 @@ const RenderToken = ({ token }: { token: MarkdownToken }) => {
   switch (token.type) {
     case 'h1':
       return (
-        <h1 className="text-3xl font-bold my-4">
+        <h1 className="text-3xl font-bold my-2">
           <RenderLine line={token.content} />
         </h1>
       );
     case 'h2':
       return (
-        <h2 className="text-2xl font-bold my-3">
+        <h2 className="text-2xl font-bold mt-4">
           <RenderLine line={token.content} />
         </h2>
       );
     case 'h3':
       return (
-        <h3 className="text-xl font-bold my-2">
+        <h3 className="text-xl font-bold mt-4">
           <RenderLine line={token.content} />
         </h3>
       );
     case 'h4':
       return (
-        <h4 className="text-lg font-bold my-2">
+        <h4 className="text-lg font-bold mt-4">
           <RenderLine line={token.content} />
         </h4>
       );
     case 'h5':
       return (
-        <h5 className="text-base font-bold my-1">
+        <h5 className="text-base font-bold mt-4">
           <RenderLine line={token.content} />
         </h5>
       );
     case 'h6':
       return (
-        <h6 className="text-sm font-bold my-1">
+        <h6 className="text-sm font-bold mt-4">
           <RenderLine line={token.content} />
         </h6>
       );
     case 'li':
       if (token.ordered) {
         return (
-          <div className="ml-6 flex gap-2">
+          <div className="ml-6 mt-1 flex gap-2">
             <span className="font-bold">•</span>
             <div>
               <RenderLine line={token.content} />
@@ -357,7 +357,7 @@ const RenderToken = ({ token }: { token: MarkdownToken }) => {
       );
     case 'p':
       return (
-        <p className="my-2">
+        <p className="mb-0">
           <RenderLine line={token.content} />
         </p>
       );
