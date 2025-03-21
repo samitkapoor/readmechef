@@ -2,20 +2,9 @@
 
 import Chatbox from '@/components/Chatbox';
 import Hyperlink from '@/components/ui/Hyperlink';
-import IconDetail from '@/components/ui/IconDetail';
+
 import Loader from '@/components/ui/Loader';
-import {
-  ArrowUpRight,
-  Eye,
-  EyeOff,
-  GitBranch,
-  GitFork,
-  Github,
-  Glasses,
-  Languages,
-  NotebookText,
-  Star
-} from 'lucide-react';
+import { Github } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';

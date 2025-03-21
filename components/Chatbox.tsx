@@ -53,6 +53,8 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
   const handleSendMessage = async (message: string) => {
     try {
       setLoading(true);
+      const previousConversation = messages;
+
       setMessages((prev) => {
         if (messages.length + 1 === 1 && messages.length === 0) {
           return [...prev, { id: prev.length + 1, content: message, role: 'user', type: 'text' }];
@@ -66,7 +68,8 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
         body: JSON.stringify({
           message: message,
           repository,
-          accessToken: session?.user?.accessToken
+          accessToken: session?.user?.accessToken,
+          previousConversation
         })
       });
 
