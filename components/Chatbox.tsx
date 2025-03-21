@@ -2,7 +2,6 @@ import dayjs from 'dayjs';
 import { Send } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState, useRef } from 'react';
-import MarkdownRenderer from './ui/MarkdownRenderer';
 import { EverythingMarkdown } from 'everything-markdown';
 
 interface Repository {
@@ -113,11 +112,6 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
               <div className="text-gray-700 dark:text-gray-300">{message.content}</div>
             )}
             {message.type === 'markdown' && (
-              // <MarkdownRenderer
-              //   content={message.content
-              //     .split('```markdown')[1]
-              //     .substring(0, message.content.split('```markdown')[1].length - 4)}
-              // />
               <EverythingMarkdown
                 content={message.content
                   .split('```markdown')[1]
