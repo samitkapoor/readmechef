@@ -102,7 +102,7 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
             className={`p-3 rounded-lg mx-4 mb-4 overflow-x-auto shrink-0 ${
               message.role === 'user'
                 ? 'bg-neutral-700/90 ml-auto max-w-[50%]'
-                : 'bg-neutral-800/80 max-w-[75%]'
+                : 'bg-neutral-900/80 max-w-[75%]'
             }`}
           >
             <div className="text-sm font-semibold mb-1 text-gray-900 dark:text-white">
