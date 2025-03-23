@@ -12,7 +12,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'avatars.githubusercontent.com'
       }
-    ]
+    ],
+    domains: ['avatars.githubusercontent.com']
+  },
+  env: {
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL
   }
 };
 

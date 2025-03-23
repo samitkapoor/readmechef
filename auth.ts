@@ -27,7 +27,7 @@ declare module 'next-auth/jwt' {
   }
 }
 
-const options: NextAuthOptions = {
+export const options: NextAuthOptions = {
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID || '',
@@ -37,7 +37,6 @@ const options: NextAuthOptions = {
         params: { scope: 'read:user user:email repo' }
       },
       profile(profile, tokens) {
-        console.log(profile);
         return {
           id: profile.id.toString(),
           name: profile.name || profile.login,
@@ -49,8 +48,12 @@ const options: NextAuthOptions = {
       }
     })
   ],
+  secret: process.env.NEXTAUTH_SECRET || '',
   pages: {
     signIn: '/login'
+  },
+  session: {
+    strategy: 'jwt'
   },
   callbacks: {
     async session({ session, token }) {
