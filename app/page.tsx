@@ -1,4 +1,3 @@
-import GetStartedButton from '@/components/GetStartedButton';
 import { ChefHat } from 'lucide-react';
 import Link from 'next/link';
 

@@ -222,7 +222,7 @@ function AllRepositories() {
 const EmptyState = () => (
   <div className="py-6">
     <p className="text-gray-700 dark:text-gray-300">
-      You don't have any repositories yet. Get started by creating your first repository.
+      You don&apos;t have any repositories yet. Get started by creating your first repository.
     </p>
     <button
       onClick={() => {

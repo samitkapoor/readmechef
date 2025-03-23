@@ -14,7 +14,7 @@ const fetchRepoFiles = async (
   return response.json();
 };
 
-export const POST = async (request: NextRequest, response: NextResponse) => {
+export const POST = async (request: NextRequest) => {
   const { message, repository, accessToken, previousConversation } = await request.json();
 
   const packageJson = await fetchRepoFiles(

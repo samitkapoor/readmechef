@@ -96,7 +96,7 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
         <div className="w-full flex items-center justify-start mt-10 text-white/70 px-4 text-sm mb-1">
           {dayjs().format('DD/MM/YYYY hh:mm:ss A')}
         </div>
-        {messages.map((message, i) => (
+        {messages.map((message) => (
           <div
             key={message.id}
             className={`p-3 rounded-lg mx-4 mb-4 overflow-x-auto shrink-0 ${
