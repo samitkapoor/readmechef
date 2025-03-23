@@ -137,7 +137,7 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
         >
           <textarea
             id="message"
-            className="w-full m-4 border border-gray-700 resize-none outline-none border-none text-white placeholder-gray-400 h-[100px]"
+            className="w-full m-4 border border-gray-700 resize-none outline-none border-none text-white placeholder-gray-400 h-[100px] bg-transparent"
             placeholder="Type your message here..."
           ></textarea>
 
@@ -148,7 +148,7 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
               handleSendMessage(message.value);
               (document.getElementById('message') as HTMLTextAreaElement).value = '';
             }}
-            className="p-4 bg-[var(--secondary)]/50 text-white rounded-lg hover:bg-[var(--secondary)]/70 transition-colors mr-4 mb-4 group cursor-pointer"
+            className="p-4 bg-primary text-white rounded-lg hover:bg-secondary transition-colors mr-4 mb-4 group cursor-pointer"
           >
             <Send
               size={20}
