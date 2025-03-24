@@ -22,6 +22,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          src="https://script.refix.ai/script.min.js"
+          type="text/javascript"
+          data-refix-token="21e99321-89fd-4286-9d23-1d9c70fabbd8"
+          defer
+        ></script>
+      </head>
       <body className={`${inter.className} antialiased m-0 p-0`}>
         <SessionProvider>
           <Navbar />
