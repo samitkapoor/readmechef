@@ -13,7 +13,7 @@ interface RequestBody {
   message: string;
   repository: Repository;
   accessToken: string;
-  previousConversation: any[];
+  previousConversation: string[];
 }
 
 interface RepoDetails {
@@ -88,10 +88,10 @@ const fetchAllRepoFiles = async (owner: string, repo: string, accessToken: strin
 const generatePrompt = (
   repository: Repository,
   message: string,
-  previousConversation: any[],
-  files: { packageJson: any; license: any; readme: any },
+  previousConversation: string[],
+  files: { packageJson: string; license: string; readme: string },
   repoDetails: RepoDetails,
-  contributors: any[]
+  contributors: string[]
 ) => {
   return `
     You are an expert technical writer specializing in creating comprehensive and professional project documentation. Your task is to create or improve a README.md file that follows industry best practices and effectively communicates the project's value.
