@@ -28,8 +28,8 @@ const Dropdown = ({ options, value, onChange, optionsHeading, placeholder }: Dro
       <div
         onClick={() => setIsOpen(!isOpen)}
         className={twMerge(
-          'w-full px-3 py-1 text-sm rounded-md border border-gray-700 bg-[var(--card)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--secondary)] cursor-pointer flex items-center gap-1',
-          isOpen && 'ring-2 ring-[var(--secondary)]'
+          'w-full px-3 py-1 text-sm rounded-md border border-gray-700 bg-[var(--card)] text-white focus:outline-none focus:ring-2 focus:ring-secondary cursor-pointer flex items-center gap-1',
+          isOpen && 'ring-2 ring-secondary'
         )}
       >
         <p>{placeholder}</p>
@@ -52,7 +52,7 @@ const Dropdown = ({ options, value, onChange, optionsHeading, placeholder }: Dro
               onClick={() => {
                 onChange(option.value);
               }}
-              className="w-full px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-[var(--primary)] cursor-pointer bg-[var(--card)] hover:bg-[var(--card)]/70 flex items-center gap-2"
+              className="w-full px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer bg-[var(--card)] hover:bg-[var(--card)]/70 flex items-center gap-2"
               key={option.value}
             >
               {value === option.value ? (

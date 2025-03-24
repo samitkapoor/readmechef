@@ -122,18 +122,18 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
         ))}
         {loading && (
           <div className="text-gray-700 dark:text-gray-300 ml-4">
-            <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-l-2 border-[var(--secondary)]" />
+            <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-l-2 border-secondary" />
           </div>
         )}
       </div>
 
       {/* Chat Input */}
-      <div className="border-t-[1px] border-[var(--primary)]/10 p-3 backdrop-blur-3xl sticky bottom-0">
+      <div className="border-t-[1px] border-primary/10 p-3 backdrop-blur-3xl sticky bottom-0">
         <div
           style={{
             boxShadow: '-5px -5px 10px 0px rgba(255, 0, 0, 0.15)'
           }}
-          className="flex items-end gap-4 rounded-lg backdrop-blur-3xl bg-gradient-to-r from-transparent to-red-900/10 border-[1px] border-[var(--primary)]/70"
+          className="flex items-end gap-4 rounded-lg backdrop-blur-3xl bg-gradient-to-r from-transparent to-red-900/10 border-[1px] border-primary/70"
         >
           <textarea
             id="message"

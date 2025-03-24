@@ -169,7 +169,7 @@ function AllRepositories() {
       />
 
       {loading && currentPage === 1 ? (
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-l-2 border-[var(--secondary)] mt-5"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-l-2 border-secondary mt-5"></div>
       ) : (
         <>
           <div className="grid grid-cols-1 gap-[1px] border-slate-800">
@@ -200,7 +200,7 @@ function AllRepositories() {
               <button
                 onClick={handleLoadMore}
                 disabled={loading}
-                className="rounded-md bg-[var(--primary)] px-6 py-2 text-white hover:bg-[var(--primary)]/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
+                className="rounded-md bg-primary px-6 py-2 text-white hover:bg-primary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
               >
                 {loading ? (
                   <>
@@ -228,7 +228,7 @@ const EmptyState = () => (
       onClick={() => {
         redirect('https://github.com/');
       }}
-      className="mt-4 rounded-md bg-[var(--secondary)] px-4 py-2 text-white hover:bg-[var(--secondary)]/60 cursor-pointer transition-colors flex items-center gap-1"
+      className="mt-4 rounded-md bg-secondary px-4 py-2 text-white hover:bg-secondary/60 cursor-pointer transition-colors flex items-center gap-1"
     >
       <Github size={16} />
       <p>Go to GitHub</p>

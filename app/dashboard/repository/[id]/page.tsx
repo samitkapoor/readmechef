@@ -85,7 +85,7 @@ const RepositoryPage = () => {
         <p className="text-[var(--error)]">{error || 'Repository not found'}</p>
         <button
           onClick={() => router.back()}
-          className="px-4 py-2 bg-[var(--secondary)]/40 text-white rounded-md hover:bg-[var(--secondary)]/80 transition-colors cursor-pointer"
+          className="px-4 py-2 bg-secondary/40 text-white rounded-md hover:bg-secondary/80 transition-colors cursor-pointer"
         >
           Go Back
         </button>
@@ -126,7 +126,7 @@ const RepositoryPage = () => {
           </div>
         </div>
 
-        <div className="col-span-3 border-l-[1px] border-[var(--primary)]/10 h-full overflow-y-auto">
+        <div className="col-span-3 border-l-[1px] border-primary/10 h-full overflow-y-auto">
           <Chatbox repository={repository} />
         </div>
       </div>

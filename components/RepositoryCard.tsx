@@ -32,7 +32,7 @@ const RepositoryCard = ({ repo, onClick, ...props }: RepositoryCardProps) => {
           <div className="flex items-center">
             <h2
               onClick={onClick}
-              className="text-xl font-semibold text-[var(--primary)] hover:underline cursor-pointer"
+              className="text-xl font-semibold text-primary hover:underline cursor-pointer"
             >
               {repo.name}
             </h2>
@@ -50,7 +50,7 @@ const RepositoryCard = ({ repo, onClick, ...props }: RepositoryCardProps) => {
               return (
                 <div
                   key={i + Date.now() + topic}
-                  className="rounded-full px-2 py-0.5 bg-[var(--primary)]/5 text-[var(--primary)]"
+                  className="rounded-full px-2 py-0.5 bg-primary/5 text-primary"
                 >
                   {topic}
                 </div>
@@ -82,7 +82,7 @@ const RepositoryCard = ({ repo, onClick, ...props }: RepositoryCardProps) => {
 
           {repo.language && (
             <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-[var(--secondary)]"></span>
+              <span className="w-3 h-3 rounded-full bg-secondary"></span>
               <span>{repo.language}</span>
             </div>
           )}
