@@ -1,92 +1,35 @@
 import dayjs from 'dayjs';
 import { Send } from 'lucide-react';
-import { useSession } from 'next-auth/react';
-import React, { useEffect, useState, useRef } from 'react';
-import { EverythingMarkdown } from 'everything-markdown';
+import React from 'react';
+import { ClientMessage } from '../app/dashboard/repository/[id]/actions';
 
-interface Repository {
-  id: number;
-  name: string;
-  full_name: string;
-  description: string | null;
-  language: string | null;
-  stargazers_count: number;
-  forks_count: number;
-  watchers_count: number;
-  private: boolean;
-  default_branch: string;
-  owner: {
-    login: string;
-    avatar_url: string;
-  };
-  html_url: string;
-  created_at: string;
-  updated_at: string;
-}
+// interface Repository {
+//   id: number;
+//   name: string;
+//   full_name: string;
+//   description: string | null;
+//   language: string | null;
+//   stargazers_count: number;
+//   forks_count: number;
+//   watchers_count: number;
+//   private: boolean;
+//   default_branch: string;
+//   owner: {
+//     login: string;
+//     avatar_url: string;
+//   };
+//   html_url: string;
+//   created_at: string;
+//   updated_at: string;
+// }
 
-interface Message {
-  id: number;
-  content: string;
-  role: 'user' | 'assistant';
-  type: 'text' | 'markdown';
-}
-
-const Chatbox = ({ repository }: { repository: Repository }) => {
-  const { data: session } = useSession();
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [firstTime, setFirstTime] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const effectRan = useRef(false);
-
-  useEffect(() => {
-    if (effectRan.current === false) {
-      if (firstTime) {
-        const message = 'Generate a README.md file for this repository.';
-
-        handleSendMessage(message);
-        setFirstTime(false);
-      }
-
-      effectRan.current = true;
-    }
-  }, []);
-
-  const handleSendMessage = async (message: string) => {
-    try {
-      setLoading(true);
-      const previousConversation = messages;
-
-      setMessages((prev) => {
-        if (messages.length + 1 === 1 && messages.length === 0) {
-          return [...prev, { id: prev.length + 1, content: message, role: 'user', type: 'text' }];
-        } else {
-          return [...prev, { id: prev.length + 1, content: message, role: 'user', type: 'text' }];
-        }
-      });
-
-      const res = await fetch('/api/repo/create-readme', {
-        method: 'POST',
-        body: JSON.stringify({
-          message: message,
-          repository,
-          accessToken: session?.user?.accessToken,
-          previousConversation
-        })
-      });
-
-      const p = await res.json();
-
-      setMessages((prev) => [
-        ...prev,
-        { id: prev.length + 1, content: p.message, role: 'assistant', type: 'markdown' }
-      ]);
-
-      setLoading(false);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+const Chatbox = ({
+  handleSendMessage,
+  messages
+}: {
+  handleSendMessage: (message: string) => Promise<void>;
+  messages: ClientMessage[];
+}) => {
   return (
     <div
       style={{ gridTemplateRows: '1fr 155px' }}
@@ -96,35 +39,31 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
         <div className="w-full flex items-center justify-start mt-10 text-white/70 px-4 text-sm mb-1">
           {dayjs().format('DD/MM/YYYY hh:mm:ss A')}
         </div>
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`p-3 rounded-lg mx-4 mb-4 overflow-x-auto shrink-0 ${
-              message.role === 'user'
-                ? 'bg-neutral-700/90 ml-auto max-w-[50%]'
-                : 'bg-neutral-900/80 max-w-[75%]'
-            }`}
-          >
-            <div className="text-sm font-semibold mb-1 text-gray-900 dark:text-white">
-              {message.role === 'user' ? 'You' : 'ReadmeChef'}
+        {messages.map((message) => {
+          console.log({ message });
+          return (
+            <div
+              key={message.id}
+              className={`p-3 rounded-lg mx-4 mb-4 overflow-x-auto shrink-0 ${
+                message.role === 'user'
+                  ? 'bg-neutral-700/90 ml-auto max-w-[50%]'
+                  : 'bg-neutral-900/80 max-w-[75%]'
+              }`}
+            >
+              <div className="text-sm font-semibold mb-1 text-gray-900 dark:text-white">
+                {message.role === 'user' ? 'You' : 'ReadmeChef'}
+              </div>
+
+              {message.role === 'user' ? (
+                <div className="text-gray-700 dark:text-gray-300">{message.display}</div>
+              ) : (
+                <div>
+                  <pre>{message.display}</pre>
+                </div>
+              )}
             </div>
-            {message.type === 'text' && (
-              <div className="text-gray-700 dark:text-gray-300">{message.content}</div>
-            )}
-            {message.type === 'markdown' && (
-              <EverythingMarkdown
-                content={message.content
-                  .split('```markdown')[1]
-                  .substring(0, message.content.split('```markdown')[1].length - 4)}
-              />
-            )}
-          </div>
-        ))}
-        {loading && (
-          <div className="text-gray-700 dark:text-gray-300 ml-4">
-            <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-l-2 border-secondary" />
-          </div>
-        )}
+          );
+        })}
       </div>
 
       {/* Chat Input */}
