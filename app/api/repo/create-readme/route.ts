@@ -173,9 +173,6 @@ export const POST = async (request: NextRequest) => {
   );
 
   const res = await generateGoogleResponse(prompt);
-  console.log(res);
-
-  // const res = await getGeminiReponse(prompt);
 
   return NextResponse.json({ message: res });
 };
