@@ -78,7 +78,7 @@ const Chatbox = ({ repository }: { repository: Repository }) => {
 
       setMessages((prev) => [
         ...prev,
-        { id: prev.length + 1, content: p?.message[0].text, role: 'assistant', type: 'markdown' }
+        { id: prev.length + 1, content: p.message, role: 'assistant', type: 'markdown' }
       ]);
 
       setLoading(false);

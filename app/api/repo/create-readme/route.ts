@@ -1,4 +1,4 @@
-import { getGeminiReponse } from '@/config/gemini';
+import { generateGoogleResponse } from '@/config/google';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface Repository {
@@ -171,7 +171,11 @@ export const POST = async (request: NextRequest) => {
     repoDetails,
     contributors
   );
-  const res = await getGeminiReponse(prompt);
 
-  return NextResponse.json({ message: res.candidates[0].content.parts });
+  const res = await generateGoogleResponse(prompt);
+  console.log(res);
+
+  // const res = await getGeminiReponse(prompt);
+
+  return NextResponse.json({ message: res });
 };
