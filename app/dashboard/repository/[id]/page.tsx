@@ -67,8 +67,13 @@ export default function Home() {
   };
 
   return (
-    <div className="mt-20">
-      <Chatbox handleSendMessage={handleSendMessage} messages={conversation} />
+    <div className="pt-[70px] grid grid-cols-2 gap-10 overflow-hidden h-screen">
+      <div className="overflow-y-auto h-full scrollbar-hide px-5 col-span-2">
+        <Chatbox handleSendMessage={handleSendMessage} messages={conversation} />
+      </div>
+      {/* <div className="overflow-y-auto h-full py-10 scrollbar-hide bg-black px-5">
+        {latestMessage && <EverythingMarkdown content={latestMessage?.split('```markdown')?.[1]} />}
+      </div> */}
     </div>
   );
 }

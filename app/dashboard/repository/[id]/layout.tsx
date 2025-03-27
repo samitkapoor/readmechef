@@ -11,7 +11,7 @@ export default function ChatLayout({
 
   return (
     <AI initialAIState={history} initialUIState={[]}>
-      {children}
+      <div className="overflow-hidden">{children}</div>
     </AI>
   );
 }
