@@ -1,4 +1,4 @@
-import { Command, CornerDownLeft, Dot, Send } from 'lucide-react';
+import { Command, CornerDownLeft, Dot } from 'lucide-react';
 import React, { useRef } from 'react';
 import { ClientMessage } from '@/types/ai.types';
 import { Repository } from '@/types/github.types';
