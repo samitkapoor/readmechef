@@ -17,7 +17,7 @@ module.exports = {
         secondary: '#ec1f1f',
         background: '#0f0f0f',
         foreground: '#eaeaea',
-        card: '#161b22',
+        card: '#18181a',
         success: '#4caf50',
         warning: '#f4a261',
         error: '#e63946',

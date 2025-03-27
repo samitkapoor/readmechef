@@ -1,127 +1,51 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { generateId } from 'ai';
-import Chatbox from '@/components/Chatbox';
 import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import EverythingMarkdown from 'everything-markdown';
-import { Repository } from '@/types/github.types';
-import { ClientMessage } from '@/types/ai.types';
+
+import Chatbox from '@/components/Chatbox';
+import MarkdownPreview from '@/components/MarkdownPreview';
+import { useRepository } from '@/hooks/useRepository';
+import { useChat } from '@/hooks/useChat';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-export default function Home() {
+export default function RepositoryPage() {
   const params = useParams();
   const { data: session } = useSession();
+  const repositoryId = params.id as string;
+  const accessToken = session?.user?.accessToken;
+  
+  // Custom hooks for repository data and chat functionality
+  const { repository, isLoading } = useRepository(repositoryId, accessToken || '');
+  const { messages, latestMarkdownId, sendMessage } = useChat(repository, accessToken);
+  
+  // State to track if initial README generation has been requested
+  const [hasRequestedReadme, setHasRequestedReadme] = useState(false);
 
-  const [repository, setRepository] = useState<Repository | null>(null);
-  const [firstTime, setFirstTime] = useState<boolean>(true);
-  const [messages, setMessages] = useState<ClientMessage[]>([]);
-  const [latestMarkdownId, setLatestMarkdownId] = useState<string | null>(null);
-
+  // Auto-generate README when repository data is loaded
   useEffect(() => {
-    const fetchRepository = async () => {
-      if (!session?.user?.accessToken) return;
-
-      try {
-        const res = await fetch(`https://api.github.com/repositories/${params.id}`, {
-          headers: {
-            Authorization: `Bearer ${session.user.accessToken}`,
-            Accept: 'application/vnd.github+json'
-          }
-        });
-
-        if (!res.ok) {
-          throw new Error('Failed to fetch repository details');
-        }
-
-        const data = await res.json();
-        setRepository(data);
-      } catch (err) {
-        console.error('Error fetching repository:', err);
-      }
-    };
-
-    fetchRepository();
-  }, [params.id, session?.user?.accessToken]);
-
-  useEffect(() => {
-    if (!repository) return;
-    if (!firstTime) return;
-
-    handleSendMessage('Generate a README.md for this repository.');
-    setFirstTime(false);
-  }, [repository]);
-
-  const handleSendMessage = async (input: string) => {
-    setMessages((currentMessages: ClientMessage[]) => [
-      ...currentMessages,
-      { id: generateId(), role: 'user', display: input }
-    ]);
-
-    const response = await fetch('/api/conversation', {
-      method: 'POST',
-      body: JSON.stringify({
-        history: messages,
-        input: input,
-        repository: repository,
-        accessToken: session?.user?.accessToken
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    const reader = response.body?.getReader();
-    const decoder = new TextDecoder();
-    let result = '';
-    const newMessageId = generateId();
-    setLatestMarkdownId(newMessageId);
-
-    setMessages((currentMessages: ClientMessage[]) => [
-      ...currentMessages,
-      { id: newMessageId, role: 'assistant', display: result }
-    ]);
-
-    if (reader) {
-      while (true) {
-        const { done, value } = await reader.read(); // Read chunks
-        if (done) break;
-        result += decoder.decode(value, { stream: true }); // Decode the chunk
-        setMessages((currentMessages: ClientMessage[]) => {
-          const messageIndex = currentMessages.findIndex((message) => message.id === newMessageId);
-          if (messageIndex === -1) return currentMessages;
-
-          // Create a new array with the updated message
-          return currentMessages.map((message, index) => {
-            if (index === messageIndex) {
-              return { ...message, display: result };
-            }
-            return message;
-          });
-        });
-      }
+    if (repository && !hasRequestedReadme && !isLoading) {
+      sendMessage('Generate a README.md for this repository.');
+      setHasRequestedReadme(true);
     }
-  };
+  }, [repository, hasRequestedReadme, isLoading, sendMessage]);
 
   return (
-    <div className="pt-[70px] grid grid-cols-2 gap-10 overflow-hidden h-screen">
-      <div className="overflow-y-auto h-full scrollbar-hide px-5">
-        <Chatbox handleSendMessage={handleSendMessage} messages={messages} />
+    <div className="pt-[70px] grid grid-cols-2 gap-0 overflow-hidden h-screen bg-black">
+      <div className="overflow-y-auto h-full scrollbar-hide pr-5 pl-10 pb-5 bg-background/50">
+        <Chatbox
+          handleSendMessage={sendMessage}
+          messages={messages}
+          repository={repository}
+        />
       </div>
-      <div className="overflow-y-auto h-full py-10 scrollbar-hide bg-black px-5">
-        {latestMarkdownId && (
-          <EverythingMarkdown
-            content={
-              messages
-                .find((message) => message.id === latestMarkdownId)
-                ?.display.split('```markdown')[1] || ''
-            }
-          />
-        )}
-      </div>
+      <MarkdownPreview 
+        messages={messages}
+        latestMarkdownId={latestMarkdownId}
+      />
     </div>
   );
 }
