@@ -1,27 +1,7 @@
 import dayjs from 'dayjs';
 import { Send } from 'lucide-react';
 import React from 'react';
-import { ClientMessage } from '../app/dashboard/repository/[id]/actions';
-
-// interface Repository {
-//   id: number;
-//   name: string;
-//   full_name: string;
-//   description: string | null;
-//   language: string | null;
-//   stargazers_count: number;
-//   forks_count: number;
-//   watchers_count: number;
-//   private: boolean;
-//   default_branch: string;
-//   owner: {
-//     login: string;
-//     avatar_url: string;
-//   };
-//   html_url: string;
-//   created_at: string;
-//   updated_at: string;
-// }
+import { ClientMessage } from '@/types/ai.types';
 
 const Chatbox = ({
   handleSendMessage,

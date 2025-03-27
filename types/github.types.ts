@@ -23,3 +23,24 @@ export type GitHubRepo = {
     | 'mirrors'
     | 'templates';
 };
+
+export type Repository = {
+  owner: {
+    login: string;
+  };
+  name: string;
+  description: string;
+};
+
+export type RepoDetails = {
+  stars: number;
+  forks: number;
+  openIssues: number;
+  topics: string[];
+  defaultBranch: string;
+  language: string;
+  lastUpdate: string;
+  homepage: string | null;
+  hasWiki: boolean;
+  visibility: string;
+};
