@@ -200,8 +200,6 @@ export const POST = async (request: NextRequest) => {
     isFirstMessage
   );
 
-  console.log([...messages, { role: 'user', content: contextualizedInput }]);
-
   const result = await streamText({
     model: google('gemini-2.0-flash-001'),
     messages: [...messages, { role: 'user', content: contextualizedInput }]
