@@ -5,6 +5,7 @@ import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import GradientButton from '@/components/GradientButton';
 
 export default function LoginPage() {
   const { status } = useSession();
@@ -45,36 +46,51 @@ export default function LoginPage() {
       <div
         style={{
           background:
-            'radial-gradient(circle at center, transparent 20%, rgba(255, 0, 0, 0.1), transparent 60%)'
+            'radial-gradient(circle at center, transparent 20%, rgba(255, 0, 0, 0.13), transparent 60%)'
         }}
         className="absolute inset-0 z-0 opacity-70"
       />
       <div className="z-10 relative">
-        <div className="h-full w-full overflow-hidden p-[5px] rounded-2xl border-[5px] border-neutral-900 ">
-          <div
-            style={{
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.7)'
-            }}
-            className="flex flex-col items-center justify-center z-10 bg-black/30 p-12 md:p-16 rounded-lg backdrop-blur-md border border-white/30"
-          >
-            <div className="w-full max-w-[320px] space-y-8">
+        <div className="h-full w-full overflow-hidden rounded-3xl">
+          {/* Card glow effect */}
+          <div className="absolute -inset-2 bg-gradient-to-r from-primary/10 via-secondary/5 to-primary/10 rounded-3xl blur-md opacity-70"></div>
+
+          <div className="flex flex-col items-center justify-center z-10 bg-black/60 p-14 md:p-18 md:px-22 rounded-3xl backdrop-blur-xl border-[4px] border-white/10 relative">
+            {/* Subtle inner highlight */}
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-secondary/5 via-transparent to-secondary/5 pointer-events-none"></div>
+            <div className="w-full max-w-[400px] space-y-12">
+              {/* Logo and heading */}
               <div className="text-center flex flex-col items-center justify-center">
-                <Image src="/icon.png" alt="Logo" width={100} height={100} />
-                <h1 className="text-4xl font-bold text-white tracking-tight bg-clip-text bg-gradient-to-r from-amber-200 to-amber-400">
-                  Welcome
+                <div className="relative mb-2">
+                  <div className="h-[110px] w-[110px] bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full flex items-center justify-center border border-white/10 relative shadow-lg">
+                    <Image
+                      src="/icon.png"
+                      alt="Logo"
+                      width={88}
+                      height={88}
+                      className="drop-shadow-lg"
+                    />
+                  </div>
+                </div>
+
+                <h1 className="text-4xl font-bold text-white tracking-tight mt-5 mb-2">
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+                    ReadmeChef
+                  </span>
                 </h1>
-                <p className="text-yellow-100/80 text-sm font-semibold max-w-[240px]">
-                  Sign in to let me cook the perfect README
+                <p className="text-white/70 text-sm max-w-[260px] mb-1">
+                  Sign in to let me cook the perfect README for your repositories
                 </p>
               </div>
 
-              <button
+              {/* Login button with hover effect */}
+              <GradientButton 
                 onClick={handleGitHubLogin}
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-white hover:bg-secondary transition-all duration-200 shadow-lg shadow-amber-900/20 font-medium cursor-pointer"
+                fullWidth
+                icon={<LucideGithub className="w-5 h-5" />}
               >
-                <LucideGithub className="w-5 h-5" />
-                Login with GitHub
-              </button>
+                Connect with GitHub
+              </GradientButton>
             </div>
           </div>
         </div>
