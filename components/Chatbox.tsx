@@ -1,7 +1,6 @@
-import { Command, CornerDownLeft, Dot, Loader } from 'lucide-react';
+import { CornerDownLeft, Loader } from 'lucide-react';
 import React, { useRef, useState, useEffect } from 'react';
 import { ClientMessage } from '@/types/ai.types';
-import { Repository } from '@/types/github.types';
 
 const isWindows = navigator.platform.includes('Win');
 
@@ -13,12 +12,10 @@ const isWindows = navigator.platform.includes('Win');
  */
 const Chatbox = ({
   handleSendMessage,
-  messages,
-  repository
+  messages
 }: {
   handleSendMessage: (message: string) => Promise<void>;
   messages: ClientMessage[];
-  repository: Repository | null;
 }) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);

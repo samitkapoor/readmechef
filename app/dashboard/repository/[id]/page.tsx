@@ -80,7 +80,7 @@ export default function RepositoryPage() {
         </div>
       </div>
       <div className="overflow-y-auto h-full scrollbar-hide pr-5 pl-10 pb-5 bg-background/50">
-        <Chatbox handleSendMessage={sendMessage} messages={messages} repository={repository} />
+        <Chatbox handleSendMessage={sendMessage} messages={messages} />
       </div>
       <MarkdownPreview messages={messages} latestMarkdownId={latestMarkdownId} />
     </div>
