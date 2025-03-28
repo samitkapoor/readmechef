@@ -62,45 +62,35 @@ const Chatbox = ({
 
   return (
     <div
-      style={{ gridTemplateRows: '1fr 155px' }}
-      className="w-full h-full border-gray-700 grid grid-cols-1 shadow-md relative"
+      style={{ gridTemplateRows: '1fr auto' }}
+      className="w-full h-full grid grid-cols-1 relative"
     >
       <div
         ref={divRef}
-        className="flex flex-col flex-nowrap shrink-0 pb-4 overflow-y-auto w-full relative scrollbar-hide px-1"
+        className="flex flex-col flex-nowrap pb-6 overflow-y-auto w-full relative scrollbar-hide px-4"
       >
-        {/* Chat header */}
-        <div className="w-full flex items-start justify-start mt-10 text-white/70 text-sm mb-1 flex-col">
-          <p className="text-xl font-bold text-white">Chat</p>
-          <p className="text-sm">
-            Currently working on <span className="text-white">{repository?.name}</span>
-          </p>
-        </div>
-
         {/* Messages */}
-        {messages.map((message) => {
+        {messages.map((message, i) => {
           return (
             <div
               key={message.id}
-              className={`rounded-lg mb-4 shrink-0 flex-col flex scrollbar-hide ${
-                message.role === 'user' ? 'ml-auto max-w-[65%]' : 'max-w-[85%]'
-              }`}
+              className={`mb-6 shrink-0 flex-col flex scrollbar-hide ${
+                message.role === 'user' ? 'items-end max-w-full' : 'items-start max-w-full'
+              } ${i === 0 && 'mt-10'}`}
             >
-              <div
-                className={`text-sm mb-1 text-gray-300 flex items-center ${
-                  message.role === 'user' ? 'ml-auto' : ''
-                }`}
-              >
-                <p>{message.role === 'user' ? 'You' : 'ReadmeChef'}</p>
-                <Dot />
+              <div className={`text-xs mb-1.5 text-white/60 flex items-center gap-1.5`}>
+                <p className="font-medium">{message.role === 'user' ? 'You' : 'ReadmeChef'}</p>
+                <div className="h-1 w-1 rounded-full bg-primary/70"></div>
                 <p>{message.timestamp}</p>
               </div>
 
               {message.role === 'user' ? (
-                <div className="text-white bg-primary py-3 px-4 rounded-lg">{message.display}</div>
+                <div className="text-white bg-primary py-3 px-4 rounded-2xl rounded-tr-sm shadow-sm max-w-[65%]">
+                  {message.display}
+                </div>
               ) : (
-                <div className="text-white rounded-lg w-full py-3 px-4 overflow-x-auto bg-card/80 scrollbar-hide border-[1px] border-white/5">
-                  <pre>{message.display}</pre>
+                <div className="text-white rounded-2xl rounded-tl-sm w-full py-4 px-5 overflow-x-auto bg-card/80 scrollbar-hide border-[1px] border-white/10 shadow-md max-w-[85%]">
+                  <pre className="whitespace-pre-wrap break-words">{message.display}</pre>
                 </div>
               )}
             </div>
@@ -112,7 +102,7 @@ const Chatbox = ({
       <div className="sticky bottom-0 py-2">
         <div
           style={{
-            boxShadow: '-5px -5px 10px 0px rgba(255, 0, 0, 0.15)'
+            boxShadow: '-5px -5px 20px 10px rgba(255, 0, 0, 0.2'
           }}
           className="flex items-end gap-4 rounded-lg bg-gradient-to-r from-transparent to-secondary/20 border-[1px] border-primary/70"
         >
@@ -125,29 +115,23 @@ const Chatbox = ({
 
           <button
             onClick={handleButtonClick}
-            className="p-4 bg-primary text-white rounded-lg hover:bg-secondary transition-colors mr-4 mb-4 group cursor-pointer flex items-center whitespace-nowrap gap-1"
+            className="p-2 px-3 bg-primary text-white rounded-lg m-2 group cursor-pointer flex items-center justify-center hover:bg-secondary transition-all duration-200"
+            title={isWindows ? 'Press Ctrl+Enter to send' : 'Press ⌘+Enter to send'}
           >
             {loading ? (
-              <Loader className="animate-spin" />
+              <Loader className="animate-spin w-5 h-5" />
             ) : (
-              <>
-                {isWindows ? (
-                  <span className="group-hover:rotate-12 transition-all duration-150 text-xs">
-                    CTRL
-                  </span>
-                ) : (
-                  <Command
-                    size={20}
-                    className="group-hover:rotate-12 transition-all duration-150"
-                  />
-                )}
-                <CornerDownLeft
-                  size={20}
-                  className="group-hover:rotate-45 group-hover:mr-1 transition-all duration-150"
-                />
-              </>
+              <CornerDownLeft
+                size={20}
+                className="group-hover:scale-110 transition-all duration-200"
+              />
             )}
           </button>
+        </div>
+        <div className="flex justify-center mt-2">
+          <p className="text-xs text-white/40">
+            {isWindows ? 'Press Ctrl + Enter to send' : 'Press ⌘ + Enter to send'}
+          </p>
         </div>
       </div>
     </div>
