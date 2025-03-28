@@ -18,7 +18,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({
   return (
     <button
       className={cn(
-        'flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-primary to-secondary px-6 py-5 text-white hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 font-medium cursor-pointer group relative overflow-hidden border-2 border-white/10',
+        'flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-primary/90 to-secondary/90 px-6 py-3 text-white transition-all duration-300 font-medium cursor-pointer group relative overflow-hidden border-2 border-white/10',
         fullWidth ? 'w-full' : '',
         className
       )}

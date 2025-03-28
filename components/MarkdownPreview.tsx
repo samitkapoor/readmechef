@@ -25,7 +25,7 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ messages, latestMarkd
   return (
     <div className="h-full w-full overflow-y-auto scrollbar-hide">
       {latestMarkdownId ? (
-        <div className="p-8 pb-14">
+        <div className="p-8 pb-14 pt-[80px]">
           <div className="bg-card/80 rounded-xl border border-white/10 shadow-lg ">
             <div className="p-6 md:p-8">
               <EverythingMarkdown content={markdownContent} />

@@ -73,7 +73,7 @@ const Chatbox = ({
               key={message.id}
               className={`mb-6 shrink-0 flex-col flex scrollbar-hide ${
                 message.role === 'user' ? 'items-end max-w-full' : 'items-start max-w-full'
-              } ${i === 0 && 'mt-10'}`}
+              } ${i === 0 && 'mt-[80px]'}`}
             >
               <div className={`text-xs mb-1.5 text-white/60 flex items-center gap-1.5`}>
                 <p className="font-medium">{message.role === 'user' ? 'You' : 'ReadmeChef'}</p>

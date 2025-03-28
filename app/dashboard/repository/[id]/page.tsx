@@ -42,31 +42,29 @@ export default function RepositoryPage() {
 
   return (
     <div className="pt-[70px] grid grid-cols-2 gap-0 overflow-hidden h-screen bg-black">
-      <div className="col-span-2 border-b border-white/10 bg-gradient-to-r from-background/80 to-background/40 backdrop-blur-sm h-min">
-        <div className="grid grid-cols-2 gap-10 w-full px-6 py-2 h-min">
-          {/* Chat section header */}
-          <div className="flex items-center gap-3 px-5">
-            <div className="h-10 w-10 bg-primary/10 border border-primary/30 rounded-lg flex items-center justify-center shadow-sm shadow-primary/10">
+      <div className="col-span-2 h-min fixed top-[70px] w-full z-10">
+        <div className="grid grid-cols-2 gap-10 w-full px-6 h-min">
+          <div className="flex items-center gap-3 px-5 bg-gradient-to-r from-black to-transparent backdrop-blur-sm py-2">
+            <div className="h-10 w-10 border border-primary/30 rounded-lg flex items-center justify-center shadow-sm shadow-primary/10">
               <MessageCircle size={22} className="text-primary" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white tracking-tight">Chat</h1>
-              <p className="text-sm text-white/60 flex items-center gap-1">
+              <h1 className="text-lg font-bold text-white tracking-tight">Chat</h1>
+              <p className="text-sm text-white/60 flex items-center gap-1 leading-none">
                 <span>Working on</span>
                 <span className="text-primary">{repository?.name || 'Repository'}</span>
               </p>
             </div>
           </div>
 
-          {/* Preview section header */}
-          <div className="flex items-center justify-between px-5">
+          <div className="flex items-center justify-between px-5 bg-gradient-to-r from-black via-transparent to-black backdrop-blur-sm py-2">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 bg-primary/10 border border-primary/30 rounded-lg flex items-center justify-center shadow-sm shadow-primary/10">
+              <div className="h-10 w-10 border border-primary/30 rounded-lg flex items-center justify-center shadow-sm shadow-primary/10">
                 <Eye size={22} className="text-primary" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white tracking-tight">Preview</h1>
-                <p className="text-sm text-white/60">README.md</p>
+                <h1 className="text-lg font-bold text-white tracking-tight">Preview</h1>
+                <p className="text-sm text-white/60 leading-none">README.md</p>
               </div>
             </div>
             <ActionButton
