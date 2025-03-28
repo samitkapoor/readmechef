@@ -1,8 +1,16 @@
-import { Command, CornerDownLeft, Dot } from 'lucide-react';
-import React, { useRef } from 'react';
+import { Command, CornerDownLeft, Dot, Loader } from 'lucide-react';
+import React, { useRef, useState, useEffect } from 'react';
 import { ClientMessage } from '@/types/ai.types';
 import { Repository } from '@/types/github.types';
 
+const isWindows = navigator.platform.includes('Win');
+
+/**
+ * Chatbox component
+ * @param handleSendMessage - a function to send a message to the server
+ * @param messages - an array of messages to display in the chat
+ * @param repository - the current repository
+ */
 const Chatbox = ({
   handleSendMessage,
   messages,
@@ -13,6 +21,44 @@ const Chatbox = ({
   repository: Repository | null;
 }) => {
   const divRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(false);
+
+  const sendMessage = async (input: string) => {
+    setLoading(true);
+    await handleSendMessage(input);
+    setLoading(false);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+      const message = e.currentTarget.value;
+      sendMessage(message);
+      e.currentTarget.value = '';
+      scrollToBottom();
+    }
+  };
+
+  const scrollToBottom = () => {
+    if (divRef.current && divRef.current.lastChild)
+      (divRef.current.lastChild as HTMLElement).scrollIntoView({
+        behavior: 'smooth',
+        block: 'end'
+      });
+  };
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      scrollToBottom();
+    }
+  }, [messages]);
+
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const message = (e.currentTarget.previousElementSibling as HTMLTextAreaElement).value;
+    sendMessage(message);
+    (e.currentTarget.previousElementSibling as HTMLTextAreaElement).value = '';
+    scrollToBottom();
+  };
 
   return (
     <div
@@ -23,12 +69,15 @@ const Chatbox = ({
         ref={divRef}
         className="flex flex-col flex-nowrap shrink-0 pb-4 overflow-y-auto w-full relative scrollbar-hide px-1"
       >
+        {/* Chat header */}
         <div className="w-full flex items-start justify-start mt-10 text-white/70 text-sm mb-1 flex-col">
           <p className="text-xl font-bold text-white">Chat</p>
           <p className="text-sm">
             Currently working on <span className="text-white">{repository?.name}</span>
           </p>
         </div>
+
+        {/* Messages */}
         {messages.map((message) => {
           return (
             <div
@@ -68,49 +117,36 @@ const Chatbox = ({
           className="flex items-end gap-4 rounded-lg bg-gradient-to-r from-transparent to-secondary/20 border-[1px] border-primary/70"
         >
           <textarea
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
-                const message = document.getElementById('message') as HTMLTextAreaElement;
-                handleSendMessage(message.value);
-                (document.getElementById('message') as HTMLTextAreaElement).value = '';
-                setTimeout(() => {
-                  if (divRef.current && divRef.current.lastChild)
-                    (divRef.current.lastChild as HTMLElement).scrollIntoView({
-                      behavior: 'smooth'
-                    });
-                }, 1000);
-              }
-            }}
+            onKeyDown={handleKeyDown}
             id="message"
             className="w-full m-4 border border-gray-700 resize-none outline-none border-none text-white placeholder-gray-400 h-[100px] bg-transparent scrollbar-hide"
             placeholder="Type your message here..."
           ></textarea>
 
           <button
-            onClick={(e) => {
-              e.preventDefault();
-              const message = document.getElementById('message') as HTMLTextAreaElement;
-              handleSendMessage(message.value);
-              (document.getElementById('message') as HTMLTextAreaElement).value = '';
-              if (divRef.current)
-                divRef.current.scrollTo({
-                  top: divRef.current.scrollHeight,
-                  behavior: 'smooth'
-                });
-            }}
+            onClick={handleButtonClick}
             className="p-4 bg-primary text-white rounded-lg hover:bg-secondary transition-colors mr-4 mb-4 group cursor-pointer flex items-center whitespace-nowrap gap-1"
           >
-            {navigator.platform.includes('Win') ? (
-              <span className="group-hover:rotate-12 transition-all duration-150 text-xs">
-                CTRL
-              </span>
+            {loading ? (
+              <Loader className="animate-spin" />
             ) : (
-              <Command size={20} className="group-hover:rotate-12 transition-all duration-150" />
+              <>
+                {isWindows ? (
+                  <span className="group-hover:rotate-12 transition-all duration-150 text-xs">
+                    CTRL
+                  </span>
+                ) : (
+                  <Command
+                    size={20}
+                    className="group-hover:rotate-12 transition-all duration-150"
+                  />
+                )}
+                <CornerDownLeft
+                  size={20}
+                  className="group-hover:rotate-45 group-hover:mr-1 transition-all duration-150"
+                />
+              </>
             )}
-            <CornerDownLeft
-              size={20}
-              className="group-hover:rotate-45 group-hover:mr-1 transition-all duration-150"
-            />
           </button>
         </div>
       </div>
