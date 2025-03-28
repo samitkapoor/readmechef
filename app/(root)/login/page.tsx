@@ -5,7 +5,7 @@ import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import GradientButton from '@/components/GradientButton';
+import GradientButton from '@/components/ui/GradientButton';
 
 export default function LoginPage() {
   const { status } = useSession();
@@ -84,7 +84,7 @@ export default function LoginPage() {
               </div>
 
               {/* Login button with hover effect */}
-              <GradientButton 
+              <GradientButton
                 onClick={handleGitHubLogin}
                 fullWidth
                 icon={<LucideGithub className="w-5 h-5" />}

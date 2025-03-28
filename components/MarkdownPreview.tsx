@@ -33,7 +33,7 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ messages, latestMarkd
           </div>
         </div>
       ) : (
-        <div className="flex items-start mt-40 justify-center h-full">
+        <div className="flex items-start pt-40 justify-center h-full">
           <div className="text-center p-8 max-w-md">
             <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
               <Book className="text-primary w-8 h-8" />

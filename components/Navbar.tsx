@@ -3,9 +3,11 @@
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { ChefHat, Github, LogOut } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const { status } = useSession();
+  const pathname = usePathname();
 
   const handleLogout = () => {
     signOut({ callbackUrl: '/' });
@@ -34,13 +36,15 @@ export default function Navbar() {
                 </button>
               </div>
             ) : (
-              <Link
-                href="/login"
-                className="rounded-full bg-secondary bg-opacity-40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-opacity-80 flex items-center gap-1"
-              >
-                <Github size={17} />
-                <p>Login</p>
-              </Link>
+              pathname !== '/login' && (
+                <Link
+                  href="/login"
+                  className="rounded-full bg-secondary bg-opacity-40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-opacity-80 flex items-center gap-1"
+                >
+                  <Github size={17} />
+                  <p>Login</p>
+                </Link>
+              )
             )}
           </nav>
         </div>
