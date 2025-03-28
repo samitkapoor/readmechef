@@ -15,7 +15,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 z-50 flex items-center justify-center h-[70px] w-screen">
-      <div className="w-screen backdrop-blur-md shadow-lg shadow-white/[0.02]">
+      <div className="w-screen bg-gradient-to-r from-black via-transparent to-black backdrop-blur-sm shadow-lg shadow-white/[0.02]">
         <div className="flex h-16 items-center justify-between px-4 mx-6">
           <Link href="/" className="flex items-center gap-2">
             <ChefHat size={24} />
@@ -29,7 +29,7 @@ export default function Navbar() {
               <div className="flex items-center gap-4">
                 <button
                   onClick={handleLogout}
-                  className="rounded-md bg-primary hover:bg-secondary px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-opacity-80 flex items-center gap-1 cursor-pointer"
+                  className="rounded-full bg-primary bg-opacity-40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-opacity-80 flex items-center gap-1"
                 >
                   <LogOut size={17} />
                   <p>Logout</p>
@@ -39,7 +39,7 @@ export default function Navbar() {
               pathname !== '/login' && (
                 <Link
                   href="/login"
-                  className="rounded-full bg-secondary bg-opacity-40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-opacity-80 flex items-center gap-1"
+                  className="rounded-full bg-primary bg-opacity-40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-opacity-80 flex items-center gap-1"
                 >
                   <Github size={17} />
                   <p>Login</p>
