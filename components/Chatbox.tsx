@@ -1,4 +1,4 @@
-import { CornerDownLeft, Loader } from 'lucide-react';
+import { CornerDownLeft } from 'lucide-react';
 import React, { useRef, useState, useEffect } from 'react';
 import { ClientMessage } from '@/types/ai.types';
 
