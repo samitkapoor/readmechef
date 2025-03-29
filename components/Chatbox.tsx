@@ -73,21 +73,23 @@ const Chatbox = ({
               key={message.id}
               className={`mb-6 shrink-0 flex-col flex scrollbar-hide ${
                 message.role === 'user' ? 'items-end max-w-full' : 'items-start max-w-full'
-              } ${i === 0 && 'mt-[80px]'}`}
+              } ${i === 0 ? 'mt-[80px]' : 'mt-[16px]'}`}
             >
-              <div className={`text-xs mb-1.5 text-white/60 flex items-center gap-1.5`}>
-                <p className="font-medium">{message.role === 'user' ? 'You' : 'ReadmeChef'}</p>
+              <div className={`text-xs mb-1.5 text-white/40 flex font-light items-center gap-1.5`}>
+                <p>{message.role === 'user' ? 'You' : 'ReadmeChef'}</p>
                 <div className="h-1 w-1 rounded-full bg-primary/70"></div>
                 <p>{message.timestamp}</p>
               </div>
 
               {message.role === 'user' ? (
-                <div className="text-white bg-primary py-3 px-4 rounded-2xl rounded-tr-sm shadow-sm max-w-[65%]">
+                <div className="text-white bg-[#D35400] py-4 px-5 rounded-2xl rounded-tr-sm shadow-sm max-w-[65%] text-[15px] tracking-tight">
                   {message.display}
                 </div>
               ) : (
-                <div className="text-white rounded-2xl rounded-tl-sm w-full py-4 px-5 overflow-x-auto bg-card/80 scrollbar-hide border-[1px] border-white/10 shadow-md max-w-[85%]">
-                  <pre className="whitespace-pre-wrap break-words">{message.display}</pre>
+                <div className="text-white rounded-2xl rounded-tl-sm text-sm w-full py-5 px-6 overflow-x-auto bg-[#151515] scrollbar-hide border-[1px] border-white/20 shadow-md max-w-[85%] tracking-tight">
+                  <pre className="whitespace-pre-wrap break-words text-white/80">
+                    {message.display}
+                  </pre>
                 </div>
               )}
             </div>
@@ -96,31 +98,26 @@ const Chatbox = ({
       </div>
 
       {/* Chat Input */}
-      <div className="sticky bottom-0 py-2">
-        <div
-          style={{
-            boxShadow: '-5px -5px 20px 10px rgba(255, 0, 0, 0.2'
-          }}
-          className="flex items-end gap-4 rounded-lg bg-gradient-to-r from-transparent to-secondary/20 border-[1px] border-primary/70"
-        >
+      <div className="sticky bottom-0 py-2 px-2">
+        <div className="flex items-end gap-4 rounded-lg bg-[#222222] border-[1px] border-white/40">
           <textarea
             onKeyDown={handleKeyDown}
             id="message"
-            className="w-full m-4 border border-gray-700 resize-none outline-none border-none text-white placeholder-gray-400 h-[100px] bg-transparent scrollbar-hide"
+            className="w-full m-4 border border-gray-700 resize-none outline-none border-none text-white placeholder-gray-400 h-[80px] bg-transparent scrollbar-hide rounded-lg"
             placeholder="Type your message here..."
           ></textarea>
 
           <button
             onClick={handleButtonClick}
-            className="p-2 px-3 bg-primary text-white rounded-lg m-2 group cursor-pointer flex items-center justify-center hover:bg-secondary transition-all duration-200"
+            className="px-2 py-2 bg-[#D35400] text-white rounded-lg m-2 group cursor-pointer flex items-center justify-center transition-all duration-200"
             title={isWindows ? 'Press Ctrl+Enter to send' : 'Press ⌘+Enter to send'}
           >
             {loading ? (
-              <Loader className="animate-spin w-5 h-5" />
+              <div className="animate-spin rounded-full border-b-2 border-white h-5 w-5"></div>
             ) : (
               <CornerDownLeft
-                size={20}
-                className="group-hover:scale-110 transition-all duration-200"
+                size={24}
+                className="group-hover:rotate-90 transition-all duration-200"
               />
             )}
           </button>
