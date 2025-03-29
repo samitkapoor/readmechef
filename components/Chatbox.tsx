@@ -4,12 +4,6 @@ import { ClientMessage } from '@/types/ai.types';
 
 const isWindows = navigator.platform.includes('Win');
 
-/**
- * Chatbox component
- * @param handleSendMessage - a function to send a message to the server
- * @param messages - an array of messages to display in the chat
- * @param repository - the current repository
- */
 const Chatbox = ({
   handleSendMessage,
   messages
@@ -66,7 +60,6 @@ const Chatbox = ({
         ref={divRef}
         className="flex flex-col flex-nowrap pb-6 overflow-y-auto w-full relative scrollbar-hide px-4"
       >
-        {/* Messages */}
         {messages.map((message, i) => {
           return (
             <div
@@ -97,7 +90,6 @@ const Chatbox = ({
         })}
       </div>
 
-      {/* Chat Input */}
       <div className="sticky bottom-0 py-2 px-2">
         <div className="flex items-end gap-4 rounded-lg bg-[#222222] border-[1px] border-white/40">
           <textarea

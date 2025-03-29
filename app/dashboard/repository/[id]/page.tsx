@@ -11,7 +11,6 @@ import { useChat } from '@/hooks/useChat';
 import { Copy, Eye, MessageCircle } from 'lucide-react';
 import ActionButton from '@/components/ui/ActionButton';
 
-// Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
 export default function RepositoryPage() {
@@ -20,14 +19,11 @@ export default function RepositoryPage() {
   const repositoryId = params.id as string;
   const accessToken = session?.user?.accessToken;
 
-  // Custom hooks for repository data and chat functionality
   const { repository, isLoading } = useRepository(repositoryId, accessToken || '');
   const { messages, latestMarkdownId, sendMessage } = useChat(repository, accessToken);
 
-  // State to track if initial README generation has been requested
   const [hasRequestedReadme, setHasRequestedReadme] = useState(false);
 
-  // Auto-generate README when repository data is loaded
   useEffect(() => {
     if (repository && !hasRequestedReadme && !isLoading) {
       sendMessage('Generate a README.md for this repository.');

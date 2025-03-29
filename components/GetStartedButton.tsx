@@ -6,7 +6,6 @@ import Link from 'next/link';
 export default function GetStartedButton() {
   const { status } = useSession();
 
-  // If user is authenticated, link to dashboard, otherwise to login
   const href = status === 'authenticated' ? '/dashboard' : '/login';
 
   return (

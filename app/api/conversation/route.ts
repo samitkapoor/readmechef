@@ -6,7 +6,6 @@ import { NextRequest } from 'next/server';
 import { Repository, RepoDetails } from '@/types/github.types';
 import { ClientMessage } from '@/types/ai.types';
 
-// Helper functions for fetching repository data
 const fetchRepoFiles = async (
   owner: string,
   repo: string,
@@ -80,7 +79,6 @@ const fetchAllRepoFiles = async (owner: string, repo: string, accessToken: strin
   return { packageJson, license, readme };
 };
 
-// Generate a comprehensive prompt with repository context
 const generateContextualizedInput = async (
   input: string,
   repository: Repository,
@@ -88,7 +86,6 @@ const generateContextualizedInput = async (
   isFirstMessage: boolean
 ) => {
   try {
-    // Only fetch detailed repository information if this is the first message
     if (isFirstMessage) {
       const [files, repoDetails, contributors] = await Promise.all([
         fetchAllRepoFiles(repository.owner.login, repository.name, accessToken),
@@ -155,7 +152,6 @@ const generateContextualizedInput = async (
             Respond to the user's specific request: ${input}
           `;
     } else {
-      // For follow-up messages, just pass the input with minimal context
       return `
           Continue helping with the README.md for repository ${repository.name} (${repository.owner.login}/${repository.name}).
           User request: ${input}
@@ -163,7 +159,6 @@ const generateContextualizedInput = async (
     }
   } catch (error) {
     console.error('Error generating contextualized input:', error);
-    // Fallback to basic context if there's an error
     return `
         Repository Information:
         - Name: ${repository.name}
@@ -192,7 +187,6 @@ export const POST = async (request: NextRequest) => {
 
   const isFirstMessage = messages.length === 0;
 
-  // Get contextualized input
   const contextualizedInput = await generateContextualizedInput(
     input,
     repository,

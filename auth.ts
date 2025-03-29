@@ -1,7 +1,6 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 
-// Declare module augmentation for next-auth
 declare module 'next-auth' {
   interface Session {
     user: {
@@ -19,7 +18,6 @@ declare module 'next-auth' {
   }
 }
 
-// Declare module augmentation for JWT
 declare module 'next-auth/jwt' {
   interface JWT {
     username?: string | null;
@@ -57,7 +55,6 @@ export const options: NextAuthOptions = {
   },
   callbacks: {
     async session({ session, token }) {
-      // Add username and access token to the session from token
       if (session.user) {
         session.user.username = token.username;
         session.user.accessToken = token.accessToken;
@@ -65,7 +62,6 @@ export const options: NextAuthOptions = {
       return session;
     },
     async jwt({ token, user, account }) {
-      // Add username and access token to the token when user signs in
       if (user) {
         token.username = user.username;
       }
@@ -75,9 +71,7 @@ export const options: NextAuthOptions = {
       return token;
     },
     async redirect({ url, baseUrl }) {
-      // Allows relative callback URLs
       if (url.startsWith('/')) return `${baseUrl}${url}`;
-      // Allows callback URLs on the same origin
       else if (new URL(url).origin === baseUrl) return url;
       return baseUrl;
     }

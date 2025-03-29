@@ -26,7 +26,6 @@ function AllRepositories() {
   const router = useRouter();
   const debouncedSearch = useDebounce(searchQuery, 300);
 
-  // Extract unique languages from repos
   const availableLanguages = useMemo(() => {
     const languages = repos
       .map((repo) => repo.language)
@@ -63,14 +62,10 @@ function AllRepositories() {
 
         const newRepos = await res.json();
 
-        // Check if there are more pages to load
         const linkHeader = res.headers.get('Link');
         if (linkHeader) {
-          // If there's a "next" link, there are more pages
           setHasMorePages(linkHeader.includes('rel="next"'));
         } else {
-          // If no Link header and we got less than the full page
-          // or no results, there are no more pages
           setHasMorePages(newRepos.length === 30);
         }
 
@@ -112,7 +107,6 @@ function AllRepositories() {
     return filtered;
   }, [repos, debouncedSearch, languageFilter]);
 
-  // Fetch repos when dependencies change
   useEffect(() => {
     if (session?.user?.username) {
       setCurrentPage(1);

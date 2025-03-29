@@ -12,7 +12,6 @@ export default function LoginPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirect to dashboard if already authenticated
     if (status === 'authenticated') {
       router.push('/dashboard');
     }
@@ -22,7 +21,6 @@ export default function LoginPage() {
     signIn('github', { callbackUrl: '/dashboard' });
   };
 
-  // Show loading state while checking authentication
   if (status === 'loading') {
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-900">
@@ -53,17 +51,9 @@ export default function LoginPage() {
         <div className="h-full w-full overflow-hidden rounded-3xl">
           <div className="flex flex-col items-center justify-center z-10 p-14 md:p-18 md:px-22 rounded-3xl backdrop-blur-xl relative">
             <div className="w-full max-w-[800px] space-y-4">
-              {/* Logo and heading */}
               <div className="text-center flex flex-col items-center justify-center">
                 <div className="relative mb-2">
                   <div className="h-[110px] w-[110px] bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full flex items-center justify-center border-[2px] border-white/20 relative shadow-lg">
-                    {/* <Image
-                      src="/icon.png"
-                      alt="Logo"
-                      width={88}
-                      height={88}
-                      className="drop-shadow-lg"
-                    /> */}
                     <ChefHat size={50} className="drop-shadow-lg text-primary" />
                   </div>
                 </div>
@@ -76,7 +66,6 @@ export default function LoginPage() {
                 </p>
               </div>
 
-              {/* Login button with hover effect */}
               <GradientButton
                 onClick={handleGitHubLogin}
                 fullWidth
