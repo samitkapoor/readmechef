@@ -9,6 +9,7 @@ ReadmeChef is a web application that helps developers and organizations create b
 - **Template Library**: Choose from dozens of professionally designed README templates tailored for different project types
 - **One-Click Import**: Import your project details directly from GitHub to automatically populate your README
 - **Live Preview**: See your README changes in real-time with our live Markdown preview editor
+- **Rate Limiting**: Protected API endpoints with rate limiting to ensure fair usage
 
 ## Getting Started
 
@@ -49,6 +50,15 @@ yarn dev
 - [Next.js](https://nextjs.org/) - React framework for building the frontend
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript
+- [express-rate-limit](https://github.com/express-rate-limit/express-rate-limit) - Rate limiting for API endpoints
+
+## Rate Limiting
+
+The application implements rate limiting to protect API endpoints from abuse:
+
+- All API endpoints: 100 requests per 15 minutes per IP
+
+Rate limiting is implemented in a simple middleware that applies to all API routes. When the rate limit is exceeded, the API returns a 429 status code with a message to try again later.
 
 ## Contributing
 
