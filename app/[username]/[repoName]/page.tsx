@@ -16,10 +16,14 @@ export const maxDuration = 30;
 export default function RepositoryPage() {
   const params = useParams();
   const { data: session } = useSession();
-  const repositoryId = params.id as string;
+  const repositoryName = params.repoName as string;
   const accessToken = session?.user?.accessToken;
 
-  const { repository, isLoading } = useRepository(repositoryId, accessToken || '');
+  const { repository, isLoading } = useRepository(
+    session?.user?.username || '',
+    repositoryName,
+    accessToken || ''
+  );
   const { messages, latestMarkdownId, sendMessage } = useChat(repository, accessToken);
 
   const [hasRequestedReadme, setHasRequestedReadme] = useState(false);

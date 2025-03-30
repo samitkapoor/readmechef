@@ -174,13 +174,13 @@ function AllRepositories() {
                     ref={lastComponent}
                     key={repo.id}
                     repo={repo}
-                    onClick={() => router.push(`/${session?.user?.username}/repository/${repo.id}`)}
+                    onClick={() => router.push(`/${session?.user?.username}/${repo.name}`)}
                   />
                 ) : (
                   <RepositoryCard
                     key={repo.id}
                     repo={repo}
-                    onClick={() => router.push(`/${session?.user?.username}/repository/${repo.id}`)}
+                    onClick={() => router.push(`/${session?.user?.username}/${repo.name}`)}
                   />
                 )
               )

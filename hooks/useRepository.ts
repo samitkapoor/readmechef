@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Repository } from '@/types/github.types';
 
-export function useRepository(repositoryId: string, accessToken?: string) {
+export function useRepository(username: string, repositoryName: string, accessToken?: string) {
   const [repository, setRepository] = useState<Repository | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
@@ -15,7 +15,7 @@ export function useRepository(repositoryId: string, accessToken?: string) {
 
       try {
         setIsLoading(true);
-        const res = await fetch(`https://api.github.com/repositories/${repositoryId}`, {
+        const res = await fetch(`https://api.github.com/repos/${username}/${repositoryName}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
             Accept: 'application/vnd.github+json'
@@ -38,7 +38,7 @@ export function useRepository(repositoryId: string, accessToken?: string) {
     };
 
     fetchRepository();
-  }, [repositoryId, accessToken]);
+  }, [username, repositoryName, accessToken]);
 
   return { repository, isLoading, error };
 }
