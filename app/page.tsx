@@ -31,8 +31,8 @@ export default function Home() {
       <main className="flex-1 flex-col flex items-center">
         <HeroSection />
         <FeaturesSection />
-        <WhyReadmeSection />
         <DemoSection />
+        <WhyReadmeSection />
         <CtaSection />
       </main>
 
