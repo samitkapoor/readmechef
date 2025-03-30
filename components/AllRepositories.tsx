@@ -46,7 +46,8 @@ function AllRepositories() {
           per_page: debouncedSearch ? '100' : '10',
           page: pageNumber.toString(),
           ...(visibilityFilter !== 'all' && { visibility: visibilityFilter }),
-          ...(languageFilter !== 'all' && { language: languageFilter })
+          ...(languageFilter !== 'all' && { language: languageFilter }),
+          affiliation: 'owner'
         });
 
         const res = await fetch(`https://api.github.com/user/repos?${params}`, {
