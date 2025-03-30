@@ -18,7 +18,7 @@ function AllRepositories() {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMorePages, setHasMorePages] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>('public');
+  const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>('all');
   const [languageFilter, setLanguageFilter] = useState('all');
 
   const lastComponent = useRef<HTMLDivElement>(null);
