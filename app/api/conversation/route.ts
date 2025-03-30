@@ -48,7 +48,7 @@ const fetchDirectoryStructure = async (
     const contents = await response.json();
 
     // Only return directories and important files to avoid excessive data
-    return contents.map((item: any) => ({
+    return contents.map((item: { name: string; path: string; type: string; size: number }) => ({
       name: item.name,
       path: item.path,
       type: item.type,
@@ -141,6 +141,7 @@ const fetchDocumentationFiles = async (owner: string, repo: string, accessToken:
           return data ? { path, isDirectory: false, contents: data } : null;
         }
       } catch (error) {
+        console.error(`Error fetching documentation file ${path}:`, error);
         return null;
       }
     })
