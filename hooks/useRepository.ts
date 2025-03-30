@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Repository } from '@/types/github.types';
+import { signOut } from 'next-auth/react';
 
 export function useRepository(username: string, repositoryName: string, accessToken?: string) {
   const [repository, setRepository] = useState<Repository | null>(null);
@@ -23,6 +24,7 @@ export function useRepository(username: string, repositoryName: string, accessTo
         });
 
         if (!res.ok) {
+          signOut({ callbackUrl: '/login' });
           throw new Error(`Failed to fetch repository details: ${res.status}`);
         }
 
