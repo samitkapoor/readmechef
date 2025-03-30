@@ -1,6 +1,8 @@
+import CtaSection from '@/components/CtaSection';
 import DemoSection from '@/components/DemoSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import HeroSection from '@/components/HeroSection';
+import WhyReadmeSection from '@/components/WhyReadmeSection';
 import Link from 'next/link';
 
 export default function Home() {
@@ -10,6 +12,8 @@ export default function Home() {
         <HeroSection />
         <FeaturesSection />
         <DemoSection />
+        <WhyReadmeSection />
+        <CtaSection />
       </main>
 
       {/* Footer */}

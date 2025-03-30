@@ -75,7 +75,7 @@ const FeaturesSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
-            className="text-xl text-gray-400 max-w-3xl mx-auto"
+            className="text-xl text-gray-400 max-w-3xl mx-auto mt-5"
           >
             Stop spending hours writing documentation. Let AI do the heavy lifting.
           </motion.p>
