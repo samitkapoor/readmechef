@@ -287,7 +287,7 @@ const generateContextualizedInput = async (
             Strategically use emojis for emphasis and ensure proper markdown formatting.
             4 Special Considerations: If a README exists, improve structure while preserving valuable content. Address specific user requests, 
             highlight the project's unique value, add troubleshooting for common issues, and include links to additional documentation if available.
-            5 Don't add configuration files, project structure, Usage to the README.md file unless asked by the user.
+            5 Don't add configuration files, project structure, Usage section, Table of contents section to the README.md file unless asked by the user.
             6 Use all the information provided to you to understand the project and then generate the README.md file.
           `;
     } else {
