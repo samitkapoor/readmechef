@@ -1,0 +1,10 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Disallow crawling of login pages
+Disallow: /login
+Disallow: /admin
+
+# Sitemap location
+Sitemap: https://readmechef.com/sitemap.xml 
