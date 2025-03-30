@@ -7,18 +7,18 @@ import { useEffect } from 'react';
 import GradientButton from '@/components/ui/GradientButton';
 
 export default function LoginPage() {
-  const { status } = useSession();
+  const { status, data: session } = useSession();
 
   const router = useRouter();
 
   useEffect(() => {
     if (status === 'authenticated') {
-      router.push('/dashboard');
+      router.push('/' + session?.user?.username);
     }
   }, [status, router]);
 
   const handleGitHubLogin = () => {
-    signIn('github', { callbackUrl: '/dashboard' });
+    signIn('github');
   };
 
   if (status === 'loading') {
