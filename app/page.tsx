@@ -1,11 +1,13 @@
+import DemoSection from '@/components/DemoSection';
 import HeroSection from '@/components/HeroSection';
 import Link from 'next/link';
 
 export default function Home() {
   return (
     <>
-      <main className="flex-1 flex items-center">
+      <main className="flex-1 flex-col flex items-center">
         <HeroSection />
+        <DemoSection />
       </main>
 
       {/* Footer */}
