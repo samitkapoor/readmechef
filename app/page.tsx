@@ -1,4 +1,5 @@
 import DemoSection from '@/components/DemoSection';
+import FeaturesSection from '@/components/FeaturesSection';
 import HeroSection from '@/components/HeroSection';
 import Link from 'next/link';
 
@@ -7,6 +8,7 @@ export default function Home() {
     <>
       <main className="flex-1 flex-col flex items-center">
         <HeroSection />
+        <FeaturesSection />
         <DemoSection />
       </main>
 
