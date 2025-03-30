@@ -47,7 +47,8 @@ function AllRepositories() {
           page: pageNumber.toString(),
           ...(visibilityFilter !== 'all' && { visibility: visibilityFilter }),
           ...(languageFilter !== 'all' && { language: languageFilter }),
-          affiliation: 'owner'
+          affiliation: 'owner',
+          sort: 'updated' // Default sort by last updated time
         });
 
         const res = await fetch(`https://api.github.com/user/repos?${params}`, {
