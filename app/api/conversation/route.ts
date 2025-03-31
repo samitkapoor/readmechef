@@ -5,7 +5,7 @@ import { streamText } from 'ai';
 import { NextRequest, NextResponse } from 'next/server';
 import { Repository, RepoDetails } from '@/types/github.types';
 import { ClientMessage } from '@/types/ai.types';
-import { storeUserDetails } from '@/lib/utils';
+import { createUser } from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { auth } from '@/auth';
 import { User } from 'next-auth';
@@ -349,7 +349,7 @@ export const POST = async (request: NextRequest) => {
       return NextResponse.json({ message: 'Something went wrong' }, { status: 400 });
     }
 
-    storeUserDetails(session.user);
+    createUser(session.user);
 
     const messages = history.map((his) => ({ role: his.role, content: his.display }));
 
