@@ -1,4 +1,4 @@
-import { CornerDownLeft } from 'lucide-react';
+import { CornerDownLeft, Loader } from 'lucide-react';
 import React, { useRef, useState, useEffect } from 'react';
 import { ClientMessage } from '@/types/ai.types';
 
@@ -105,7 +105,9 @@ const Chatbox = ({
             title={isWindows ? 'Press Ctrl+Enter to send' : 'Press ⌘+Enter to send'}
           >
             {loading ? (
-              <div className="animate-spin rounded-full border-b-2 border-white h-5 w-5"></div>
+              <div className="flex items-center justify-center h-5 w-5">
+                <Loader className="animate-spin" />
+              </div>
             ) : (
               <CornerDownLeft
                 size={24}

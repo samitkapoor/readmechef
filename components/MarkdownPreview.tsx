@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import EverythingMarkdown from 'everything-markdown';
 import { Book } from 'lucide-react';
 
@@ -10,16 +10,20 @@ interface MarkdownPreviewProps {
 }
 
 const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ messages, latestMarkdownId }) => {
-  const markdownContent = useMemo(() => {
-    if (!latestMarkdownId) return '';
+  const [markdownContent, setMarkdownContent] = useState('');
+
+  useEffect(() => {
+    if (!latestMarkdownId) return;
 
     const message = messages.find((message) => message.id === latestMarkdownId);
-    if (!message) return '';
+    if (!message) return;
 
     // Extract content between markdown code blocks if present
     const content = message.display;
-    const markdownMatch = content.split('```markdown');
-    return markdownMatch.length > 1 ? markdownMatch[1] : content;
+    if (content.includes('```markdown')) {
+      const markdownMatch = content.split('```markdown');
+      setMarkdownContent(markdownMatch.length > 1 ? markdownMatch[1] : content);
+    }
   }, [messages, latestMarkdownId]);
 
   return (
