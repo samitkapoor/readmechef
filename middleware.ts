@@ -65,6 +65,7 @@ export async function middleware(request: NextRequest) {
   const origin = request.headers.get('origin');
   const allowedOrigins = [
     ...(process.env.NODE_ENV === 'development' ? ['http://localhost:3000'] : []),
+    'https://www.readmechef.com',
     'https://readmechef.com'
   ];
 
