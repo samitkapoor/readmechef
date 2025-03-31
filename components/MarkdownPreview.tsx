@@ -28,7 +28,7 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ messages, latestMarkd
         <div className="p-8 pb-14 pt-[80px]">
           <div className="bg-[#181818] rounded-xl border border-white/50 shadow-lg ">
             <div className="p-6 md:p-8">
-              <EverythingMarkdown content={markdownContent} />
+              <EverythingMarkdown className="dark" content={markdownContent} />
             </div>
           </div>
         </div>

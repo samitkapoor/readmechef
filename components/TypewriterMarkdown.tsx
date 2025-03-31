@@ -126,7 +126,7 @@ const TypewriterMarkdown: React.FC<TypewriterMarkdownProps> = ({
         className="markdown-content relative flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent pr-2"
       >
         <div className="prose prose-invert prose-headings:text-white/90 prose-a:text-primary hover:prose-a:text-primary/80 prose-blockquote:border-l-secondary/70 prose-blockquote:text-white/70 max-w-none">
-          <EverythingMarkdown content={displayedContent} />
+          <EverythingMarkdown className="dark" content={displayedContent} />
         </div>
       </div>
     </div>
