@@ -32,7 +32,7 @@ export default function Navbar() {
               <div className="flex items-center gap-4">
                 <button
                   onClick={handleLogout}
-                  className="rounded-full bg-primary bg-opacity-40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-opacity-80 flex items-center gap-1"
+                  className="rounded-full bg-primary bg-opacity-40 text-xs md:text-sm px-2 md:px-5 py-2 font-medium text-white transition-colors hover:bg-opacity-80 flex items-center gap-1"
                 >
                   <LogOut size={17} />
                   <p>Logout</p>
@@ -42,7 +42,7 @@ export default function Navbar() {
               pathname !== '/login' && (
                 <Link
                   href="/login"
-                  className="rounded-full bg-primary bg-opacity-40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-opacity-80 flex items-center gap-1"
+                  className="rounded-full bg-primary bg-opacity-40 text-xs md:text-sm px-2 md:px-5 py-2 font-medium text-white transition-colors hover:bg-opacity-80 flex items-center gap-1"
                 >
                   <Github size={17} />
                   <p>Login</p>

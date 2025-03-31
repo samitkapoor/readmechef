@@ -25,7 +25,7 @@ const HeroSection = () => {
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : -50 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="flex flex-col items-start justify-between w-full lg:w-1/2 pl-0 lg:pl-10 z-10 pb-10 lg:pb-0 mt-5 md:mt-10"
+        className="flex flex-col items-center lg:items-start justify-center lg:justify-between w-full lg:w-1/2 pl-0 lg:pl-10 z-10 pb-10 lg:pb-0 mt-5 md:mt-10"
       >
         <div className="mt-10 flex items-center justify-center p-4 md:p-5 border-2 border-secondary/70 bg-secondary/10 rounded-full shadow-lg shadow-secondary/5 backdrop-blur-sm ">
           <div>
@@ -38,15 +38,15 @@ const HeroSection = () => {
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <h1 className="text-3xl lg:text-4xl xl:text-5xl mt-8 text-white/90 font-medium">
+          <h1 className="text-center lg:text-left text-3xl lg:text-4xl xl:text-5xl mt-8 text-white/90 font-medium">
             Cooking the perfect README
           </h1>
 
-          <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary mt-2 pb-1">
+          <h1 className="text-center lg:text-left text-3xl lg:text-4xl xl:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary mt-2 pb-1">
             Every Single Time
           </h1>
 
-          <h2 className="mt-10 text-lg text-white/70 max-w-xl leading-relaxed">
+          <h2 className="text-center lg:text-left mt-10 text-lg text-white/70 max-w-xl leading-relaxed">
             ReadMeChef is an AI-powered README generator that helps you create professional
             documentation for your projects in minutes.
           </h2>
@@ -65,7 +65,9 @@ const HeroSection = () => {
             Get started for free
           </GradientButton>
 
-          <p className="text-white/50 text-sm mt-4 font-medium">No credit card required</p>
+          <p className="text-white/50 text-sm mt-4 font-medium text-center lg:text-left ">
+            No credit card required
+          </p>
         </motion.div>
       </motion.div>
 

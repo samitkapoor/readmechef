@@ -75,11 +75,11 @@ const Chatbox = ({
               </div>
 
               {message.role === 'user' ? (
-                <div className="text-white bg-[#D35400] py-4 px-5 rounded-2xl rounded-tr-sm shadow-sm max-w-[65%] text-[15px] tracking-tight">
+                <div className="text-white bg-[#D35400] py-4 px-5 rounded-2xl rounded-tr-sm shadow-sm max-w-[65%] text-xs md:text-[15px] tracking-tight">
                   {message.display}
                 </div>
               ) : (
-                <div className="text-white rounded-2xl rounded-tl-sm text-sm w-full py-5 px-6 overflow-x-auto bg-[#151515] scrollbar-hide border-[1px] border-white/20 shadow-md max-w-[85%] tracking-tight">
+                <div className="text-white rounded-2xl rounded-tl-sm text-xs md:text-sm w-full py-5 px-6 overflow-x-auto bg-[#151515] scrollbar-hide border-[1px] border-white/20 shadow-md max-w-[85%] tracking-tight">
                   <pre className="whitespace-pre-wrap break-words text-white/80">
                     {message.display}
                   </pre>

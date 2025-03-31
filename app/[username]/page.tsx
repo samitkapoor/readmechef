@@ -10,9 +10,9 @@ export default function DashboardPage() {
   const { data: session } = useSession();
 
   return (
-    <div className="container mx-auto max-w-7xl grid grid-cols-4 gap-10 px-4 py-[100px]">
+    <div className="container mx-auto max-w-7xl flex flex-col md:grid md:grid-cols-4 gap-10 px-4 py-[100px]">
       <div className="col-span-1 flex flex-col items-start justify-start relative">
-        <div className="flex flex-col items-start justify-start sticky top-[100px]">
+        <div className="flex md:flex-col items-start justify-start sticky top-[100px]">
           <div>
             {session?.user?.image && (
               <div className="h-full w-full overflow-hidden rounded-full hover:animate-spin p-1 border-[10px] border-neutral-900 ">
@@ -21,7 +21,7 @@ export default function DashboardPage() {
                   alt={session.user.name || 'User'}
                   width={1080}
                   height={1080}
-                  className="rounded-full"
+                  className="rounded-full w-24 h-24 md:w-full md:h-full"
                 />
               </div>
             )}
@@ -39,7 +39,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-      <div className="col-span-3 mt-5">
+      <div className="col-span-3 lg:mt-5">
         <AllRepositories />
       </div>
     </div>

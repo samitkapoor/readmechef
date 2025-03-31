@@ -45,7 +45,7 @@ const RepositoryCard = ({ repo, onClick, ...props }: RepositoryCardProps) => {
         </div>
 
         {repo.topics.length > 0 && (
-          <div className="flex items-center gap-1 text-sm">
+          <div className="flex items-center gap-1 text-sm flex-wrap">
             {repo.topics.map((topic, i) => {
               return (
                 <div
@@ -59,7 +59,7 @@ const RepositoryCard = ({ repo, onClick, ...props }: RepositoryCardProps) => {
           </div>
         )}
 
-        <div className="flex items-center gap-4 text-sm text-gray-400">
+        <div className="flex items-center flex-wrap gap-4 text-sm text-gray-400">
           {repo.stargazers_count > 0 && (
             <div className="flex items-center gap-1.5">
               <Star size={16} />

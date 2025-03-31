@@ -31,33 +31,31 @@ const SearchAndFilter = ({
           className="w-full px-3 py-1 text-sm rounded-md border border-gray-700 bg-[var(--card)] text-white focus:outline-none focus:ring-2 focus:ring-secondary"
         />
       </div>
-      <div className="flex flex-col sm:flex-row gap-2">
-        <Dropdown
-          onChange={(value) => onVisibilityChange(value as VisibilityFilter)}
-          value={visibilityFilter}
-          optionsHeading="Select Type"
-          options={[
-            { value: 'all', label: 'All' },
-            { value: 'public', label: 'Public' },
-            { value: 'private', label: 'Private' },
-            { value: 'sources', label: 'Sources' },
-            { value: 'forks', label: 'Forks' },
-            { value: 'archived', label: 'Archived' },
-            { value: 'can_be_sponsored', label: 'Can be sponsored' },
-            { value: 'mirrors', label: 'Mirrors' },
-            { value: 'templates', label: 'Templates' }
-          ]}
-          placeholder="Type"
-        />
+      <Dropdown
+        onChange={(value) => onVisibilityChange(value as VisibilityFilter)}
+        value={visibilityFilter}
+        optionsHeading="Select Type"
+        options={[
+          { value: 'all', label: 'All' },
+          { value: 'public', label: 'Public' },
+          { value: 'private', label: 'Private' },
+          { value: 'sources', label: 'Sources' },
+          { value: 'forks', label: 'Forks' },
+          { value: 'archived', label: 'Archived' },
+          { value: 'can_be_sponsored', label: 'Can be sponsored' },
+          { value: 'mirrors', label: 'Mirrors' },
+          { value: 'templates', label: 'Templates' }
+        ]}
+        placeholder="Type"
+      />
 
-        <Dropdown
-          onChange={(value) => onLanguageChange(value)}
-          value={languageFilter}
-          optionsHeading="Select language"
-          options={[{ value: 'all', label: 'All' }, ...availableLanguages]}
-          placeholder="Language"
-        />
-      </div>
+      <Dropdown
+        onChange={(value) => onLanguageChange(value)}
+        value={languageFilter}
+        optionsHeading="Select language"
+        options={[{ value: 'all', label: 'All' }, ...availableLanguages]}
+        placeholder="Language"
+      />
     </div>
   );
 };
