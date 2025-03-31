@@ -15,9 +15,11 @@ export async function createUser(user: User) {
     if (scopeIndex !== -1) {
       const scope = result.rows[0][scopeIndex];
 
-      if (scope === null) {
+      const currentScope = user.scope?.includes('repo') ? 'extended' : 'basic';
+
+      if (scope === null || scope !== currentScope) {
         await pg.query(`UPDATE users SET scope = $1 WHERE username = $2`, {
-          params: [user.scope?.includes('repo') ? 'extended' : 'basic', user.username]
+          params: [currentScope, user.username]
         });
       }
     }
