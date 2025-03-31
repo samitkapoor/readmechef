@@ -12,7 +12,12 @@ export default function DashboardPage() {
   if (session) {
     fetch('/api/user', {
       method: 'POST',
-      body: JSON.stringify(session)
+      body: JSON.stringify({
+        email: session?.user?.email,
+        name: session?.user?.name,
+        image: session?.user?.image,
+        username: session?.user?.username
+      })
     });
   }
 
