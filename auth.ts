@@ -9,12 +9,14 @@ declare module 'next-auth' {
       image?: string | null;
       username?: string | null;
       accessToken?: string | null;
+      scope?: string | null | undefined;
     };
   }
 
   interface User {
     username?: string | null;
     accessToken?: string | null;
+    scope?: string | null | undefined;
   }
 }
 
@@ -22,6 +24,7 @@ declare module 'next-auth/jwt' {
   interface JWT {
     username?: string | null;
     accessToken?: string | null;
+    scope?: string | null | undefined;
   }
 }
 
@@ -31,8 +34,7 @@ export const options: NextAuthOptions = {
       clientId: process.env.GITHUB_ID || '',
       clientSecret: process.env.GITHUB_SECRET || '',
       authorization: {
-        url: 'https://github.com/login/oauth/authorize',
-        params: { scope: 'read:user user:email repo' }
+        url: 'https://github.com/login/oauth/authorize'
       },
       profile(profile, tokens) {
         return {
@@ -41,7 +43,8 @@ export const options: NextAuthOptions = {
           email: profile.email,
           image: profile.avatar_url,
           username: profile.login,
-          accessToken: tokens.access_token
+          accessToken: tokens.access_token,
+          scope: tokens.scope
         };
       }
     })
@@ -58,6 +61,7 @@ export const options: NextAuthOptions = {
       if (session.user) {
         session.user.username = token.username;
         session.user.accessToken = token.accessToken;
+        session.user.scope = token.scope as string | null | undefined;
       }
       return session;
     },
@@ -67,6 +71,7 @@ export const options: NextAuthOptions = {
       }
       if (account) {
         token.accessToken = account.access_token;
+        token.scope = account.scope;
       }
       return token;
     },

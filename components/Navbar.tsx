@@ -10,7 +10,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const handleLogout = () => {
-    signOut({ callbackUrl: '/' });
+    signOut({ callbackUrl: '/login' });
   };
 
   return (
