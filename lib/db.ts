@@ -10,6 +10,19 @@ export async function createUser(user: User) {
     params: [user.email]
   });
 
+  if (result.rows && result.rows.length > 0 && result.fields) {
+    const scopeIndex = result.fields.findIndex((field) => field.fieldName === 'scope');
+    if (scopeIndex !== -1) {
+      const scope = result.rows[0][scopeIndex];
+
+      if (scope === null) {
+        await pg.query(`UPDATE users SET scope = $1 WHERE username = $2`, {
+          params: [user.scope?.includes('repo') ? 'extended' : 'basic', user.username]
+        });
+      }
+    }
+  }
+
   if (result.rows && result.rows.length > 0) {
     return { message: 'User already exists' };
   }
