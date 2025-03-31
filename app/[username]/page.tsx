@@ -9,18 +9,6 @@ import Image from 'next/image';
 export default function DashboardPage() {
   const { data: session } = useSession();
 
-  if (session) {
-    fetch('/api/user', {
-      method: 'POST',
-      body: JSON.stringify({
-        email: session?.user?.email,
-        name: session?.user?.name,
-        image: session?.user?.image,
-        username: session?.user?.username
-      })
-    });
-  }
-
   return (
     <div className="container mx-auto max-w-7xl grid grid-cols-4 gap-10 px-4 py-[100px]">
       <div className="col-span-1 flex flex-col items-start justify-start relative">

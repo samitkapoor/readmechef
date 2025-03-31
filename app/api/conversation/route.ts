@@ -5,6 +5,7 @@ import { streamText } from 'ai';
 import { NextRequest } from 'next/server';
 import { Repository, RepoDetails } from '@/types/github.types';
 import { ClientMessage } from '@/types/ai.types';
+import { storeUserDetails } from '@/lib/utils';
 
 const fetchRepoFiles = async (
   owner: string,
@@ -321,6 +322,8 @@ export const POST = async (request: NextRequest) => {
     repository: Repository;
     accessToken: string;
   } = await request.json();
+
+  storeUserDetails();
 
   const messages = history.map((his) => ({ role: his.role, content: his.display }));
 
