@@ -1,8 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { auth } from '@/auth';
 import { getPostgresClient } from '@/config/postgres';
-import { getServerSession } from 'next-auth';
+import { User } from 'next-auth';
 
 /**
  * Combines multiple class names and merges tailwind classes
@@ -11,14 +10,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const storeUserDetails = async () => {
+export const storeUserDetails = async (user: User) => {
   try {
-    const session = await getServerSession(auth);
-
-    if (!session || !session.user) return false;
-
-    const { user } = session;
-
     const pg = await getPostgresClient();
 
     const result = await pg.query(`SELECT * FROM users WHERE email = $1`, { params: [user.email] });

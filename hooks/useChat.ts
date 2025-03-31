@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { ClientMessage } from '@/types/ai.types';
 import { Repository } from '@/types/github.types';
 
-export function useChat(repository: Repository | null, accessToken?: string | null) {
+export function useChat(repository: Repository | null) {
   const [messages, setMessages] = useState<ClientMessage[]>([]);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [latestMarkdownId, setLatestMarkdownId] = useState<string | null>(null);
@@ -33,8 +33,7 @@ export function useChat(repository: Repository | null, accessToken?: string | nu
         body: JSON.stringify({
           history: messages,
           input: input,
-          repository: repository,
-          accessToken: accessToken
+          repository: repository
         }),
         headers: {
           'Content-Type': 'application/json'

@@ -2,10 +2,13 @@
 
 import { google } from '@ai-sdk/google';
 import { streamText } from 'ai';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { Repository, RepoDetails } from '@/types/github.types';
 import { ClientMessage } from '@/types/ai.types';
 import { storeUserDetails } from '@/lib/utils';
+import { getServerSession } from 'next-auth';
+import { auth } from '@/auth';
+import { User } from 'next-auth';
 
 const fetchRepoFiles = async (
   owner: string,
@@ -311,35 +314,62 @@ const generateContextualizedInput = async (
 };
 
 export const POST = async (request: NextRequest) => {
-  const {
-    history,
-    input,
-    repository,
-    accessToken
-  }: {
-    history: ClientMessage[];
-    input: string;
-    repository: Repository;
-    accessToken: string;
-  } = await request.json();
+  try {
+    const {
+      history,
+      input,
+      repository
+    }: {
+      history: ClientMessage[];
+      input: string;
+      repository: Repository;
+    } = await request.json();
 
-  storeUserDetails();
+    const session: { user: User } | null = await getServerSession(auth);
 
-  const messages = history.map((his) => ({ role: his.role, content: his.display }));
+    if (!session || !session.user) {
+      return NextResponse.json({ message: 'Something went wrong' }, { status: 400 });
+    }
 
-  const isFirstMessage = messages.length === 0;
+    const accessToken = session.user.accessToken;
 
-  const contextualizedInput = await generateContextualizedInput(
-    input,
-    repository,
-    accessToken,
-    isFirstMessage
-  );
+    if (!history || !Array.isArray(history)) {
+      return NextResponse.json({ message: 'Something went wrong' }, { status: 400 });
+    }
 
-  const result = await streamText({
-    model: google('gemini-2.0-flash-001'),
-    messages: [...messages, { role: 'user', content: contextualizedInput }]
-  });
+    if (!input || typeof input !== 'string') {
+      return NextResponse.json({ message: 'Something went wrong' }, { status: 400 });
+    }
 
-  return result.toTextStreamResponse();
+    if (!repository || typeof repository !== 'object' || !repository.name || !repository.owner) {
+      return NextResponse.json({ message: 'Something went wrong' }, { status: 400 });
+    }
+
+    if (!accessToken || typeof accessToken !== 'string') {
+      return NextResponse.json({ message: 'Something went wrong' }, { status: 400 });
+    }
+
+    storeUserDetails(session.user);
+
+    const messages = history.map((his) => ({ role: his.role, content: his.display }));
+
+    const isFirstMessage = messages.length === 0;
+
+    const contextualizedInput = await generateContextualizedInput(
+      input,
+      repository,
+      accessToken,
+      isFirstMessage
+    );
+
+    const result = await streamText({
+      model: google('gemini-2.0-flash-001'),
+      messages: [...messages, { role: 'user', content: contextualizedInput }]
+    });
+
+    return result.toTextStreamResponse();
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+  }
 };

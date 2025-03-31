@@ -24,7 +24,7 @@ export default function RepositoryPage() {
     repositoryName,
     accessToken || ''
   );
-  const { messages, latestMarkdownId, sendMessage } = useChat(repository, accessToken);
+  const { messages, latestMarkdownId, sendMessage } = useChat(repository);
 
   const [hasRequestedReadme, setHasRequestedReadme] = useState(false);
 
