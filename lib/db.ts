@@ -10,12 +10,12 @@ export async function createUser(user: User) {
     params: [user.email]
   });
 
+  const currentScope = user.scope?.includes('repo') ? 'extended' : 'basic';
+
   if (result.rows && result.rows.length > 0 && result.fields) {
     const scopeIndex = result.fields.findIndex((field) => field.fieldName === 'scope');
     if (scopeIndex !== -1) {
       const scope = result.rows[0][scopeIndex];
-
-      const currentScope = user.scope?.includes('repo') ? 'extended' : 'basic';
 
       if (scope === null || scope !== currentScope) {
         await pg.query(`UPDATE users SET scope = $1 WHERE username = $2`, {
@@ -30,8 +30,8 @@ export async function createUser(user: User) {
   }
 
   await pg.query(
-    `INSERT INTO users (name, email, image, username, subscribed) VALUES ($1, $2, $3, $4, $5)`,
-    { params: [user.name, user.email, user.image, user.username, false] }
+    `INSERT INTO users (name, email, image, username, subscribed, scope) VALUES ($1, $2, $3, $4, $5, $6)`,
+    { params: [user.name, user.email, user.image, user.username, false, currentScope] }
   );
 
   return { message: 'User created' };
