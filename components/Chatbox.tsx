@@ -75,7 +75,7 @@ const Chatbox = ({
               </div>
 
               {message.role === 'user' ? (
-                <div className="text-white bg-[#D35400] py-4 px-5 rounded-2xl rounded-tr-sm shadow-sm max-w-[65%] text-xs md:text-[15px] tracking-tight">
+                <div className="text-white bg-[#198d49] py-4 px-5 rounded-2xl rounded-tr-sm shadow-sm max-w-[65%] text-xs md:text-[15px] tracking-tight">
                   {message.display}
                 </div>
               ) : (
@@ -101,7 +101,7 @@ const Chatbox = ({
 
           <button
             onClick={handleButtonClick}
-            className="px-2 py-2 bg-[#D35400] text-white rounded-lg m-2 group cursor-pointer flex items-center justify-center transition-all duration-200"
+            className="px-2 py-2 bg-[#198d49] text-white rounded-lg m-2 group cursor-pointer flex items-center justify-center transition-all duration-200"
             title={isWindows ? 'Press Ctrl+Enter to send' : 'Press ⌘+Enter to send'}
           >
             {loading ? (
