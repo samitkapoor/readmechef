@@ -18,10 +18,10 @@ export default function Home() {
 
   return (
     <>
-      <main className="flex-1 flex-col flex items-center">
+      <main className="flex-1 flex-col flex items-center overflow-x-hidden">
         <HeroSection />
-        <FeaturesSection />
         <DemoSection />
+        <FeaturesSection />
         <WhyReadmeSection />
         <CtaSection />
       </main>

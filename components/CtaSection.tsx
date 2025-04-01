@@ -9,13 +9,13 @@ const CtaSection = () => {
   const router = useRouter();
 
   return (
-    <section className="w-full py-24 px-6 md:px-16 bg-secondary">
+    <section className="w-full bg-secondary/70 flex flex-col items-center justify-center">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="max-w-4xl mx-auto text-center"
+        className="max-w-[1300px] w-full py-60 mx-auto text-center border-[1px] border-background border-t-0"
       >
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
           Ready to Cook Up Perfect READMEs?
