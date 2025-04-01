@@ -28,7 +28,10 @@ const DemoSection = () => {
       }}
       className="relative flex flex-col items-center justify-start w-full"
     >
-      <div className="flex flex-col items-center justify-center max-w-[1300px] w-full">
+      <div
+        id="demo-section"
+        className="flex flex-col items-center justify-center max-w-[1300px] w-full"
+      >
         <div className="border-[1px] border-primary/40 w-full border-y-0 bg-background shadow-[0_0_15px_rgba(25,141,73,0.05)_inset]">
           <LandingText>
             What if I told you that you could create

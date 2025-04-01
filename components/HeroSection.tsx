@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 
@@ -12,6 +12,13 @@ import MovingBorderCard from './ui/MovingBorderCard';
 
 const HeroSection = () => {
   const router = useRouter();
+
+  const scrollToDemo = () => {
+    const demoSection = document.getElementById('demo-section');
+    if (demoSection) {
+      demoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   const backgroundCircles = [
     {
@@ -78,7 +85,7 @@ const HeroSection = () => {
               Get started
             </GradientButton>
             <ShineButton
-              onClick={() => router.push('/login')}
+              onClick={scrollToDemo}
               className="px-8 py-3 rounded-xl text-lg font-medium shadow-md shadow-white/20 transition-all duration-300 hover:scale-105"
             >
               Watch Demo
