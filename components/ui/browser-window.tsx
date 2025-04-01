@@ -19,7 +19,7 @@ const BrowserWindow: React.FC<BrowserWindowProps> = ({
   return (
     <div
       ref={ref}
-      className={`flex flex-col items-center justify-center rounded-lg overflow-hidden border border-neutral-700 shadow-lg bg-neutral-900/60 h-full w-full relative ${className}`}
+      className={`flex flex-col items-center justify-center rounded-lg overflow-hidden border border-neutral-700 shadow-lg bg-neutral-900/60 h-full w-full relative backdrop-blur-md ${className}`}
       {...props}
     >
       {/* Browser Header */}
