@@ -13,13 +13,11 @@ type BenefitProps = {
 
 const Benefit = ({ title, description, icon }: BenefitProps) => {
   return (
-    <div className="flex gap-5 items-start bg-black w-full h-full p-12">
-      <div className="flex-shrink-0 mt-1">
-        <div className="bg-primary/30 rounded-full p-1.5">{icon}</div>
-      </div>
+    <div className="flex flex-col gap-5 items-start bg-black w-full h-full p-12">
+      <div className="p-4 bg-primary/20 rounded-full">{icon}</div>
       <div>
-        <h3 className="text-xl font-semibold text-black dark:text-white/90 mb-2">{title}</h3>
-        <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{description}</p>
+        <h3 className="text-xl font-semibold text-white/90 mb-2">{title}</h3>
+        <p className="text-white/80 leading-relaxed">{description}</p>
       </div>
     </div>
   );
@@ -29,7 +27,7 @@ const WhyReadmeSection = () => {
   const benefits = [
     {
       title: 'Increases Repository Traffic',
-      icon: <TrendingUp className="w-5 h-5 text-secondary" />,
+      icon: <TrendingUp className="w-8 h-8 text-secondary" />,
       description: (
         <>
           GitHub projects with well-documented READMEs receive up to{' '}
@@ -42,7 +40,7 @@ const WhyReadmeSection = () => {
     },
     {
       title: 'Boosts Contribution Rates',
-      icon: <GitPullRequest className="w-5 h-5 text-secondary" />,
+      icon: <GitPullRequest className="w-8 h-8 text-secondary" />,
       description: (
         <>
           Open-source projects with comprehensive READMEs see{' '}
@@ -54,7 +52,7 @@ const WhyReadmeSection = () => {
     },
     {
       title: 'Reduces Onboarding Time by 68%',
-      icon: <Clock className="w-5 h-5 text-secondary" />,
+      icon: <Clock className="w-8 h-8 text-secondary" />,
       description: (
         <>
           According to Stack Overflow's Developer Survey, detailed READMEs with clear installation
@@ -66,7 +64,7 @@ const WhyReadmeSection = () => {
     },
     {
       title: 'Builds Project Credibility',
-      icon: <Award className="w-5 h-5 text-secondary" />,
+      icon: <Award className="w-8 h-8 text-secondary" />,
       description: (
         <>
           <span className="text-primary font-medium">72% of developers</span> report they won't use
