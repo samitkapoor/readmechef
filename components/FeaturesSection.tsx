@@ -12,13 +12,13 @@ const FeatureCard = ({
 }: {
   icon: React.ReactNode;
   title: string;
-  description: string;
+  description: React.ReactNode;
 }) => {
   return (
     <div className="p-8 flex flex-col items-start gap-4 bg-black h-full w-full">
       <div className="p-4 bg-primary/20 rounded-full">{icon}</div>
       <h3 className="text-xl md:text-2xl font-semibold text-white/90">{title}</h3>
-      <p className="text-gray-400 leading-relaxed">{description}</p>
+      <p className="text-white/80 leading-relaxed">{description}</p>
     </div>
   );
 };
@@ -28,20 +28,40 @@ const FeaturesSection = () => {
     {
       icon: <Sparkles className="text-secondary w-8 h-8" />,
       title: 'One-Click Generation',
-      description:
-        'Connect your GitHub account and generate professional, comprehensive READMEs with a single click - no more spending hours on documentation.'
+      description: (
+        <>
+          Connect your GitHub account and generate professional, comprehensive READMEs with a{' '}
+          <span className="text-primary font-medium">single click</span> -{' '}
+          <span className="text-primary font-medium">no more spending hours</span> on documentation.
+        </>
+      )
     },
     {
       icon: <Github className="text-secondary w-8 h-8" />,
       title: 'Smart Repository Analysis',
-      description:
-        'Our AI scans your GitHub repository, analyzes code structure, dependencies, and purpose to craft a perfectly tailored README that accurately represents your project.'
+      description: (
+        <>
+          Our AI scans your GitHub repository,{' '}
+          <span className="text-primary font-medium">
+            analyzes code structure, dependencies, and purpose
+          </span>{' '}
+          to craft a <span className="text-primary font-medium">perfectly tailored README</span>{' '}
+          that accurately represents your project.
+        </>
+      )
     },
     {
       icon: <Lock className="text-secondary w-8 h-8" />,
       title: 'Public & Private Access',
-      description:
-        'Choose between basic access for public repositories or extended access for both public and private repos, giving you full control over your GitHub integration.'
+      description: (
+        <>
+          Choose between <span className="text-primary font-medium">basic access</span> for public
+          repositories or <span className="text-primary font-medium">extended access</span> for both
+          public and private repos, giving you{' '}
+          <span className="text-primary font-medium">full control</span> over your GitHub
+          integration.
+        </>
+      )
     }
   ];
 
