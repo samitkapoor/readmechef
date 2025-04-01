@@ -14,9 +14,9 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 z-50 flex items-center justify-center h-[70px] w-screen">
-      <div className="w-screen bg-gradient-to-r from-black via-transparent to-black backdrop-blur-sm shadow-lg shadow-white/[0.02]">
-        <div className="flex h-16 items-center justify-between px-4 mx-6">
+    <header className="fixed top-0 z-50 flex items-center justify-center h-[100px] w-screen bg-gradient-to-b from-black/70 to-transparent">
+      <div className="w-screen">
+        <div className="flex h-16 items-center justify-between sm:px-20 mx-6">
           <Link
             href={status === 'authenticated' ? '/' + session?.user?.username : '/'}
             className="flex items-center gap-2"

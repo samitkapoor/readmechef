@@ -1,93 +1,109 @@
 'use client';
 
-import { ChefHatIcon } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 
 import GradientButton from './ui/GradientButton';
 import BrowserWindow from './ui/browser-window';
 import TypewriterMarkdown from './TypewriterMarkdown';
+import ShineButton from './ui/ShineButton';
+import MovingBorderCard from './ui/MovingBorderCard';
 
 const HeroSection = () => {
   const router = useRouter();
-  const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    // Trigger animations after mounting
-    setIsVisible(true);
-  }, []);
+  const backgroundCircles = [
+    {
+      height: 500,
+      width: 500,
+      className: 'border-y-4 blur-md border-neutral-400',
+      animation: 'spin 6s linear infinite'
+    },
+    {
+      height: 700,
+      width: 700,
+      className: 'border-l-4 blur-md border-neutral-400',
+      animation: 'spin 6s linear infinite'
+    },
+    {
+      height: 300,
+      width: 300,
+      className: 'border-r-4 blur-md border-neutral-400',
+      animation: 'spin 1s linear infinite'
+    },
+    {
+      height: 900,
+      width: 900,
+      className: 'border-l-4 blur-md border-neutral-400',
+      animation: 'spin 2s linear infinite'
+    }
+  ];
 
   return (
-    <section className="relative pb-16 px-6 md:px-10 pt-[100px] flex flex-col lg:flex-row items-start justify-between min-h-[calc(100vh-100px)] w-full overflow-hidden bg-background">
-      {/* Left side - Text content */}
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : -50 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="flex flex-col items-center lg:items-start justify-center lg:justify-between w-full lg:w-1/2 pl-0 lg:pl-10 z-10 pb-10 lg:pb-0 mt-5 md:mt-10"
+    <section className="relative px-6 md:px-10 pt-[100px] flex flex-col items-center w-screen overflow-hidden bg-background h-screen">
+      <div
+        style={{
+          background:
+            'radial-gradient(circle, transparent 20%, rgba(0, 255, 0, 0.04) 60%, transparent 100%)'
+        }}
+        className="w-screen h-screen absolute top-0 left-0 flex items-center justify-center"
       >
-        <div className="mt-10 flex items-center justify-center p-4 md:p-5 border-2 border-secondary/70 bg-secondary/10 rounded-full shadow-lg shadow-secondary/5 backdrop-blur-sm ">
+        {backgroundCircles.map((circle) => (
+          <div
+            key={circle.height}
+            className={`rounded-full absolute ${circle.className}`}
+            style={{
+              height: circle.height,
+              width: circle.width,
+              animation: circle.animation
+            }}
+          ></div>
+        ))}
+      </div>
+      <div className="w-screen h-screen flex flex-col items-center justify-center z-10">
+        <div className="flex flex-col items-center justify-center w-full lg:w-1/2 pl-0 lg:pl-10 z-10 pb-10 lg:pb-0">
           <div>
-            <ChefHatIcon size={80} className="text-primary drop-shadow-lg" />
+            <h1 className="text-center text-3xl lg:text-4xl xl:text-5xl text-white/90 font-light sm:mt-20">
+              Cooking the perfect README
+              <span className="block mt-2 font-medium text-primary">Every Single Time</span>
+            </h1>
+          </div>
+
+          <div className="mt-8 flex items-center justify-center gap-2">
+            <GradientButton
+              onClick={() => router.push('/login')}
+              className="px-8 py-3 rounded-xl text-lg font-medium transition-all duration-300 hover:scale-105"
+            >
+              Get started
+            </GradientButton>
+            <ShineButton
+              onClick={() => router.push('/login')}
+              className="px-8 py-3 rounded-xl text-lg font-medium shadow-md shadow-white/20 transition-all duration-300 hover:scale-105"
+            >
+              Watch Demo
+            </ShineButton>
           </div>
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          initial={{ y: 300 }}
+          whileInView={{ y: 0 }}
+          transition={{ duration: 1, delay: 0.1 }}
+          className="w-screen mt-12 relative flex items-start justify-start z-10 overflow-hidden"
         >
-          <h1 className="text-center lg:text-left text-3xl lg:text-4xl xl:text-5xl mt-8 text-white/90 font-medium">
-            Cooking the perfect README
-          </h1>
-
-          <h1 className="text-center lg:text-left text-3xl lg:text-4xl xl:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary mt-2 pb-1">
-            Every Single Time
-          </h1>
-
-          <h2 className="text-center lg:text-left mt-10 text-lg text-white/70 max-w-xl leading-relaxed">
-            ReadMeChef is an AI-powered README generator that helps you create professional
-            documentation for your projects in minutes.
-          </h2>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-20"
-        >
-          <GradientButton
-            onClick={() => router.push('/login')}
-            className="px-8 py-3 rounded-xl text-lg font-medium shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all duration-300 hover:scale-105"
-          >
-            Get started for free
-          </GradientButton>
-
-          <p className="text-white/50 text-sm mt-4 font-medium text-center lg:text-left ">
-            No credit card required
-          </p>
-        </motion.div>
-      </motion.div>
-
-      {/* Right side - Browser preview */}
-      <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : 50 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
-        className="w-full lg:w-1/2 py-5 md:py-10 relative flex items-center justify-center z-10"
-      >
-        <div className="w-full max-w-2xl hidden sm:block md:h-[700px]">
-          <BrowserWindow
-            url="readmechef.com"
-            className="shadow-2xl shadow-black/30 border border-gray-800/50 h-full"
-          >
-            <div className="h-full w-full flex flex-col p-5">
-              <TypewriterMarkdown
-                typingSpeed={150}
-                charSpeed={5}
-                content={`
+          <div className="row-span-1 w-screen flex items-start justify-center overflow-hidden h-[800px]">
+            <BrowserWindow
+              url="readmechef.com"
+              className="border border-gray-800/50 h-full max-w-[1300px] w-full"
+              childrenClassName="flex items-center justify-center relative"
+            >
+              <MovingBorderCard wrapperClassName="my-4 rounded-xl">
+                <div className="flex relative flex-col h-[700px] w-[800px] py-10 bg-neutral-800 p-10 shadow-2xl shadow-black rounded-lg">
+                  <TypewriterMarkdown
+                    typingSpeed={150}
+                    charSpeed={5}
+                    content={`
 # ReadMeChef
 ---
 
@@ -115,11 +131,13 @@ For more information, visit [ReadMeChef](https://readmechef.com).
 
 
 `}
-              />
-            </div>
-          </BrowserWindow>
-        </div>
-      </motion.div>
+                  />
+                </div>
+              </MovingBorderCard>
+            </BrowserWindow>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 };

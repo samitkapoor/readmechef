@@ -34,7 +34,7 @@ export default function LoginPage() {
       <div
         style={{
           background:
-            'radial-gradient(circle at center, transparent 20%, rgba(255, 0, 0, 0.13), transparent 60%)'
+            'radial-gradient(circle at center, transparent 20%, rgba(0, 255, 0, 0.07), transparent 60%)'
         }}
         className="absolute inset-0 z-0 opacity-70"
       />
@@ -128,7 +128,7 @@ export default function LoginPage() {
                       </ul>
                       <button
                         onClick={() => handleGitHubLogin('extended')}
-                        className="w-full flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-black via-red-950 to-black px-4 lg:px-6 py-3 text-white transition-all duration-300 font-medium cursor-pointer group relative overflow-hidden border-2 border-primary/20 hover:border-primary/40 shadow-lg shadow-primary/10"
+                        className="w-full flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-black/20 via-green-950 to-black/20 px-4 lg:px-6 py-3 text-white transition-all duration-300 font-medium cursor-pointer group relative overflow-hidden border-2 border-primary/20 hover:border-primary/40 shadow-lg shadow-primary/10"
                       >
                         <span className="absolute inset-0 bg-gradient-to-r from-primary/0 via-white/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
                         <span className="relative z-10">

@@ -3,19 +3,47 @@
 @tailwind utilities;
 
 :root {
-  --primary: #d26a4d;
-  --secondary: #ec1f1f;
-  --background: #0f0f0f;
-  --text: #eaeaea;
-  --card: #161b22;
-  --success: #4caf50;
-  --warning: #f4a261;
-  --error: #e63946;
-  --info: #a6773c;
+  --primary: #57cb5b; /* A fresh, vibrant green */
+  --secondary: #198d49; /* A slightly darker green for contrast */
+  --background: #020b05; /* Keeping the dark background */
+  --text: #eaeaea; /* Keeping the light text for readability */
+  --card: #161b22; /* Keeping the card background for consistency */
+  --success: #60d666; /* A brighter success green */
+  --warning: #f4a261; /* Keeping the warm orange */
+  --error: #e63946; /* Keeping the error color for contrast */
+  --info: #a6cc3c; /* Adjusted info to a greenish shade */
 }
 
 body {
   background: var(--background);
   color: var(--text);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+.moving-border-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(var(--angle), #57cb5baa, transparent, #198d49aa);
+  animation: moveGradient 4s linear infinite;
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes moveGradient {
+  to {
+    --angle: 360deg;
+  }
+}
+
+.moving-border-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(var(--angle), transparent, #d0d0d0, transparent);
+  animation: moveGradient 2s linear infinite;
 }
