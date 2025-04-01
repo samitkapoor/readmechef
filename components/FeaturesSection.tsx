@@ -53,7 +53,7 @@ const FeaturesSection = () => {
   ];
 
   return (
-    <section className="w-full flex items-center justify-center">
+    <section className="w-full flex items-center justify-center border-b-[1px] border-neutral-700 ">
       <div className="max-w-[1300px] flex flex-col items-center justify-center border-[1px] border-neutral-700 w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

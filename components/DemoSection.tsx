@@ -21,7 +21,7 @@ const DemoSection = () => {
   };
 
   return (
-    <section className="relative px-6 md:px-10 flex flex-col items-center justify-start w-full overflow-hidden">
+    <section className="relative px-6 md:px-10 flex flex-col items-center justify-start w-full border-b-[1px] border-neutral-700">
       <div className="flex flex-col items-center justify-center max-w-[1300px] w-full">
         <div className="border-[1px] border-y-0 border-neutral-700 h-[400px] w-full"></div>
         <div className="border-[1px] border-neutral-700 w-full border-b-0">
