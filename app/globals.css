@@ -24,7 +24,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(var(--angle), transparent 90%, #ffffff 90%);
+  background: linear-gradient(var(--angle), #57cb5baa, transparent, #198d49aa);
   animation: moveGradient 4s linear infinite;
 }
 
@@ -38,4 +38,12 @@ body {
   to {
     --angle: 360deg;
   }
+}
+
+.moving-border-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(var(--angle), transparent, #d0d0d0, transparent);
+  animation: moveGradient 2s linear infinite;
 }

@@ -15,7 +15,7 @@ const MovingBorderButton = ({
 }) => {
   return (
     <button
-      className={`moving-border-btn rounded-full p-[1px] ${wrapperClassName}`}
+      className={`moving-border-btn p-[1px] ${wrapperClassName}`}
       onClick={onClick}
       type={type}
     >

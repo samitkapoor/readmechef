@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 
@@ -8,44 +8,40 @@ import GradientButton from './ui/GradientButton';
 import BrowserWindow from './ui/browser-window';
 import TypewriterMarkdown from './TypewriterMarkdown';
 import ShineButton from './ui/ShineButton';
+import MovingBorderCard from './ui/MovingBorderCard';
 
 const HeroSection = () => {
   const router = useRouter();
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
 
   const backgroundCircles = [
     {
       height: 500,
       width: 500,
-      className: 'border-y-4 blur-md border-neutral-500',
+      className: 'border-y-4 blur-md border-neutral-400',
       animation: 'spin 6s linear infinite'
     },
     {
       height: 700,
       width: 700,
-      className: 'border-l-4 blur-md border-neutral-500',
+      className: 'border-l-4 blur-md border-neutral-400',
       animation: 'spin 6s linear infinite'
     },
     {
       height: 300,
       width: 300,
-      className: 'border-r-4 blur-md border-neutral-500',
+      className: 'border-r-4 blur-md border-neutral-400',
       animation: 'spin 1s linear infinite'
     },
     {
       height: 900,
       width: 900,
-      className: 'border-l-4 blur-md border-neutral-500',
+      className: 'border-l-4 blur-md border-neutral-400',
       animation: 'spin 2s linear infinite'
     }
   ];
 
   return (
-    <section className="relative px-6 md:px-10 pt-[100px] flex flex-col items-center w-screen overflow-hidden bg-background h-screen border-b-[1px] border-neutral-700">
+    <section className="relative px-6 md:px-10 pt-[100px] flex flex-col items-center w-screen overflow-hidden bg-background h-screen">
       <div
         style={{
           background:
@@ -65,29 +61,15 @@ const HeroSection = () => {
         ))}
       </div>
       <div className="w-screen h-screen flex flex-col items-center justify-center z-10">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : -50 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex flex-col items-center justify-center w-full lg:w-1/2 pl-0 lg:pl-10 z-10 pb-10 lg:pb-0"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <h1 className="text-center text-3xl lg:text-4xl xl:text-5xl text-white/90 font-light mt-20">
+        <div className="flex flex-col items-center justify-center w-full lg:w-1/2 pl-0 lg:pl-10 z-10 pb-10 lg:pb-0">
+          <div>
+            <h1 className="text-center text-3xl lg:text-4xl xl:text-5xl text-white/90 font-light sm:mt-20">
               Cooking the perfect README
               <span className="block mt-2 font-medium text-primary">Every Single Time</span>
             </h1>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="mt-8 flex items-center justify-center gap-2"
-          >
+          <div className="mt-8 flex items-center justify-center gap-2">
             <GradientButton
               onClick={() => router.push('/login')}
               className="px-8 py-3 rounded-xl text-lg font-medium transition-all duration-300 hover:scale-105"
@@ -100,14 +82,14 @@ const HeroSection = () => {
             >
               Watch Demo
             </ShineButton>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : 50 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="w-screen mt-12  relative flex items-start justify-start z-10 overflow-hidden"
+          initial={{ y: 300 }}
+          whileInView={{ y: 0 }}
+          transition={{ duration: 1, delay: 0.1 }}
+          className="w-screen mt-12 relative flex items-start justify-start z-10 overflow-hidden"
         >
           <div className="row-span-1 w-screen flex items-start justify-center overflow-hidden h-[800px]">
             <BrowserWindow
@@ -115,11 +97,12 @@ const HeroSection = () => {
               className="border border-gray-800/50 h-full max-w-[1300px] w-full"
               childrenClassName="flex items-center justify-center relative"
             >
-              <div className="flex relative flex-col h-[700px] w-[800px] py-10 bg-neutral-800 p-10 shadow-2xl shadow-black rounded-lg my-4">
-                <TypewriterMarkdown
-                  typingSpeed={150}
-                  charSpeed={5}
-                  content={`
+              <MovingBorderCard wrapperClassName="my-4 rounded-xl">
+                <div className="flex relative flex-col h-[700px] w-[800px] py-10 bg-neutral-800 p-10 shadow-2xl shadow-black rounded-lg">
+                  <TypewriterMarkdown
+                    typingSpeed={150}
+                    charSpeed={5}
+                    content={`
 # ReadMeChef
 ---
 
@@ -147,8 +130,9 @@ For more information, visit [ReadMeChef](https://readmechef.com).
 
 
 `}
-                />
-              </div>
+                  />
+                </div>
+              </MovingBorderCard>
             </BrowserWindow>
           </div>
         </motion.div>

@@ -1,9 +1,10 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+
 import { Check } from 'lucide-react';
 import LandingText from './ui/LandingText';
+import GridDivider from './ui/GridDivider';
 
 type BenefitProps = {
   title: string;
@@ -51,10 +52,9 @@ const WhyReadmeSection = () => {
   ];
 
   return (
-    <section className="w-full flex flex-col items-center justify-center border-b-[1px] border-neutral-700">
+    <section className="w-full flex flex-col items-center justify-center border-b-[1px] border-primary/40">
       <div className="max-w-[1300px] w-full">
-        <div className="border-[1px] border-t-0 border-neutral-700 h-[400px] w-full"></div>
-        <LandingText className="border-t-0 border-[1px] border-neutral-700 border-b-0 w-full">
+        <LandingText className="border-y-0 !border-b-[1px] border-[1px] border-neutral-700 w-full ">
           Why Every Project Needs a Great README?
         </LandingText>
 
@@ -68,7 +68,7 @@ const WhyReadmeSection = () => {
             />
           ))}
         </div>
-        <LandingText className="border-t-0 border-[1px] border-neutral-700 border-b-0 w-full">
+        <LandingText className="border-y-0 border-[1px] border-primary/40 border-b-0 w-full">
           A well-crafted README is essential for your project&apos;s success.
         </LandingText>
       </div>
