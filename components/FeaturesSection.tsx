@@ -1,22 +1,18 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Zap, FileText, Code, Github, Lock, Sparkles } from 'lucide-react';
+import { Github, Lock, Sparkles } from 'lucide-react';
 import LandingText from './ui/LandingText';
-import GridDivider from './ui/GridDivider';
 import MovingBorderCard from './ui/MovingBorderCard';
 
 const FeatureCard = ({
   icon,
   title,
-  description,
-  index
+  description
 }: {
   icon: React.ReactNode;
   title: string;
   description: string;
-  index: number;
 }) => {
   return (
     <div className="p-8 flex flex-col items-start gap-4 bg-black h-full w-full">
@@ -67,7 +63,6 @@ const FeaturesSection = () => {
                   icon={feature.icon}
                   title={feature.title}
                   description={feature.description}
-                  index={index}
                 />
               </MovingBorderCard>
             ))}

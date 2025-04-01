@@ -4,7 +4,6 @@ import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Pause } from 'lucide-react';
 import LandingText from './ui/LandingText';
-import GridDivider from './ui/GridDivider';
 
 const DemoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);

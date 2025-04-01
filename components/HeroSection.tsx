@@ -51,6 +51,7 @@ const HeroSection = () => {
       >
         {backgroundCircles.map((circle) => (
           <div
+            key={circle.height}
             className={`rounded-full absolute ${circle.className}`}
             style={{
               height: circle.height,

@@ -4,15 +4,13 @@ import React from 'react';
 
 import { Check } from 'lucide-react';
 import LandingText from './ui/LandingText';
-import GridDivider from './ui/GridDivider';
 
 type BenefitProps = {
   title: string;
   description: string;
-  index: number;
 };
 
-const Benefit = ({ title, description, index }: BenefitProps) => {
+const Benefit = ({ title, description }: BenefitProps) => {
   return (
     <div className="flex gap-5 items-start bg-black w-full h-full p-12">
       <div className="flex-shrink-0 mt-1">
@@ -60,12 +58,7 @@ const WhyReadmeSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 border-[1px] border-neutral-700 border-t-0 gap-[1px] bg-neutral-700 w-full">
           {benefits.map((benefit, index) => (
-            <Benefit
-              key={index}
-              title={benefit.title}
-              description={benefit.description}
-              index={index}
-            />
+            <Benefit key={index} title={benefit.title} description={benefit.description} />
           ))}
         </div>
         <LandingText className="border-y-0 border-[1px] border-primary/40 border-b-0 w-full">
