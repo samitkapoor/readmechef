@@ -61,13 +61,10 @@ const FeaturesSection = () => {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <LandingText>
-            Craft Perfect READMEs in Seconds
-            <br />
-            Stop spending hours writing documentation. Let AI do the heavy lifting.
-          </LandingText>
+          <div className="border-t-0 border-x-0 border-b-[1px] border-neutral-700 h-[400px] w-full"></div>
+          <LandingText>Craft Perfect READMEs in Seconds</LandingText>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-neutral-700">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-neutral-700 border-b-[1px] border-neutral-700">
             {features.map((feature, index) => (
               <FeatureCard
                 key={index}
@@ -78,6 +75,10 @@ const FeaturesSection = () => {
               />
             ))}
           </div>
+
+          <LandingText>
+            Stop spending hours writing documentation. Let AI do the heavy lifting.
+          </LandingText>
         </motion.div>
       </div>
     </section>

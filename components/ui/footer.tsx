@@ -57,9 +57,9 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-black/95 text-white w-full flex items-center justify-center">
+    <footer className="text-white w-full flex items-center justify-center mt-[200px]">
       <div className="max-w-[1300px] w-full pb-96">
-        <div className="flex flex-col lg:flex-row border-[1px] border-neutral-700 border-t-0 gap-8 lg:gap-0 lg:justify-between items-center py-20 px-8">
+        <div className="flex flex-col lg:flex-row border-[1px] border-neutral-700 gap-8 lg:gap-0 lg:justify-between items-center py-20 px-8">
           {/* Logo and description section */}
           <div className="flex flex-col gap-4 sm:gap-6 w-full lg:w-auto lg:max-w-sm">
             <div className="flex items-center gap-2">
@@ -117,7 +117,7 @@ const Footer = () => {
         </div>
 
         {/* Copyright section */}
-        <div className="pt-6 border-[1px] border-t-0 border-neutral-700 text-center text-gray-500 text-sm">
+        <div className="p-6 border-[1px] border-t-0 border-neutral-700 text-center text-gray-500 text-sm">
           © {new Date().getFullYear()} Samit Kapoor. All rights reserved.
         </div>
       </div>

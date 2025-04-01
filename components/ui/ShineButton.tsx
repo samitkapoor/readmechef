@@ -1,16 +1,21 @@
+import { cn } from '@/lib/utils';
 import { motion, MotionProps } from 'framer-motion';
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 
 type ShineButtonProps = {
   className?: string;
   children: React.ReactNode;
-} & MotionProps;
+} & ButtonHTMLAttributes<HTMLButtonElement> &
+  MotionProps;
 
 const ShineButton: React.FC<ShineButtonProps> = ({ children, className, ...props }) => {
   return (
     <motion.button
       {...props}
-      className={`relative overflow-hidden rounded-lg border border-neutral-700 px-6 py-3 text-white font-semibold transition-all duration-300 hover:border-neutral-400 hover:shadow-[0_0_10px_rgba(255,255,255,0.2)] active:scale-95 ${className}`}
+      className={cn(
+        `relative overflow-hidden rounded-lg border border-neutral-700 px-6 py-3 text-white text-sm lg:text-base transition-all duration-100 hover:border-neutral-400 hover:shadow-[0_0_10px_rgba(255,255,255,0.2)] active:scale-95`,
+        className
+      )}
       whileHover={{ scale: 1.05 }}
     >
       <motion.span

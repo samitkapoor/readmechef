@@ -23,7 +23,8 @@ const DemoSection = () => {
   return (
     <section className="relative px-6 md:px-10 flex flex-col items-center justify-start w-full overflow-hidden">
       <div className="flex flex-col items-center justify-center max-w-[1300px] w-full">
-        <div className="border-[1px] border-neutral-700 w-full border-y-0">
+        <div className="border-[1px] border-y-0 border-neutral-700 h-[400px] w-full"></div>
+        <div className="border-[1px] border-neutral-700 w-full border-b-0">
           <LandingText>
             What if I told you that you could create
             <br />a perfect README in just one step?

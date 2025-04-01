@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import GradientButton from './ui/GradientButton';
 import BrowserWindow from './ui/browser-window';
 import TypewriterMarkdown from './TypewriterMarkdown';
-import MovingBorderCard from './ui/MovingBorderCard';
+import ShineButton from './ui/ShineButton';
 
 const HeroSection = () => {
   const router = useRouter();
@@ -21,25 +21,35 @@ const HeroSection = () => {
     {
       height: 500,
       width: 500,
-      className: 'border-y-4 blur-sm border-neutral-600'
+      className: 'border-y-4 blur-md border-neutral-500',
+      animation: 'spin 6s linear infinite'
     },
     {
       height: 700,
       width: 700,
-      className: 'border-l-4 blur-sm border-neutral-600'
+      className: 'border-l-4 blur-md border-neutral-500',
+      animation: 'spin 6s linear infinite'
     },
     {
       height: 300,
       width: 300,
-      className: 'border-r-4 blur-sm border-neutral-600'
+      className: 'border-r-4 blur-md border-neutral-500',
+      animation: 'spin 1s linear infinite'
+    },
+    {
+      height: 900,
+      width: 900,
+      className: 'border-l-4 blur-md border-neutral-500',
+      animation: 'spin 2s linear infinite'
     }
   ];
 
   return (
-    <section className="relative px-6 md:px-10 pt-[100px] flex flex-col items-center w-screen overflow-hidden bg-background h-screen">
+    <section className="relative px-6 md:px-10 pt-[100px] flex flex-col items-center w-screen overflow-hidden bg-background h-screen border-b-[1px] border-neutral-700">
       <div
         style={{
-          background: 'radial-gradient(circle, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%)'
+          background:
+            'radial-gradient(circle, transparent 20%, rgba(0, 255, 0, 0.04) 60%, transparent 100%)'
         }}
         className="w-screen h-screen absolute top-0 left-0 flex items-center justify-center"
       >
@@ -49,7 +59,7 @@ const HeroSection = () => {
             style={{
               height: circle.height,
               width: circle.width,
-              animation: 'spin 6s linear infinite'
+              animation: circle.animation
             }}
           ></div>
         ))}
@@ -70,11 +80,6 @@ const HeroSection = () => {
               Cooking the perfect README
               <span className="block mt-2 font-medium text-primary">Every Single Time</span>
             </h1>
-
-            <h2 className="text-center mt-4 text-white/70  leading-relaxed">
-              ReadMeChef is an AI-powered README generator that helps you <br /> create professional
-              documentation for your projects in minutes.
-            </h2>
           </motion.div>
 
           <motion.div
@@ -85,16 +90,16 @@ const HeroSection = () => {
           >
             <GradientButton
               onClick={() => router.push('/login')}
-              className="px-8 py-3 rounded-xl text-lg font-medium shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all duration-300 hover:scale-105"
+              className="px-8 py-3 rounded-xl text-lg font-medium transition-all duration-300 hover:scale-105"
             >
               Get started
             </GradientButton>
-            <GradientButton
+            <ShineButton
               onClick={() => router.push('/login')}
-              className="px-8 py-3 rounded-xl text-lg font-medium shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all duration-300 hover:scale-105"
+              className="px-8 py-3 rounded-xl text-lg font-medium shadow-md shadow-white/20 transition-all duration-300 hover:scale-105"
             >
               Watch Demo
-            </GradientButton>
+            </ShineButton>
           </motion.div>
         </motion.div>
 
@@ -102,7 +107,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : 50 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="w-screen mt-8 relative flex items-start justify-start z-10 overflow-hidden"
+          className="w-screen mt-12  relative flex items-start justify-start z-10 overflow-hidden"
         >
           <div className="row-span-1 w-screen flex items-start justify-center overflow-hidden h-[800px]">
             <BrowserWindow

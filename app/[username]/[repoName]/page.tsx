@@ -41,8 +41,8 @@ export default function RepositoryPage() {
   };
 
   return (
-    <div className="pt-[70px] grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden h-screen bg-black">
-      <div className="col-span-2 h-min fixed top-[70px] w-full z-10">
+    <div className="pt-[90px] grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden h-screen bg-black">
+      <div className="col-span-2 h-min fixed top-[90px] w-full z-10">
         <div className="grid grid-cols-2 gap-10 w-full px-6 h-min">
           <div className="hidden md:flex items-center gap-3 px-5 bg-gradient-to-r from-black to-black md:to-transparent backdrop-blur-sm py-2">
             <div className="h-10 w-10 border border-primary/30 rounded-lg flex items-center justify-center shadow-sm shadow-primary/10">
