@@ -31,8 +31,8 @@ const WhyReadmeSection = () => {
       description: (
         <>
           GitHub projects with well-documented READMEs receive up to{' '}
-          <span className="text-primary font-medium">60% more traffic</span>. GitHub's own research
-          shows README quality directly{' '}
+          <span className="text-primary font-medium">60% more traffic</span>. GitHub&apos;s own
+          research shows README quality directly{' '}
           <span className="text-primary font-medium">correlates with discoverability</span> in
           search rankings.
         </>
@@ -46,7 +46,7 @@ const WhyReadmeSection = () => {
           Open-source projects with comprehensive READMEs see{' '}
           <span className="text-primary font-medium">126% more pull requests</span> on average and
           attract <span className="text-primary font-medium">58% more external contributors</span>,
-          according to GitHub's 2021 Open Source Survey.
+          according to GitHub&apos;s 2021 Open Source Survey.
         </>
       )
     },
@@ -55,8 +55,8 @@ const WhyReadmeSection = () => {
       icon: <Clock className="w-8 h-8 text-secondary" />,
       description: (
         <>
-          According to Stack Overflow's Developer Survey, detailed READMEs with clear installation
-          and usage instructions{' '}
+          According to Stack Overflow&apos;s Developer Survey, detailed READMEs with clear
+          installation and usage instructions{' '}
           <span className="text-primary font-medium">reduce onboarding time by 68%</span> and{' '}
           <span className="text-primary font-medium">decrease abandoned contributions</span>.
         </>
@@ -67,9 +67,9 @@ const WhyReadmeSection = () => {
       icon: <Award className="w-8 h-8 text-secondary" />,
       description: (
         <>
-          <span className="text-primary font-medium">72% of developers</span> report they won't use
-          or contribute to a project without a proper README, regardless of code quality. This makes
-          it the{' '}
+          <span className="text-primary font-medium">72% of developers</span> report they won&apos;t
+          use or contribute to a project without a proper README, regardless of code quality. This
+          makes it the{' '}
           <span className="text-primary font-medium">single most important trust signal</span> for
           open-source projects.
         </>
