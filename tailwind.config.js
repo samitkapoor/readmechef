@@ -14,15 +14,15 @@ module.exports = {
         sans: ['var(--font-inter)']
       },
       colors: {
-        primary: '#d26a4d',
-        secondary: '#ec1f1f',
-        background: '#0f0f0f',
-        foreground: '#eaeaea',
-        card: '#18181a',
-        success: '#4caf50',
-        warning: '#f4a261',
-        error: '#e63946',
-        info: '#a6773c'
+        primary: '#57cb5b',
+        secondary: '#198d49',
+        background: '#020b05',
+        text: '#EAEAEA',
+        card: '#161B22',
+        success: '#60D666',
+        warning: '#F4A261',
+        error: '#E63946',
+        info: '#A6CC3C'
       }
     }
   },
