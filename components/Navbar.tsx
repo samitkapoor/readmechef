@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { ChefHat, Github, LogOut } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 export default function Navbar() {
   const { status, data: session } = useSession();
@@ -12,6 +13,19 @@ export default function Navbar() {
   const handleLogout = () => {
     signOut({ callbackUrl: '/login' });
   };
+
+  const actionButtons = [
+    {
+      name: 'Connect',
+      logo: '/contacts/twitter.png',
+      link: 'https://x.com/samitkapoorr'
+    },
+    {
+      name: 'Support',
+      link: 'https://buymeacoffee.com/samitkapoow',
+      logo: '/contacts/buymeacoffee.svg'
+    }
+  ];
 
   return (
     <header className="fixed top-0 z-50 flex items-center justify-center h-[100px] w-screen bg-gradient-to-b from-black/70 to-transparent">
@@ -28,11 +42,21 @@ export default function Navbar() {
           </Link>
 
           <nav className="flex items-center gap-6">
+            {actionButtons.map((button) => (
+              <Link
+                href={button.link}
+                key={button.name}
+                className="text-white hover:text-primary border-b-[1px] border-transparent hover:border-primary bg-opacity-40 text-xs md:text-sm font-medium transition-colors hover:bg-opacity-80 flex items-center gap-1"
+              >
+                <Image src={button.logo} alt={button.name} width={17} height={17} />
+                <p>{button.name}</p>
+              </Link>
+            ))}
             {status === 'authenticated' ? (
               <div className="flex items-center gap-4">
                 <button
                   onClick={handleLogout}
-                  className="rounded-full bg-primary bg-opacity-40 text-xs md:text-sm px-2 md:px-5 py-2 font-medium text-white transition-colors hover:bg-opacity-80 flex items-center gap-1"
+                  className="text-primary border-b-[1px] border-transparent hover:border-primary bg-opacity-40 text-xs md:text-sm font-medium transition-colors hover:bg-opacity-80 flex items-center gap-1"
                 >
                   <LogOut size={17} />
                   <p>Logout</p>
@@ -42,7 +66,7 @@ export default function Navbar() {
               pathname !== '/login' && (
                 <Link
                   href="/login"
-                  className="rounded-full bg-primary bg-opacity-40 text-xs md:text-sm px-2 md:px-5 py-2 font-medium text-white transition-colors hover:bg-opacity-80 flex items-center gap-1"
+                  className="text-primary border-b-[1px] border-transparent hover:border-primary bg-opacity-40 text-xs md:text-sm font-medium transition-colors hover:bg-opacity-80 flex items-center gap-1"
                 >
                   <Github size={17} />
                   <p>Login</p>
