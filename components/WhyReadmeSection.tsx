@@ -13,7 +13,7 @@ type BenefitProps = {
 
 const Benefit = ({ title, description, icon }: BenefitProps) => {
   return (
-    <div className="flex flex-col gap-5 items-start bg-black w-full h-full p-12">
+    <div className="flex flex-col gap-5 items-start  bg-gradient-to-tr from-black to-black h-full w-full hover:bg-gradient-to-tr hover:from-[#1c1c1c] hover:via-black hover:to-[#1c1c1c] transition-all duration-300 p-12">
       <div className="p-4 bg-primary/20 rounded-full">{icon}</div>
       <div className="flex flex-col gap-2">
         <h3 className="text-xl md:text-2xl font-semibold text-white/90">{title}</h3>
