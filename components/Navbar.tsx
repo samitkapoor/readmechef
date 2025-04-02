@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
-import { ChefHat, Github, LogOut } from 'lucide-react';
+import { Github, LogOut } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 
@@ -35,7 +35,7 @@ export default function Navbar() {
             href={status === 'authenticated' ? '/' + session?.user?.username : '/'}
             className="flex items-center gap-2"
           >
-            <ChefHat size={24} />
+            <Image src="/readmechef-logo.png" alt="ReadmeChef Logo" width={32} height={32} />
             <span className="text-xl font-bold text-white">
               <span className="text-primary">ReadMe</span>Chef
             </span>

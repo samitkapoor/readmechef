@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { ChefHat } from 'lucide-react';
 import Image from 'next/image';
 
 const Footer = () => {
@@ -63,7 +62,7 @@ const Footer = () => {
           {/* Logo and description section */}
           <div className="flex flex-col gap-4 sm:gap-6 w-full lg:w-auto lg:max-w-sm">
             <div className="flex items-center gap-2">
-              <ChefHat size={40} className="text-primary" />
+              <Image src="/readmechef-logo.png" alt="ReadmeChef Logo" width={32} height={32} />
               <p className="text-2xl font-bold">ReadMeChef</p>
             </div>
             <p className="text-white/80">Cooking the perfect README Every Single Time</p>
