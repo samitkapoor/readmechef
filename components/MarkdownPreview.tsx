@@ -30,7 +30,7 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ messages, latestMarkd
     <div className="h-full w-full overflow-y-auto scrollbar-hide">
       {latestMarkdownId ? (
         <div className="p-8 pb-14 pt-[80px]">
-          <div className="bg-[#181818] rounded-xl border border-white/50 shadow-lg ">
+          <div className="bg-[#181818] rounded-xl border border-white/50 shadow-lg mt-[140px]">
             <div className="p-6 md:p-8">
               <EverythingMarkdown className="dark" content={markdownContent} />
             </div>

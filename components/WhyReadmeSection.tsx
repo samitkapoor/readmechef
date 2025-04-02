@@ -15,8 +15,8 @@ const Benefit = ({ title, description, icon }: BenefitProps) => {
   return (
     <div className="flex flex-col gap-5 items-start bg-black w-full h-full p-12">
       <div className="p-4 bg-primary/20 rounded-full">{icon}</div>
-      <div>
-        <h3 className="text-xl font-semibold text-white/90 mb-2">{title}</h3>
+      <div className="flex flex-col gap-2">
+        <h3 className="text-xl md:text-2xl font-semibold text-white/90">{title}</h3>
         <p className="text-white/80 leading-relaxed">{description}</p>
       </div>
     </div>

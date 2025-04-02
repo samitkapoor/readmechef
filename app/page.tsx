@@ -25,23 +25,7 @@ export default function Home() {
         <FeaturesSection />
         <GridDivider />
         <DemoSection />
-        <GridDivider>
-          {/* <div className="flex flex-col items-center justify-center p-6 rounded-xl">
-            <div className="p-3 bg-primary/10 rounded-full mb-3">
-              <Info className="text-primary w-8 h-8" />
-            </div>
-            <p className="font-semibold text-primary mb-2">Did you know?</p>
-            <p className="font-medium text-white/90 leading-tight text-center max-w-2xl">
-              Projects with well-written READMEs receive{' '}
-              <span className="text-primary font-bold">80% more stars</span> and{' '}
-              <span className="text-primary font-bold">65% more contributions</span> on GitHub than
-              those without.
-            </p>
-            <p className="mt-2 text-sm text-white/80 text-center">
-              ReadmeChef helps you join the top 10% of repositories with exceptional documentation.
-            </p>
-          </div> */}
-        </GridDivider>
+        <GridDivider />
         <WhyReadmeSection />
         <CtaSection />
       </main>
