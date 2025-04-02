@@ -49,9 +49,9 @@ export default function LoginPage() {
                   </div>
                 </div>
 
-                <h1 className="text-4xl font-bold text-white tracking-tight mb-2">
+                <p className="text-4xl font-bold text-white tracking-tight mb-2">
                   <span className="text-white">ReadmeChef</span>
-                </h1>
+                </p>
                 <p className="text-white/90 mb-6">
                   Let AI cook the perfect README for your repositories
                 </p>

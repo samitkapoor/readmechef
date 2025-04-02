@@ -16,7 +16,7 @@ export default function NotFound() {
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-16 bg-background">
       <div className="flex flex-col items-center text-center max-w-md">
         <ChefHat size={80} className="text-primary mb-6" />
-        <h1 className="text-4xl font-bold text-white mb-4">404 - Page Not Found</h1>
+        <p className="text-4xl font-bold text-white mb-4">404 - Page Not Found</p>
         <p className="text-gray-400 mb-8">
           Oops! Looks like this recipe doesn&apos;t exist. Try checking the URL or the ReadmeChef
           website.

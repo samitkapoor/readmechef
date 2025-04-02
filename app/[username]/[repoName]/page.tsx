@@ -50,7 +50,7 @@ export default function RepositoryPage() {
                 <MessageCircle size={22} className="text-primary" />
               </div>
               <div>
-                <h1 className="text-lg font-bold text-white tracking-tight">Chat</h1>
+                <p className="text-lg font-bold text-white tracking-tight">Chat</p>
                 <p className="text-sm text-white/60 flex items-center gap-1 leading-none">
                   <span>Working on</span>
                   <span className="text-primary">{repository?.name || 'Repository'}</span>
@@ -65,7 +65,7 @@ export default function RepositoryPage() {
                 <Eye size={22} className="text-primary" />
               </div>
               <div>
-                <h1 className="text-lg font-bold text-white tracking-tight">Preview</h1>
+                <p className="text-lg font-bold text-white tracking-tight">Preview</p>
                 <p className="text-sm text-white/60 leading-none">README.md</p>
               </div>
             </div>

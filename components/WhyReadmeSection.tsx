@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { TrendingUp, GitPullRequest, Clock, Award } from 'lucide-react';
+import { TrendingUp, GitPullRequest, Clock, Award, Wrench, Users } from 'lucide-react';
 import LandingText from './ui/LandingText';
 
 type BenefitProps = {
@@ -74,7 +74,39 @@ const WhyReadmeSection = () => {
           open-source projects.
         </>
       )
+    },
+    {
+      title: 'Improves Project Maintenance',
+      icon: <Wrench className="w-8 h-8 text-secondary" />,
+      description: (
+        <>
+          Projects with comprehensive READMEs experience{' '}
+          <span className="text-primary font-medium">45% fewer maintenance issues</span> and{' '}
+          <span className="text-primary font-medium">reduced technical debt</span>. Clear
+          documentation helps maintain consistency and makes future updates more efficient.
+        </>
+      )
+    },
+    {
+      title: 'Fosters Community Growth',
+      icon: <Users className="w-8 h-8 text-secondary" />,
+      description: (
+        <>
+          Projects with engaging READMEs that include contribution guidelines and community
+          information see{' '}
+          <span className="text-primary font-medium">3x higher community engagement</span> and{' '}
+          <span className="text-primary font-medium">85% more community discussions</span>, creating
+          a vibrant ecosystem around your project.
+        </>
+      )
     }
+  ];
+
+  // Define the layout pattern (1 for benefit, 0 for empty space)
+  const layoutPattern = [
+    [1, 1, 0], // First row
+    [0, 1, 1], // Second row
+    [1, 1, 0] // Third row
   ];
 
   return (
@@ -84,15 +116,22 @@ const WhyReadmeSection = () => {
           Why Every Project Needs a Great README?
         </LandingText>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 border-[1px] border-neutral-700 border-t-0 gap-[1px] bg-neutral-700 w-full">
-          {benefits.map((benefit, index) => (
-            <Benefit
-              key={index}
-              title={benefit.title}
-              description={benefit.description}
-              icon={benefit.icon}
-            />
-          ))}
+        <div className="grid grid-cols-3 border-[1px] border-neutral-700 border-t-0 gap-[1px] bg-neutral-700 w-full">
+          {layoutPattern.map((row, rowIndex) =>
+            row.map((cell, colIndex) => {
+              const benefitIndex = rowIndex * 2 + (colIndex === 0 ? 0 : 1);
+              return cell === 1 ? (
+                <Benefit
+                  key={`${rowIndex}-${colIndex}`}
+                  title={benefits[benefitIndex].title}
+                  description={benefits[benefitIndex].description}
+                  icon={benefits[benefitIndex].icon}
+                />
+              ) : (
+                <div key={`${rowIndex}-${colIndex}`} className="bg-black" />
+              );
+            })
+          )}
         </div>
         <LandingText className="border-y-0 border-[1px] border-primary/40 border-b-0 w-full">
           A well-crafted README is essential for your project&apos;s success.

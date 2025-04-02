@@ -11,9 +11,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'ReadmeChef - Cook the Perfect README Every Time',
+  title: 'ReadmeChef - Cook the Perfect README Every Single Time',
   description:
-    'Generate beautiful, comprehensive README files for your GitHub repositories with ReadmeChef. AI-powered documentation that saves time and improves project visibility.',
+    'Generate comprehensive README files for your GitHub repositories with ReadmeChef. AI-powered documentation that saves time and improves project visibility.',
   icons: {
     icon: '/favicon.png'
   },
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     canonical: '/'
   },
   openGraph: {
-    title: 'ReadmeChef - Cook the Perfect README Every Time',
+    title: 'ReadmeChef - Cook the Perfect README Every Single Time',
     description:
       'AI-powered README generator that helps you create professional documentation for your projects in minutes.',
     url: 'https://readmechef.com',
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ReadmeChef - Cook the Perfect README Every Time',
+    title: 'ReadmeChef - Cook the Perfect README Every Single Time',
     description:
       'AI-powered README generator that helps you create professional documentation for your projects in minutes.',
     creator: '@samitkapoorr',
