@@ -31,7 +31,7 @@ const CtaSection = () => {
 
         <ShineButton
           onClick={() => router.push('/login')}
-          className="flex justify-center bg-background text-primary z-10 font-medium px-8 py-4 rounded-md items-center gap-2 shadow-2xl shadow-white/10 hover:shadow-xl transition-all duration-300"
+          className="flex justify-center bg-background text-primary z-10 font-medium px-8 py-4 rounded-md items-center gap-2 transition-all duration-300"
         >
           <p>Get Started for Free</p>
         </ShineButton>

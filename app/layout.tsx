@@ -14,6 +14,9 @@ export const metadata: Metadata = {
   title: 'ReadmeChef - Cook the Perfect README Every Time',
   description:
     'Generate beautiful, comprehensive README files for your GitHub repositories with ReadmeChef. AI-powered documentation that saves time and improves project visibility.',
+  icons: {
+    icon: '/favicon.png'
+  },
   keywords:
     'readme generator, github readme, project documentation, ai documentation, readme template, developer tools, software documentation, ai-powered documentation, markdown readme, readme best practices, readme examples, readme formatting',
   authors: [{ name: 'Samit Kapoor', url: 'https://github.com/samitkapoor' }],
