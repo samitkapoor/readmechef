@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { TrendingUp, GitPullRequest, Clock, Award, Wrench, Users } from 'lucide-react';
 import LandingText from './ui/LandingText';
+import MatrixBeam from './ui/MatrixBeam';
 
 type BenefitProps = {
   title: string;
@@ -13,7 +14,7 @@ type BenefitProps = {
 
 const Benefit = ({ title, description, icon }: BenefitProps) => {
   return (
-    <div className="flex flex-col gap-5 items-start  bg-gradient-to-tr from-black to-black h-full w-full hover:bg-gradient-to-tr hover:from-[#1c1c1c] hover:via-black hover:to-[#1c1c1c] transition-all duration-300 p-12">
+    <div className="flex flex-col gap-5 items-start bg-gradient-to-tr from-black to-black h-full w-full hover:bg-gradient-to-tr hover:from-[#1c1c1c] hover:via-black hover:to-[#1c1c1c] transition-all duration-300 p-12">
       <div className="p-4 bg-primary/20 rounded-full">{icon}</div>
       <div className="flex flex-col gap-2">
         <h3 className="text-xl md:text-2xl font-semibold text-white/90">{title}</h3>
@@ -109,6 +110,13 @@ const WhyReadmeSection = () => {
     [1, 1, 0] // Third row
   ];
 
+  // Characters for the Matrix beams
+  const matrixChars =
+    '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#*_-+`~[](){}<>|中文字符';
+
+  // Number of beams per empty cell - increase for density
+  const beamsPerCell = 8;
+
   return (
     <section className="w-full flex flex-col items-center justify-center border-b-[1px] border-primary/40">
       <div className="max-w-[1300px] w-full">
@@ -117,27 +125,71 @@ const WhyReadmeSection = () => {
         </LandingText>
 
         <div className="grid grid-cols-3 border-[1px] border-neutral-700 border-t-0 gap-[1px] bg-neutral-700 w-full">
-          {layoutPattern.map((row, rowIndex) =>
-            row.map((cell, colIndex) => {
-              const benefitIndex = rowIndex * 2 + (colIndex === 0 ? 0 : 1);
-              return cell === 1 ? (
-                <Benefit
-                  key={`${rowIndex}-${colIndex}`}
-                  title={benefits[benefitIndex].title}
-                  description={benefits[benefitIndex].description}
-                  icon={benefits[benefitIndex].icon}
-                />
-              ) : (
-                <div key={`${rowIndex}-${colIndex}`} className="bg-black" />
-              );
-            })
-          )}
+          {layoutPattern.flat().map((cell, index) => {
+            const rowIndex = Math.floor(index / 3);
+            const colIndex = index % 3;
+
+            // Calculate benefit index carefully based on the pattern
+            // Count '1's before this cell
+            let benefitCounter = 0;
+            for (let i = 0; i < index; i++) {
+              if (layoutPattern.flat()[i] === 1) {
+                benefitCounter++;
+              }
+            }
+            const benefitIndex = benefitCounter;
+
+            return cell === 1 ? (
+              <Benefit
+                key={`benefit-${rowIndex}-${colIndex}`}
+                title={benefits[benefitIndex].title}
+                description={benefits[benefitIndex].description}
+                icon={benefits[benefitIndex].icon}
+              />
+            ) : (
+              // Render empty cell with Matrix beams
+              <MatrixCell
+                key={`empty-${rowIndex}-${colIndex}`}
+                matrixChars={matrixChars}
+                beamsPerCell={beamsPerCell}
+              />
+            );
+          })}
         </div>
         <LandingText className="border-y-0 border-[1px] border-primary/40 border-b-0 w-full">
           A well-crafted README is essential for your project&apos;s success.
         </LandingText>
       </div>
     </section>
+  );
+};
+
+// Create a separate component for the Matrix cell
+type MatrixCellProps = {
+  matrixChars: string;
+  beamsPerCell: number;
+};
+
+const MatrixCell = ({ matrixChars, beamsPerCell }: MatrixCellProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div
+      className="bg-black relative overflow-hidden h-full cursor-pointer"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {Array.from({ length: beamsPerCell }).map((_, beamIndex) => (
+        <MatrixBeam
+          key={beamIndex}
+          characters={matrixChars}
+          duration={Math.random() * 4 + 6} // Slower duration: 6-10s
+          delay={Math.random() * 5} // More varied delay
+          beamHeight={Math.floor(Math.random() * 20) + 15} // Longer beams: 15-35
+          isParentHovered={isHovered}
+        />
+      ))}
+    </div>
   );
 };
 
