@@ -17,8 +17,8 @@ const FeatureCard = ({
   return (
     <div className="p-8 flex flex-col items-start gap-4 bg-gradient-to-tr from-black to-black h-full w-full hover:bg-gradient-to-tr hover:from-[#1c1c1c] hover:via-black hover:to-[#1c1c1c] transition-all duration-300">
       <div className="p-4 bg-primary/20 rounded-full">{icon}</div>
-      <h3 className="text-xl md:text-2xl font-semibold text-white/90">{title}</h3>
-      <p className="text-white/80 leading-relaxed">{description}</p>
+      <h3 className="text-xl lg:text-2xl font-semibold text-white/90">{title}</h3>
+      <p className="text-white/80 text-sm lg:text-base leading-relaxed">{description}</p>
     </div>
   );
 };

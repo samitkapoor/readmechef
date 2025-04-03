@@ -22,10 +22,10 @@ const CtaSection = () => {
           }}
           className="absolute inset-0 h-full w-full"
         />
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 z-10">
+        <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 z-10">
           Ready to Cook Up Perfect READMEs?
         </h2>
-        <p className="text-xl text-white/90 mb-12 max-w-3xl mx-auto z-10">
+        <p className="sm:text-xl text-white/90 mb-12 max-w-3xl mx-auto z-10">
           Join the developers who save time and improve their projects with ReadMeChef.
         </p>
 

@@ -49,7 +49,7 @@ export default function Navbar() {
                 className="text-white hover:text-primary border-b-[1px] border-transparent hover:border-primary bg-opacity-40 text-xs md:text-sm font-medium transition-colors hover:bg-opacity-80 flex items-center gap-1"
               >
                 <Image src={button.logo} alt={button.name} width={17} height={17} />
-                <p>{button.name}</p>
+                <p className="hidden md:block">{button.name}</p>
               </Link>
             ))}
             {status === 'authenticated' ? (
@@ -59,7 +59,7 @@ export default function Navbar() {
                   className="text-primary border-b-[1px] border-transparent hover:border-primary bg-opacity-40 text-xs md:text-sm font-medium transition-colors hover:bg-opacity-80 flex items-center gap-1"
                 >
                   <LogOut size={17} />
-                  <p>Logout</p>
+                  <p className="hidden md:block">Logout</p>
                 </button>
               </div>
             ) : (

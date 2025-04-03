@@ -48,13 +48,13 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="relative px-6 md:px-10 pt-[100px] flex flex-col items-center w-screen overflow-hidden bg-background h-screen">
+    <section className="relative px-6 md:px-10 pt-[100px] flex flex-col items-center w-screen max-h-screen overflow-hidden bg-background h-full">
       <div
         style={{
           background:
             'radial-gradient(circle, transparent 20%, rgba(0, 255, 0, 0.04) 60%, transparent 100%)'
         }}
-        className="w-screen h-screen absolute top-0 left-0 flex items-center justify-center"
+        className="w-screen max-h-screen absolute top-0 left-0 flex items-center justify-center"
       >
         {backgroundCircles.map((circle) => (
           <div
@@ -68,26 +68,20 @@ const HeroSection = () => {
           ></div>
         ))}
       </div>
-      <div className="w-screen h-screen flex flex-col items-center justify-center z-10">
-        <div className="flex flex-col items-center justify-center w-full lg:w-1/2 pl-0 lg:pl-10 z-10 pb-10 lg:pb-0">
+      <div className="w-screen max-h-screen flex flex-col items-center justify-center z-10 px-4">
+        <div className="flex flex-col items-center justify-center w-full lg:w-1/2 pl-0 lg:pl-10 z-10 pb-10 lg:pb-0 mb-20 md:mb-0">
           <div>
-            <h1 className="text-center text-3xl lg:text-4xl xl:text-5xl text-white/90 font-light sm:mt-20">
+            <h1 className="text-center text-3xl lg:text-4xl xl:text-5xl text-white/90 font-light mt-20">
               Cooking the perfect README
               <span className="block mt-2 font-medium text-primary">Every Single Time</span>
             </h1>
           </div>
 
           <div className="mt-8 flex items-center justify-center gap-2">
-            <GradientButton
-              onClick={() => router.push('/login')}
-              className="px-8 py-3 rounded-xl text-lg font-medium transition-all duration-300 hover:scale-105"
-            >
+            <GradientButton onClick={() => router.push('/login')} className="hover:scale-105">
               Get started
             </GradientButton>
-            <ShineButton
-              onClick={scrollToDemo}
-              className="px-8 py-3 rounded-xl text-lg font-medium shadow-md shadow-white/20 transition-all duration-300 hover:scale-105"
-            >
+            <ShineButton onClick={scrollToDemo} className="shadow-xl shadow-primary/30">
               Watch Demo
             </ShineButton>
           </div>
@@ -97,16 +91,16 @@ const HeroSection = () => {
           initial={{ y: 300 }}
           whileInView={{ y: 0 }}
           transition={{ duration: 1, delay: 0.1 }}
-          className="w-screen mt-12 relative flex items-start justify-start z-10 overflow-hidden"
+          className="w-screen mt-12 relative items-start justify-start z-10 overflow-hidden hidden md:flex"
         >
           <div className="row-span-1 w-screen flex items-start justify-center overflow-hidden h-[800px]">
             <BrowserWindow
               url="readmechef.com"
-              className="border border-gray-800/50 h-full max-w-[1300px] w-full"
+              className="border border-gray-800/50 h-full md:max-w-[700px] lg:max-w-[1300px] w-full"
               childrenClassName="flex items-center justify-center relative"
             >
               <MovingBorderCard wrapperClassName="my-4 rounded-xl">
-                <div className="flex relative flex-col h-[700px] w-[800px] py-10 bg-neutral-800 p-10 shadow-xl shadow-black rounded-lg">
+                <div className="flex relative flex-col h-[700px] w-[500px] lg:w-[800px] py-10 bg-neutral-800 md:p-6 lg:p-10 shadow-xl shadow-black rounded-lg">
                   <TypewriterMarkdown
                     typingSpeed={150}
                     charSpeed={5}

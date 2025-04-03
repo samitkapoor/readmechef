@@ -24,7 +24,7 @@ const GridDivider = ({
               }
             : {}
         }
-        className="border-[1px] border-y-0 border-primary/40 max-w-[1300px] bg-background h-[150px] sm:h-[400px] w-full flex items-center justify-center"
+        className="border-[1px] border-y-0 border-primary/40 max-w-[1300px] bg-background h-[150px] md:h-[200px] lg:h-[400px] w-full flex items-center justify-center"
       >
         {children}
       </div>

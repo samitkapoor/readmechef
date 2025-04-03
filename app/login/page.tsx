@@ -40,9 +40,9 @@ export default function LoginPage() {
       />
       <div className="z-10 relative">
         <div className="h-full w-full overflow-hidden rounded-3xl">
-          <div className="flex flex-col items-center justify-center z-10 p-14 md:p-18 md:px-22 rounded-3xl backdrop-blur-xl relative">
-            <div className="w-full max-w-[800px] space-y-4">
-              <div className="text-center flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center z-10 p-2 md:p-18 md:px-22 rounded-3xl backdrop-blur-xl relative">
+            <div className="w-full max-w-[800px] space-y-4 mb-36">
+              <div className="text-center flex flex-col items-center justify-center mt-36 md:mt-20 lg:mt-10">
                 <div className="relative mb-2">
                   <div className="h-[110px] w-[110px] bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full flex items-center justify-center border-[2px] border-white/20 relative shadow-lg">
                     <ChefHat size={50} className="drop-shadow-lg text-primary" />
