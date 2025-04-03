@@ -47,12 +47,29 @@ const DemoSection = () => {
       (entries) => {
         if (entries[0].isIntersecting && !isVideoLoaded) {
           if (videoRef.current) {
+            // Only load the video when it's actually needed
             videoRef.current.src = '/readmechef-demo.mp4';
-            setIsVideoLoaded(true);
+
+            // Optimize performance on mobile by reducing quality
+            const isMobile = window.innerWidth < 768;
+            if (isMobile) {
+              // Set lower quality options for mobile
+              videoRef.current.setAttribute('playsinline', '');
+              videoRef.current.currentTime = 0;
+
+              // Reduce resolution rendering by using CSS
+              videoRef.current.style.maxHeight = '480px';
+              videoRef.current.classList.add('mobile-video');
+            }
+
+            // Add event listener to handle loading
+            videoRef.current.addEventListener('loadeddata', () => {
+              setIsVideoLoaded(true);
+            });
           }
         }
       },
-      { rootMargin: '200px' } // Load when within 200px of viewport
+      { rootMargin: '400px', threshold: 0.1 } // Increased margin for earlier preloading
     );
 
     if (videoContainerRef.current) {
@@ -99,6 +116,9 @@ const DemoSection = () => {
               muted
               preload="none"
               poster="/readmechef-poster.png"
+              controlsList="nodownload"
+              disablePictureInPicture
+              disableRemotePlayback
             >
               {/* Video source will be set dynamically when in viewport */}
               Your browser does not support the video tag.

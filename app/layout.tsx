@@ -7,7 +7,9 @@ import JsonLd from '@/components/JsonLd';
 
 const inter = Inter({
   variable: '--font-inter',
-  subsets: ['latin']
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true
 });
 
 export const metadata: Metadata = {
@@ -80,12 +82,13 @@ export default function RootLayout({
         <meta name="theme-color" content="#d26a4d" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preload" as="image" href="/readmechef-poster.png" />
+        <link rel="preload" as="image" href="/readmechef-poster.png" fetchPriority="high" />
         <script
           src="https://script.refix.ai/script.min.js"
           type="text/javascript"
           data-refix-token="21e99321-89fd-4286-9d23-1d9c70fabbd8"
           defer
+          async
         ></script>
       </head>
       <body className={`${inter.className} antialiased m-0 p-0`}>

@@ -1,19 +1,35 @@
 'use client';
 
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
+import dynamic from 'next/dynamic';
 
 // Import critical sections directly
 import HeroSection from '@/components/HeroSection';
 import GridDivider from '@/components/ui/GridDivider';
 import Footer from '@/components/ui/footer';
 
-// Lazy load non-critical sections
-const FeaturesSection = lazy(() => import('@/components/FeaturesSection'));
-const DemoSection = lazy(() => import('@/components/DemoSection'));
-const WhyReadmeSection = lazy(() => import('@/components/WhyReadmeSection'));
-const CtaSection = lazy(() => import('@/components/CtaSection'));
+// Lazy load non-critical sections with better chunk naming
+const FeaturesSection = dynamic(() => import('@/components/FeaturesSection'), {
+  loading: () => <SectionLoader />,
+  ssr: true
+});
+
+const DemoSection = dynamic(() => import('@/components/DemoSection'), {
+  loading: () => <SectionLoader />,
+  ssr: false // Don't SSR the video component
+});
+
+const WhyReadmeSection = dynamic(() => import('@/components/WhyReadmeSection'), {
+  loading: () => <SectionLoader />,
+  ssr: true
+});
+
+const CtaSection = dynamic(() => import('@/components/CtaSection'), {
+  loading: () => <SectionLoader />,
+  ssr: true
+});
 
 // Simple loading components for each section
 const SectionLoader = () => (
@@ -39,26 +55,19 @@ export default function Home() {
         <HeroSection />
         <GridDivider enableBackground={false} />
 
-        {/* Defer non-critical sections with Suspense */}
-        <Suspense fallback={<SectionLoader />}>
-          <FeaturesSection />
-        </Suspense>
+        {/* Features can load early since it doesn't have heavy assets */}
+        <FeaturesSection />
 
         <GridDivider />
 
-        <Suspense fallback={<SectionLoader />}>
-          <DemoSection />
-        </Suspense>
+        {/* Demo section with video loads without SSR */}
+        <DemoSection />
 
         <GridDivider />
 
-        <Suspense fallback={<SectionLoader />}>
-          <WhyReadmeSection />
-        </Suspense>
-
-        <Suspense fallback={<SectionLoader />}>
-          <CtaSection />
-        </Suspense>
+        {/* Lower priority sections */}
+        <WhyReadmeSection />
+        <CtaSection />
       </main>
 
       {/* Footer */}
