@@ -8,7 +8,9 @@ import MovingBorderCard from './ui/MovingBorderCard';
 
 const DemoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const videoContainerRef = useRef<HTMLDivElement>(null);
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -39,6 +41,27 @@ const DemoSection = () => {
     };
   }, [isPlaying]);
 
+  useEffect(() => {
+    // Use Intersection Observer to load video only when it's near viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !isVideoLoaded) {
+          if (videoRef.current) {
+            videoRef.current.src = '/readmechef-demo.mp4';
+            setIsVideoLoaded(true);
+          }
+        }
+      },
+      { rootMargin: '200px' } // Load when within 200px of viewport
+    );
+
+    if (videoContainerRef.current) {
+      observer.observe(videoContainerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [isVideoLoaded]);
+
   return (
     <section
       style={{
@@ -63,6 +86,7 @@ const DemoSection = () => {
         {/* Video Player with scroll animation */}
         <MovingBorderCard speed={10} wrapperClassName="!p-[1px]">
           <motion.div
+            ref={videoContainerRef}
             style={{
               perspective: '1000px'
             }}
@@ -73,9 +97,10 @@ const DemoSection = () => {
               className="w-full h-full object-cover"
               playsInline
               muted
+              preload="none"
               poster="/readmechef-poster.png"
             >
-              <source src="/readmechef-demo.mp4" type="video/mp4" />
+              {/* Video source will be set dynamically when in viewport */}
               Your browser does not support the video tag.
             </video>
 
