@@ -1,10 +1,11 @@
 'use client';
 
-import { ChefHat, LucideGithub, Lock, Unlock } from 'lucide-react';
+import { LucideGithub, Lock, Unlock } from 'lucide-react';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import GradientButton from '@/components/ui/GradientButton';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const { status, data: session } = useSession();
@@ -45,7 +46,12 @@ export default function LoginPage() {
               <div className="text-center flex flex-col items-center justify-center mt-36 md:mt-20 lg:mt-10">
                 <div className="relative mb-2">
                   <div className="h-[110px] w-[110px] bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full flex items-center justify-center border-[2px] border-white/20 relative shadow-lg">
-                    <ChefHat size={50} className="drop-shadow-lg text-primary" />
+                    <Image
+                      src="/readmechef-logo.png"
+                      alt="ReadmeChef Logo"
+                      width={64}
+                      height={64}
+                    />
                   </div>
                 </div>
 
