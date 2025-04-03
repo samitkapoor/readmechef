@@ -89,17 +89,16 @@ const Chatbox = ({
                       {message.display}
                     </pre>
                   </div>
-                  {loading && <ShinyText text="Generating..." speed={1} />}
                 </>
-              )}
-              {loading && (
-                <div className="text-white rounded-2xl rounded-tl-sm text-xs md:text-sm w-full py-3 px-2 overflow-x-auto scrollbar-hide max-w-[85%] tracking-tight">
-                  <ShinyText text="Generating..." speed={1} />
-                </div>
               )}
             </div>
           );
         })}
+        {loading && (
+          <div className="text-white rounded-2xl rounded-tl-sm text-xs md:text-sm w-full pb-3 px-2 scrollbar-hide tracking-tight">
+            <ShinyText text="Generating..." speed={1} />
+          </div>
+        )}
       </div>
 
       <div className="sticky bottom-0 py-0 px-2">
