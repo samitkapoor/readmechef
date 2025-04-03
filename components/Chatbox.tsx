@@ -1,18 +1,22 @@
 import { CornerDownLeft, Loader } from 'lucide-react';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ClientMessage } from '@/types/ai.types';
+import ShinyText from './ui/ShinyText';
 
 const isWindows = navigator.platform.includes('Win');
 
 const Chatbox = ({
   handleSendMessage,
-  messages
+  messages,
+  loading,
+  setLoading
 }: {
   handleSendMessage: (message: string) => Promise<void>;
   messages: ClientMessage[];
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
 }) => {
   const divRef = useRef<HTMLDivElement>(null);
-  const [loading, setLoading] = useState(false);
 
   const sendMessage = async (input: string) => {
     setLoading(true);
@@ -79,10 +83,18 @@ const Chatbox = ({
                   {message.display}
                 </div>
               ) : (
-                <div className="text-white rounded-2xl rounded-tl-sm text-xs md:text-sm w-full py-5 px-6 overflow-x-auto bg-[#151515] scrollbar-hide border-[1px] border-white/20 shadow-md max-w-[85%] tracking-tight">
-                  <pre className="whitespace-pre-wrap break-words text-white/80">
-                    {message.display}
-                  </pre>
+                <>
+                  <div className="text-white rounded-2xl rounded-tl-sm text-xs md:text-sm w-full py-5 px-6 overflow-x-auto bg-[#151515] scrollbar-hide border-[1px] border-white/20 shadow-md max-w-[85%] tracking-tight">
+                    <pre className="whitespace-pre-wrap break-words text-white/80">
+                      {message.display}
+                    </pre>
+                  </div>
+                  {loading && <ShinyText text="Generating..." speed={1} />}
+                </>
+              )}
+              {loading && (
+                <div className="text-white rounded-2xl rounded-tl-sm text-xs md:text-sm w-full py-3 px-2 overflow-x-auto scrollbar-hide max-w-[85%] tracking-tight">
+                  <ShinyText text="Generating..." speed={1} />
                 </div>
               )}
             </div>
@@ -90,7 +102,7 @@ const Chatbox = ({
         })}
       </div>
 
-      <div className="sticky bottom-0 py-2 px-2">
+      <div className="sticky bottom-0 py-0 px-2">
         <div className="flex items-end gap-4 rounded-lg bg-[#222222] border-[1px] border-white/40">
           <textarea
             onKeyDown={handleKeyDown}
@@ -103,6 +115,7 @@ const Chatbox = ({
             onClick={handleButtonClick}
             className="px-2 py-2 bg-[#198d49] text-white rounded-lg m-2 group cursor-pointer flex items-center justify-center transition-all duration-200"
             title={isWindows ? 'Press Ctrl+Enter to send' : 'Press ⌘+Enter to send'}
+            disabled={loading}
           >
             {loading ? (
               <div className="flex items-center justify-center h-5 w-5">

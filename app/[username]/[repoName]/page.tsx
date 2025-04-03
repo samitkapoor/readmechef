@@ -27,10 +27,14 @@ export default function RepositoryPage() {
   const { messages, latestMarkdownId, sendMessage } = useChat(repository);
 
   const [hasRequestedReadme, setHasRequestedReadme] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState(false);
 
   useEffect(() => {
-    if (repository && !hasRequestedReadme && !isLoading) {
-      sendMessage('Generate a README.md for this repository.');
+    if (repository && !hasRequestedReadme && !isLoading && !loadingMessage) {
+      setLoadingMessage(true);
+      sendMessage('Generate a README.md for this repository.').then(() => {
+        setLoadingMessage(false);
+      });
       setHasRequestedReadme(true);
     }
   }, [repository, hasRequestedReadme, isLoading, sendMessage]);
@@ -82,7 +86,12 @@ export default function RepositoryPage() {
         </div>
       </div>
       <div className="overflow-y-auto h-full scrollbar-hide md:pr-5 md:pl-10 md:pb-5 bg-background/50">
-        <Chatbox handleSendMessage={sendMessage} messages={messages} />
+        <Chatbox
+          handleSendMessage={sendMessage}
+          messages={messages}
+          loading={loadingMessage}
+          setLoading={setLoadingMessage}
+        />
       </div>
       <div className="hidden md:block overflow-hidden pr-8">
         <MarkdownPreview messages={messages} latestMarkdownId={latestMarkdownId} />
