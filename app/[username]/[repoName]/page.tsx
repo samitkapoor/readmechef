@@ -48,7 +48,7 @@ export default function RepositoryPage() {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden h-screen">
       <div className="col-span-2 h-min fixed top-[100px] w-full z-10 pb-2">
         <div className="grid grid-cols-2 gap-10 w-full px-10 h-min">
-          <div className="hidden md:flex items-start justify-start pl-5">
+          <div className="hidden lg:flex items-start justify-start pl-5">
             <div className="flex items-start justify-start gap-3 px-2 py-2 backdrop-blur-lg border-[1px] border-white/10 rounded-lg">
               <div className="h-10 w-10 border border-primary/30 rounded-lg flex items-center justify-center shadow-sm shadow-primary/10">
                 <MessageCircle size={22} className="text-primary" />
@@ -63,7 +63,7 @@ export default function RepositoryPage() {
             </div>
           </div>
 
-          <div className="hidden md:flex items-center justify-between pl-4 pr-7 py-2">
+          <div className="hidden lg:flex items-center justify-between pl-4 pr-7 py-2">
             <div className="flex items-center gap-3 px-2 py-2 backdrop-blur-lg border-[1px] border-white/10 rounded-lg">
               <div className="h-10 w-10 border border-primary/30 rounded-lg flex items-center justify-center shadow-sm shadow-primary/10">
                 <Eye size={22} className="text-primary" />
@@ -85,7 +85,7 @@ export default function RepositoryPage() {
           </div>
         </div>
       </div>
-      <div className="overflow-y-auto h-full scrollbar-hide md:pr-5 md:pl-10 md:pb-5 bg-background/50">
+      <div className="overflow-y-auto col-span-2 lg:col-span-1 h-full scrollbar-hide md:pr-5 md:pl-10 md:pb-5 bg-background/50">
         <Chatbox
           handleSendMessage={sendMessage}
           messages={messages}
@@ -93,7 +93,7 @@ export default function RepositoryPage() {
           setLoading={setLoadingMessage}
         />
       </div>
-      <div className="hidden md:block overflow-hidden pr-8">
+      <div className="hidden lg:block overflow-hidden pr-8">
         <MarkdownPreview messages={messages} latestMarkdownId={latestMarkdownId} />
       </div>
     </div>

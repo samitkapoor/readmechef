@@ -3,6 +3,7 @@ import React, { useRef, useEffect } from 'react';
 import { ClientMessage } from '@/types/ai.types';
 import ShinyText from './ui/ShinyText';
 import CopyButton from './ui/CopyButton';
+import EverythingMarkdown from 'everything-markdown';
 
 const isWindows = navigator.platform.includes('Win');
 
@@ -85,11 +86,16 @@ const Chatbox = ({
                 </div>
               ) : (
                 <>
-                  <div className="text-white rounded-2xl rounded-tl-sm text-xs md:text-sm w-full py-5 px-6 overflow-x-auto bg-[#151515] scrollbar-hide border-[1px] border-white/20 shadow-md max-w-[85%] tracking-tight relative">
+                  <div className="text-white rounded-2xl rounded-tl-sm text-xs md:text-sm w-full py-5 px-2 sm:px-0 overflow-x-auto bg-[#151515] scrollbar-hide border-[1px] border-white/20 shadow-md max-w-[85%] tracking-tight relative">
                     <CopyButton text={message.display} />
-                    <pre className="whitespace-pre-wrap break-words text-white/80">
-                      {message.display}
-                    </pre>
+                    <EverythingMarkdown
+                      content={
+                        message.display.startsWith('```markdown')
+                          ? message.display.replace('```markdown', '').replace('```markdown', '')
+                          : message.display
+                      }
+                      className="dark"
+                    />
                   </div>
                 </>
               )}
