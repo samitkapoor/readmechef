@@ -46,8 +46,6 @@ const nextConfig = {
     pagesBufferLength: 2
   },
   experimental: {
-    // Optimize loading speed
-    optimizeCss: true,
     // Optimize JS size
     optimizePackageImports: ['framer-motion', 'lucide-react']
   }
