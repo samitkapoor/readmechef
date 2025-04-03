@@ -61,7 +61,7 @@ const DemoSection = () => {
         </div>
 
         {/* Video Player with scroll animation */}
-        <MovingBorderCard wrapperClassName="!p-[1px]">
+        <MovingBorderCard speed={10} wrapperClassName="!p-[1px]">
           <motion.div
             style={{
               perspective: '1000px'

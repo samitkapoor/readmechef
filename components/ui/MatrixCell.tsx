@@ -10,7 +10,7 @@ type MatrixCellProps = {
 
 const MatrixCell = ({ matrixChars, beamsPerCell = 10 }: MatrixCellProps) => {
   return (
-    <div className="bg-black relative overflow-hidden h-full cursor-pointer">
+    <div className="bg-black relative overflow-hidden h-full">
       {Array.from({ length: beamsPerCell }).map((_, beamIndex) => (
         <MatrixBeam
           key={beamIndex}
