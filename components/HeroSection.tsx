@@ -54,7 +54,7 @@ const HeroSection = () => {
           background:
             'radial-gradient(circle, transparent 20%, rgba(0, 255, 0, 0.04) 60%, transparent 100%)'
         }}
-        className="w-screen max-h-screen absolute top-0 left-0 flex items-center justify-center"
+        className="w-screen max-h-screen h-full absolute top-0 left-0 flex items-center justify-center"
       >
         {backgroundCircles.map((circle) => (
           <div

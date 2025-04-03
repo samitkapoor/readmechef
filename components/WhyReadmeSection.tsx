@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import { TrendingUp, GitPullRequest, Clock, Award, Wrench, Users } from 'lucide-react';
 import LandingText from './ui/LandingText';
-import MatrixBeam from './ui/MatrixBeam';
+import MatrixCell from './ui/MatrixCell';
 
 type BenefitProps = {
   title: string;
@@ -107,7 +107,7 @@ const WhyReadmeSection = () => {
   const layoutPattern = [
     [1, 1, 0], // First row
     [0, 1, 1], // Second row
-    [1, 1, 0] // Third row
+    [1, 0, 1] // Third row
   ];
 
   // Characters for the Matrix beams
@@ -161,35 +161,6 @@ const WhyReadmeSection = () => {
         </LandingText>
       </div>
     </section>
-  );
-};
-
-// Create a separate component for the Matrix cell
-type MatrixCellProps = {
-  matrixChars: string;
-  beamsPerCell: number;
-};
-
-const MatrixCell = ({ matrixChars, beamsPerCell }: MatrixCellProps) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <div
-      className="bg-black relative overflow-hidden h-full cursor-pointer"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {Array.from({ length: beamsPerCell }).map((_, beamIndex) => (
-        <MatrixBeam
-          key={beamIndex}
-          characters={matrixChars}
-          duration={Math.random() * 4 + 6} // Slower duration: 6-10s
-          delay={Math.random() * 5} // More varied delay
-          beamHeight={Math.floor(Math.random() * 20) + 15} // Longer beams: 15-35
-          isParentHovered={isHovered}
-        />
-      ))}
-    </div>
   );
 };
 

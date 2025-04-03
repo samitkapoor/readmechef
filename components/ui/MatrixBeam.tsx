@@ -4,19 +4,20 @@ import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 type MatrixBeamProps = {
-  duration: number;
-  delay: number;
-  characters: string;
+  duration?: number;
+  delay?: number;
+  characters?: string;
   beamHeight?: number;
-  isParentHovered?: boolean;
 };
 
+const matrixChars =
+  '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#*_-+`~[](){}<>|中文字符';
+
 const MatrixBeam = ({
-  duration,
-  delay,
-  characters,
-  beamHeight = 20,
-  isParentHovered = false
+  duration = 1,
+  delay = 0,
+  characters = matrixChars,
+  beamHeight = 20
 }: MatrixBeamProps) => {
   const beamChars = useMemo(() => {
     const result = [];
@@ -49,30 +50,14 @@ const MatrixBeam = ({
       <motion.div
         className="flex flex-col"
         animate={{
-          filter: isParentHovered ? 'brightness(1.5) contrast(1.2)' : 'brightness(1)'
+          filter: 'brightness(1)'
         }}
         transition={{
           filter: { duration: 0.2 }
         }}
       >
         {/* Wrapper for shake animation */}
-        <motion.div
-          animate={
-            isParentHovered
-              ? {
-                  rotate: [0, -1, 1, -1, 0]
-                }
-              : { rotate: 0 }
-          }
-          transition={{
-            rotate: {
-              duration: 0.15,
-              repeat: isParentHovered ? Infinity : 0,
-              repeatType: 'mirror'
-            }
-          }}
-          style={{ transformOrigin: 'center center' }}
-        >
+        <div style={{ transformOrigin: 'center center' }}>
           {beamChars.map((char, index) => {
             // Randomize brightness for each character to create depth
             const brightness = index === 0 ? 2 : 0.7 + Math.random() * 0.5;
@@ -108,7 +93,7 @@ const MatrixBeam = ({
               </motion.div>
             );
           })}
-        </motion.div>
+        </div>
       </motion.div>
     </motion.div>
   );

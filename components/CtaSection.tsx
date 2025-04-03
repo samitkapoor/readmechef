@@ -3,19 +3,17 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import ShineButton from './ui/ShineButton';
+import MatrixCell from './ui/MatrixCell';
 
 const CtaSection = () => {
   const router = useRouter();
 
   return (
     <section className="w-full pt-[200px] flex flex-col items-center justify-center bg-primary/10">
-      <div
-        style={{
-          backgroundColor: '#000000',
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23198d49' fill-opacity='0.3'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }}
-        className="py-36 mx-auto relative text-center flex flex-col items-center justify-center border-[1px] bg-background border-neutral-700 border-b-0 max-w-[1300px] w-full"
-      >
+      <div className="py-36 mx-auto relative text-center flex flex-col items-center justify-center border-[1px] bg-background border-neutral-700 border-b-0 max-w-[1300px] w-full">
+        <div className="absolute inset-0 h-full w-full overflow-hidden">
+          <MatrixCell beamsPerCell={30} />
+        </div>
         <div
           style={{
             background: 'radial-gradient(circle at center, transparent, black)'
