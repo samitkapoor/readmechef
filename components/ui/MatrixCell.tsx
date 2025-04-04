@@ -12,7 +12,7 @@ type MatrixCellProps = {
  * MatrixCell - A container for matrix-style falling character beams
  * Optimized to only render and animate when in viewport
  */
-const MatrixCell = memo(({ matrixChars, beamsPerCell = 10 }: MatrixCellProps) => {
+const MatrixCell = memo(({ matrixChars, beamsPerCell = 7 }: MatrixCellProps) => {
   // Track if the component is in the viewport
   const [isInView, setIsInView] = useState(false);
 
@@ -62,7 +62,7 @@ const MatrixCell = memo(({ matrixChars, beamsPerCell = 10 }: MatrixCellProps) =>
   return (
     <div
       ref={containerRef}
-      className="bg-black relative overflow-hidden h-full"
+      className="bg-black relative flex justify-around overflow-hidden h-full w-full"
       style={{
         willChange: 'contents', // Hint to browser for optimization
         contain: 'content' // Improve rendering performance

@@ -114,9 +114,6 @@ const WhyReadmeSection = () => {
   const matrixChars =
     '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#*_-+`~[](){}<>|中文字符';
 
-  // Number of beams per empty cell - increase for density
-  const beamsPerCell = 8;
-
   return (
     <section className="w-full flex flex-col items-center justify-center border-b-[1px] border-primary/40">
       <div className="max-w-[1300px] w-full">
@@ -148,11 +145,7 @@ const WhyReadmeSection = () => {
               />
             ) : (
               // Render empty cell with Matrix beams
-              <MatrixCell
-                key={`empty-${rowIndex}-${colIndex}`}
-                matrixChars={matrixChars}
-                beamsPerCell={beamsPerCell}
-              />
+              <MatrixCell key={`empty-${rowIndex}-${colIndex}`} matrixChars={matrixChars} />
             );
           })}
         </div>
