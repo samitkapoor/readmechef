@@ -1,75 +1,120 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, memo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Pause } from 'lucide-react';
 import LandingText from './ui/LandingText';
 import MovingBorderCard from './ui/MovingBorderCard';
 
+// Video player component
+const VideoPlayer = memo(
+  ({
+    videoRef,
+    isPlaying,
+    setIsPlaying
+  }: {
+    videoRef: React.RefObject<HTMLVideoElement | null>;
+    isPlaying: boolean;
+    setIsPlaying: (playing: boolean) => void;
+  }) => {
+    const togglePlay = useCallback(() => {
+      if (videoRef.current) {
+        if (isPlaying) {
+          videoRef.current.pause();
+        } else {
+          videoRef.current.play();
+        }
+        setIsPlaying(!isPlaying);
+      }
+    }, [isPlaying, setIsPlaying, videoRef]);
+
+    return (
+      <>
+        <video
+          ref={videoRef}
+          className="w-full h-full object-cover"
+          playsInline
+          muted
+          preload="none"
+          poster="/readmechef-poster.png"
+          controlsList="nodownload"
+          disablePictureInPicture
+          disableRemotePlayback
+        >
+          {/* Video source is set dynamically by the API */}
+        </video>
+
+        {/* Video Controls Overlay */}
+        <div
+          className={`absolute inset-0 flex items-center justify-center bg-black/50 transition-opacity duration-300 ${
+            isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'
+          }`}
+          onClick={togglePlay}
+        >
+          <div className="absolute inset-0 flex items-center justify-center">
+            <button className="w-16 h-16 rounded-full text-primary bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors">
+              {isPlaying ? <Pause size={32} /> : <Play size={32} className="ml-1" />}
+            </button>
+          </div>
+        </div>
+      </>
+    );
+  }
+);
+
+VideoPlayer.displayName = 'VideoPlayer';
+
+// Main component
 const DemoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
 
-  const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  const handleScroll = () => {
-    if (videoRef.current) {
+  // Handle scroll to pause video when not visible
+  const handleScroll = useCallback(() => {
+    if (videoRef.current && isPlaying) {
       const rect = videoRef.current.getBoundingClientRect();
-      const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
-      if (!isVisible && isPlaying) {
+      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!isVisible) {
         videoRef.current.pause();
         setIsPlaying(false);
       }
     }
-  };
+  }, [isPlaying]);
 
+  // Add passive scroll listener for better performance
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isPlaying]);
+  }, [handleScroll]);
 
+  // Load video when component is in viewport
   useEffect(() => {
-    // Use Intersection Observer to load video only when it's near viewport
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !isVideoLoaded) {
-          if (videoRef.current) {
-            // Only load the video when it's actually needed
-            videoRef.current.src = '/readmechef-demo.mp4';
+        if (entries[0].isIntersecting && !isVideoLoaded && videoRef.current) {
+          // Create source element for the video
+          const source = document.createElement('source');
+          source.type = 'video/mp4';
+          source.src = '/api/video/demo';
 
-            // Optimize performance on mobile by reducing quality
-            const isMobile = window.innerWidth < 768;
-            if (isMobile) {
-              // Set lower quality options for mobile
-              videoRef.current.setAttribute('playsinline', '');
-              videoRef.current.currentTime = 0;
+          videoRef.current.appendChild(source);
 
-              // Reduce resolution rendering by using CSS
-              videoRef.current.style.maxHeight = '480px';
-              videoRef.current.classList.add('mobile-video');
-            }
-
-            // Add event listener to handle loading
-            videoRef.current.addEventListener('loadeddata', () => {
+          // Add event listener to handle loading
+          videoRef.current.addEventListener(
+            'loadeddata',
+            () => {
               setIsVideoLoaded(true);
-            });
-          }
+            },
+            { once: true }
+          );
         }
       },
-      { rootMargin: '400px', threshold: 0.1 } // Increased margin for earlier preloading
+      { rootMargin: '200px', threshold: 0.1 }
     );
 
     if (videoContainerRef.current) {
@@ -108,37 +153,12 @@ const DemoSection = () => {
               perspective: '1000px'
             }}
             className="w-full aspect-video bg-card overflow-hidden relative group border-[1px] border-primary/40 border-y-0"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true, margin: '-10%' }}
           >
-            <video
-              ref={videoRef}
-              className="w-full h-full object-cover"
-              playsInline
-              muted
-              preload="none"
-              poster="/readmechef-poster.png"
-              controlsList="nodownload"
-              disablePictureInPicture
-              disableRemotePlayback
-            >
-              {/* Video source will be set dynamically when in viewport */}
-              Your browser does not support the video tag.
-            </video>
-
-            {/* Video Controls Overlay */}
-            <div
-              className={`absolute inset-0 flex items-center justify-center bg-black/50 transition-opacity duration-300 ${
-                isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'
-              }`}
-            >
-              <div
-                onClick={togglePlay}
-                className="absolute inset-0 flex items-center justify-center"
-              >
-                <button className="w-16 h-16 rounded-full text-primary bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors">
-                  {isPlaying ? <Pause size={32} /> : <Play size={32} className="ml-1" />}
-                </button>
-              </div>
-            </div>
+            <VideoPlayer videoRef={videoRef} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
           </motion.div>
         </MovingBorderCard>
       </div>
@@ -146,4 +166,4 @@ const DemoSection = () => {
   );
 };
 
-export default DemoSection;
+export default memo(DemoSection);
