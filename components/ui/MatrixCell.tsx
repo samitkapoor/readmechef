@@ -75,7 +75,6 @@ const MatrixCell = memo(({ matrixChars, beamsPerCell = 10 }: MatrixCellProps) =>
             key={beamIndex}
             characters={matrixChars}
             duration={Math.random() * 4 + 6} // Slower duration: 6-10s
-            delay={Math.random() * 5} // More varied delay
             beamHeight={Math.floor(Math.random() * 20) + 15} // Longer beams: 15-35
             inView={isInView} // Pass inView state to prevent animations when not visible
           />
