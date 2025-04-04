@@ -35,7 +35,6 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
-  swcMinify: true,
   // Optimize asset delivery
   assetPrefix: process.env.NODE_ENV === 'production' ? '/_next' : undefined,
   // Cache optimization
