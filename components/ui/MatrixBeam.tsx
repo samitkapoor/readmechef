@@ -40,7 +40,7 @@ const MatrixBeam = memo(
     React.useEffect(() => {
       if (inView) {
         controls.start({
-          y: '100%',
+          y: '200%',
           transition: {
             y: { duration, delay, repeat: Infinity, ease: 'linear' }
           }
