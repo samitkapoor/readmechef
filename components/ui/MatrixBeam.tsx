@@ -1,71 +1,78 @@
 'use client';
 
-import React, { useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React, { useMemo, memo } from 'react';
+import { motion, useAnimation } from 'framer-motion';
 
 type MatrixBeamProps = {
   duration?: number;
   delay?: number;
   characters?: string;
   beamHeight?: number;
+  inView?: boolean;
 };
 
 const matrixChars =
   '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#*_-+`~[](){}<>|中文字符';
 
-const MatrixBeam = ({
-  duration = 1,
-  delay = 0,
-  characters = matrixChars,
-  beamHeight = 20
-}: MatrixBeamProps) => {
-  const beamChars = useMemo(() => {
-    const result = [];
-    for (let i = 0; i < beamHeight; i++) {
-      result.push(characters[Math.floor(Math.random() * characters.length)]);
-    }
-    return result;
-  }, [characters, beamHeight]);
+/**
+ * MatrixBeam - A single animated column of falling matrix characters
+ * Optimized to reduce rerenders and pause animations when not in viewport
+ */
+const MatrixBeam = memo(
+  ({
+    duration = 1,
+    delay = 0,
+    characters = matrixChars,
+    beamHeight = 20,
+    inView = true
+  }: MatrixBeamProps) => {
+    const controls = useAnimation();
 
-  // Fixed horizontal position for this beam
-  const beamPosition = useMemo(() => `${Math.random() * 80 + 5}%`, []);
+    const beamChars = useMemo(() => {
+      return Array.from(
+        { length: beamHeight },
+        () => characters[Math.floor(Math.random() * characters.length)]
+      );
+    }, [characters, beamHeight]);
 
-  return (
-    <motion.div
-      className="absolute text-green-500 font-mono text-xs md:text-sm"
-      style={{
-        left: beamPosition, // Use fixed position from useMemo
-        top: '-50px', // Start above viewport
-        opacity: 0.8
-      }}
-      initial={{ y: '-100%' }}
-      animate={{
-        y: '200%' // Only animate vertical movement
-      }}
-      transition={{
-        y: { duration, delay, repeat: Infinity, ease: 'linear' }
-      }}
-    >
-      {/* Container for characters with hover animations */}
+    const beamPosition = useMemo(() => `${Math.random() * 80 + 5}%`, []);
+
+    React.useEffect(() => {
+      if (inView) {
+        controls.start({
+          y: '100%',
+          transition: {
+            y: { duration, delay, repeat: Infinity, ease: 'linear' }
+          }
+        });
+      } else {
+        controls.stop();
+      }
+    }, [controls, inView, duration, delay]);
+
+    return (
       <motion.div
-        className="flex flex-col"
-        animate={{
-          filter: 'brightness(1)'
+        className="absolute text-green-500 font-mono text-xs md:text-sm"
+        style={{
+          left: beamPosition,
+          top: '-50px',
+          opacity: 0.8,
+          willChange: 'transform',
+          transform: 'translateZ(0)',
+          pointerEvents: 'none'
         }}
-        transition={{
-          filter: { duration: 0.2 }
-        }}
+        initial={{ y: '-100%' }}
+        animate={controls}
       >
-        {/* Wrapper for shake animation */}
-        <div style={{ transformOrigin: 'center center' }}>
+        <div className="flex flex-col">
           {beamChars.map((char, index) => {
-            // Randomize brightness for each character to create depth
             const brightness = index === 0 ? 2 : 0.7 + Math.random() * 0.5;
-            // First character is brightest (the "head")
             const isHead = index === 0;
 
+            const shouldAnimate = isHead || Math.random() > 0.8;
+
             return (
-              <motion.div
+              <div
                 key={index}
                 className={`text-center ${isHead ? 'text-white' : ''}`}
                 style={{
@@ -74,29 +81,30 @@ const MatrixBeam = ({
                     ? '0 0 8px rgba(255, 255, 255, 0.8)'
                     : '0 0 5px rgba(0, 255, 0, 0.5)'
                 }}
-                // Random character switching animation for some characters
-                animate={
-                  Math.random() > 0.7
-                    ? {
-                        opacity: [1, 1, 1],
-                        content: [
-                          char,
-                          characters[Math.floor(Math.random() * characters.length)],
-                          char
-                        ]
-                      }
-                    : {}
-                }
-                transition={{ duration: 1, repeat: Infinity, repeatDelay: Math.random() * 2 }}
               >
-                {char}
-              </motion.div>
+                {shouldAnimate && inView ? (
+                  <motion.span
+                    animate={{ opacity: [1, 0.8, 1] }}
+                    transition={{
+                      duration: 0.5 + Math.random(),
+                      repeat: Infinity,
+                      repeatDelay: Math.random() * 3
+                    }}
+                  >
+                    {char}
+                  </motion.span>
+                ) : (
+                  <span>{char}</span>
+                )}
+              </div>
             );
           })}
         </div>
       </motion.div>
-    </motion.div>
-  );
-};
+    );
+  }
+);
+
+MatrixBeam.displayName = 'MatrixBeam';
 
 export default MatrixBeam;

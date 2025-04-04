@@ -63,11 +63,11 @@ export default function Home() {
         {/* Demo section with video loads without SSR */}
         <DemoSection />
 
-        {/* <GridDivider /> */}
+        <GridDivider />
 
         {/* Lower priority sections */}
-        {/* <WhyReadmeSection /> */}
-        {/* <CtaSection /> */}
+        <WhyReadmeSection />
+        <CtaSection />
       </main>
 
       {/* Footer */}
