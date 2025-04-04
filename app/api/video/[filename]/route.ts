@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { stat, createReadStream } from 'fs';
 import { promisify } from 'util';
 import path from 'path';
+import { Readable } from 'stream';
 
 // Convert fs.stat to promise-based
 const statPromise = promisify(stat);
@@ -19,12 +20,38 @@ const VIDEO_FILES: Record<string, { path: string; type: string }> = {
 };
 
 /**
+ * Helper function to convert Node.js ReadStream to Web ReadableStream
+ * This makes it compatible with NextResponse
+ */
+function nodeStreamToWebStream(nodeStream: Readable): ReadableStream {
+  return new ReadableStream({
+    start(controller) {
+      nodeStream.on('data', (chunk) => {
+        controller.enqueue(chunk);
+      });
+      nodeStream.on('end', () => {
+        controller.close();
+      });
+      nodeStream.on('error', (err) => {
+        controller.error(err);
+      });
+    },
+    cancel() {
+      nodeStream.destroy();
+    }
+  });
+}
+
+/**
  * GET handler for video streaming
  * Supports range requests for efficient streaming
  */
-export async function GET(request: NextRequest, { params }: { params: { filename: string } }) {
+export async function GET(request: NextRequest) {
   try {
-    const filename = params.filename;
+    // Extract filename from URL path
+    const url = new URL(request.url);
+    const pathParts = url.pathname.split('/');
+    const filename = pathParts[pathParts.length - 1];
 
     // Check if the requested video exists in our map
     if (!VIDEO_FILES[filename]) {
@@ -60,8 +87,8 @@ export async function GET(request: NextRequest, { params }: { params: { filename
         'Cache-Control': 'public, max-age=31536000'
       };
 
-      // Return the stream with appropriate headers
-      return new NextResponse(stream as any, {
+      // Convert Node.js stream to Web ReadableStream and return with appropriate headers
+      return new NextResponse(nodeStreamToWebStream(stream), {
         status: 206,
         headers
       });
@@ -77,8 +104,8 @@ export async function GET(request: NextRequest, { params }: { params: { filename
         'Cache-Control': 'public, max-age=31536000'
       };
 
-      // Return the stream with appropriate headers
-      return new NextResponse(stream as any, {
+      // Convert Node.js stream to Web ReadableStream and return with appropriate headers
+      return new NextResponse(nodeStreamToWebStream(stream), {
         status: 200,
         headers
       });
