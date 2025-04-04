@@ -100,7 +100,7 @@ const HeroSection = () => {
               childrenClassName="flex items-center justify-center relative"
             >
               <MovingBorderCard wrapperClassName="my-4 rounded-xl">
-                <div className="flex relative flex-col h-[700px] w-[500px] lg:w-[800px] py-10 bg-neutral-800 md:p-6 lg:p-10 shadow-xl shadow-black rounded-lg">
+                <div className="flex relative flex-col h-[700px] w-[500px] lg:w-[800px] py-10 bg-neutral-800 md:p-6 shadow-xl shadow-black rounded-lg">
                   <TypewriterMarkdown
                     typingSpeed={150}
                     charSpeed={5}
