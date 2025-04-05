@@ -2,13 +2,15 @@ import { GitFork, Scale, Star } from 'lucide-react';
 import { GitHubRepo } from '../types/github.types';
 import dayjs from 'dayjs';
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
+import HintText from './ui/HintText';
 
 type RepositoryCardProps = {
   repo: GitHubRepo;
   onClick: () => void;
+  index: number;
 } & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
-const RepositoryCard = ({ repo, onClick, ...props }: RepositoryCardProps) => {
+const RepositoryCard = ({ repo, onClick, index, ...props }: RepositoryCardProps) => {
   const getTimeAgo = (date: string) => {
     const now = dayjs();
     const updatedAt = dayjs(date);
@@ -28,8 +30,8 @@ const RepositoryCard = ({ repo, onClick, ...props }: RepositoryCardProps) => {
   return (
     <div className="py-6 border-b border-gray-800" {...props}>
       <div className="flex flex-col gap-3">
-        <div className="flex flex-col gap-1 mb-1">
-          <div className="flex items-center">
+        <div className="flex flex-col mb-1">
+          <div className="flex items-center relative">
             <h2
               onClick={onClick}
               className="text-xl font-semibold text-primary hover:underline cursor-pointer"
@@ -40,8 +42,9 @@ const RepositoryCard = ({ repo, onClick, ...props }: RepositoryCardProps) => {
               {repo.private ? 'Private' : 'Public'}
             </span>
           </div>
+          {index <= 9 && <HintText text={`${index}`} className="leading-none" />}
 
-          {repo.description && <p className="text-sm text-gray-400">{repo.description}</p>}
+          {repo.description && <p className="text-sm mt-1 text-gray-400">{repo.description}</p>}
         </div>
 
         {repo.topics.length > 0 && (

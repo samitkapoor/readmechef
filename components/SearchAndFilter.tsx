@@ -1,5 +1,6 @@
 import { VisibilityFilter } from '@/types/filters.types';
 import Dropdown from './ui/Dropdown';
+import HintText from './ui/HintText';
 
 interface SearchAndFilterProps {
   searchQuery: string;
@@ -9,6 +10,7 @@ interface SearchAndFilterProps {
   languageFilter: string;
   onLanguageChange: (language: string) => void;
   availableLanguages: Array<{ value: string; label: string }>;
+  searchRef: React.RefObject<HTMLInputElement | null>;
 }
 
 const SearchAndFilter = ({
@@ -18,17 +20,23 @@ const SearchAndFilter = ({
   onVisibilityChange,
   languageFilter,
   onLanguageChange,
-  availableLanguages
+  availableLanguages,
+  searchRef
 }: SearchAndFilterProps) => {
   return (
     <div className="flex gap-2 items-center justify-between">
-      <div className="w-full">
+      <div className="w-full relative">
         <input
+          ref={searchRef}
           type="text"
           placeholder="Find a repository..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           className="w-full px-3 py-1 text-sm rounded-md border border-gray-700 bg-[var(--card)] text-white focus:outline-none focus:ring-2 focus:ring-secondary"
+        />
+        <HintText
+          text={navigator.platform.startsWith('Win') ? 'CTRL + K' : 'CMD + K'}
+          className="mt-1 absolute top-full"
         />
       </div>
       <Dropdown

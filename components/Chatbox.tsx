@@ -117,7 +117,7 @@ const Chatbox = ({
             ref={chatInputRef}
             onKeyDown={handleKeyDown}
             id="message"
-            className="w-full m-4 border border-gray-700 resize-none outline-none border-none text-white placeholder-gray-400 h-[80px] bg-transparent scrollbar-hide rounded-lg"
+            className="w-full m-4 border border-gray-700 resize-none outline-none border-none text-white placeholder-gray-400 h-[80px] bg-transparent scrollbar-hide"
             placeholder={"Press ' / ' and start typing to chat"}
           ></textarea>
 

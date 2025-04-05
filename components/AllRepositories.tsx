@@ -21,6 +21,8 @@ function AllRepositories() {
   const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>('all');
   const [languageFilter, setLanguageFilter] = useState('all');
 
+  const mainRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
   const lastComponent = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
@@ -139,14 +141,42 @@ function AllRepositories() {
     }
   }, [lastComponent, loading, hasMorePages]);
 
+  useEffect(() => {
+    if (mainRef.current) {
+      mainRef.current.focus();
+    }
+  }, []);
+
   const handleLoadMore = useCallback(() => {
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
     fetchRepos(nextPage, true);
   }, [currentPage, fetchRepos]);
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const noModifiers = !event.altKey && !event.shiftKey && !event.metaKey && !event.ctrlKey;
+
+    if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+      event.preventDefault();
+      searchRef.current?.focus();
+    } else if (noModifiers && event.key === 'Escape') {
+      searchRef.current?.blur();
+      mainRef.current?.focus();
+    } else if (noModifiers && event.key >= '0' && event.key <= '9') {
+      const index = parseInt(event.key);
+      if (index >= 0 && index < filteredRepos.length) {
+        router.push(`/${session?.user?.username}/${filteredRepos[index].name}`);
+      }
+    }
+  };
+
   return (
-    <div className="flex flex-col gap-1 w-full">
+    <div
+      ref={mainRef}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      className="flex flex-col gap-1 w-full outline-none border-none"
+    >
       <div>
         <p className="text-base text-[var(--text)]">
           Select a repository to generate a professional README with our AI-powered documentation
@@ -162,6 +192,7 @@ function AllRepositories() {
         languageFilter={languageFilter}
         onLanguageChange={setLanguageFilter}
         availableLanguages={availableLanguages}
+        searchRef={searchRef}
       />
 
       {loading && currentPage === 1 ? (
@@ -177,12 +208,14 @@ function AllRepositories() {
                     key={repo.id}
                     repo={repo}
                     onClick={() => router.push(`/${session?.user?.username}/${repo.name}`)}
+                    index={i}
                   />
                 ) : (
                   <RepositoryCard
                     key={repo.id}
                     repo={repo}
                     onClick={() => router.push(`/${session?.user?.username}/${repo.name}`)}
+                    index={i}
                   />
                 )
               )
