@@ -35,7 +35,7 @@ const SearchAndFilter = ({
           className="w-full px-3 py-1 text-sm rounded-md border border-gray-700 bg-[var(--card)] text-white focus:outline-none focus:ring-2 focus:ring-secondary"
         />
         <HintText
-          text={navigator.platform.startsWith('Win') ? 'CTRL + K' : 'CMD + K'}
+          text={navigator.platform.startsWith('Win') ? 'CTRL + K' : '⌘ + K'}
           className="mt-1 absolute top-full"
         />
       </div>

@@ -3,12 +3,15 @@
 import { LucideGithub, Lock, Unlock } from 'lucide-react';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { KeyboardEventHandler, useEffect, useRef } from 'react';
 import GradientButton from '@/components/ui/GradientButton';
 import Image from 'next/image';
+import HintText from '@/components/ui/HintText';
 
 export default function LoginPage() {
   const { status, data: session } = useSession();
+
+  const mainRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
 
@@ -18,14 +21,33 @@ export default function LoginPage() {
     }
   }, [status, router]);
 
+  useEffect(() => {
+    if (mainRef.current) {
+      mainRef.current.focus();
+    }
+  }, []);
+
   const handleGitHubLogin = (scope: 'basic' | 'extended') => {
     signIn('github', undefined, {
       scope: scope === 'basic' ? 'read:user user:email' : 'read:user user:email repo'
     });
   };
 
+  const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
+    if (event.key === 'b') {
+      handleGitHubLogin('basic');
+    } else if (event.key === 'e') {
+      handleGitHubLogin('extended');
+    }
+  };
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4 relative">
+    <div
+      ref={mainRef}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+      className="flex min-h-screen flex-col items-center justify-center px-4 relative outline-none border-none"
+    >
       <div
         style={{
           background: 'radial-gradient(circle at center, transparent, rgba(0, 0, 0, 0.5))'
@@ -97,6 +119,7 @@ export default function LoginPage() {
                   >
                     Connect with Basic Access
                   </GradientButton>
+                  <HintText text={'Press B'} className="ml-1 mt-1" />
                 </div>
 
                 {/* Extended Access Card */}
@@ -144,6 +167,7 @@ export default function LoginPage() {
                           Connect with Extended Access
                         </span>
                       </button>
+                      <HintText text={'Press E'} className="ml-1 mt-1" />
                     </div>
                   </div>
                 </div>

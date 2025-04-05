@@ -162,7 +162,12 @@ function AllRepositories() {
     } else if (noModifiers && event.key === 'Escape') {
       searchRef.current?.blur();
       mainRef.current?.focus();
-    } else if (noModifiers && event.key >= '0' && event.key <= '9') {
+    } else if (
+      noModifiers &&
+      event.key >= '0' &&
+      event.key <= '9' &&
+      document.activeElement !== searchRef.current
+    ) {
       const index = parseInt(event.key);
       if (index >= 0 && index < filteredRepos.length) {
         router.push(`/${session?.user?.username}/${filteredRepos[index].name}`);
