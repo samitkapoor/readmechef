@@ -7,12 +7,14 @@ type ActionButtonProps = {
   icon: React.ReactNode;
   children: React.ReactNode;
   onClick: () => void;
+  ref?: React.RefObject<HTMLButtonElement | null>;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const ActionButton = ({ icon, children, onClick, ...props }: ActionButtonProps) => {
+const ActionButton = ({ icon, ref, children, onClick, ...props }: ActionButtonProps) => {
   const [clicked, setClicked] = useState(false);
   return (
     <button
+      ref={ref}
       {...props}
       onClick={() => {
         onClick();

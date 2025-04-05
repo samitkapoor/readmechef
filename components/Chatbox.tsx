@@ -1,5 +1,5 @@
 import { CornerDownLeft, Loader } from 'lucide-react';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, RefObject } from 'react';
 import { ClientMessage } from '@/types/ai.types';
 import ShinyText from './ui/ShinyText';
 import CopyButton from './ui/CopyButton';
@@ -11,12 +11,14 @@ const Chatbox = ({
   handleSendMessage,
   messages,
   loading,
-  setLoading
+  setLoading,
+  chatInputRef
 }: {
   handleSendMessage: (message: string) => Promise<void>;
   messages: ClientMessage[];
   loading: boolean;
   setLoading: (loading: boolean) => void;
+  chatInputRef?: RefObject<HTMLTextAreaElement | null>;
 }) => {
   const divRef = useRef<HTMLDivElement>(null);
 
@@ -112,10 +114,11 @@ const Chatbox = ({
       <div className="sticky bottom-0 py-0 px-2">
         <div className="flex items-end gap-4 rounded-lg bg-[#222222] border-[1px] border-white/40">
           <textarea
+            ref={chatInputRef}
             onKeyDown={handleKeyDown}
             id="message"
             className="w-full m-4 border border-gray-700 resize-none outline-none border-none text-white placeholder-gray-400 h-[80px] bg-transparent scrollbar-hide rounded-lg"
-            placeholder="Type your message here..."
+            placeholder={"Press ' / ' and start typing to chat"}
           ></textarea>
 
           <button
