@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { KeyboardEventHandler, useEffect, useRef } from 'react';
 import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
 // Import critical sections directly
@@ -44,13 +44,34 @@ const SectionLoader = () => (
 export default function Home() {
   const { data: session, status } = useSession();
 
+  const router = useRouter();
+
+  const mainRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (mainRef.current) {
+      mainRef.current.focus();
+    }
+  }, []);
+
   if (status === 'authenticated') {
     redirect('/' + session?.user?.username);
   }
 
+  const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
+    if (event.key === 'g') {
+      router.push('/login');
+    }
+  };
+
   return (
     <>
-      <main className="flex-col flex justify-center items-center overflow-x-hidden">
+      <main
+        ref={mainRef}
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+        className="flex-col flex justify-center items-center overflow-x-hidden outline-none border-none"
+      >
         {/* Critical path rendering - load immediately */}
         <HeroSection />
         <GridDivider enableBackground={false} />

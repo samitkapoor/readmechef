@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
@@ -28,6 +28,9 @@ export default function RepositoryPage() {
 
   const [hasRequestedReadme, setHasRequestedReadme] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState(false);
+  const mainDivRef = useRef<HTMLDivElement>(null);
+  const chatInputRef = useRef<HTMLTextAreaElement | null>(null);
+  const copyBtnRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     if (repository && !hasRequestedReadme && !isLoading && !loadingMessage) {
@@ -39,13 +42,54 @@ export default function RepositoryPage() {
     }
   }, [repository, hasRequestedReadme, isLoading, sendMessage]);
 
+  useEffect(() => {
+    if (mainDivRef.current) {
+      mainDivRef.current.focus();
+    }
+  }, []);
+
   const handleCopyToClipboard = () => {
     const content = messages.find((message) => message.id === latestMarkdownId)?.display || '';
     navigator.clipboard.writeText(content);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const noModifiers = !event.altKey && !event.shiftKey && !event.metaKey && !event.ctrlKey;
+
+    if (noModifiers) {
+      switch (event.key.toLowerCase()) {
+        case 'c':
+          if (latestMarkdownId) {
+            if (copyBtnRef.current) {
+              copyBtnRef.current.click();
+            }
+          }
+          break;
+        case '/':
+          event.preventDefault();
+          if (chatInputRef.current) {
+            chatInputRef.current.focus();
+          }
+          break;
+        case 'escape':
+          if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+          }
+          if (mainDivRef.current) {
+            mainDivRef.current.focus();
+          }
+          break;
+      }
+    }
+  };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden h-screen">
+    <div
+      ref={mainDivRef}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      className="grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden h-screen outline-none"
+    >
       <div className="col-span-2 h-min fixed top-[100px] w-full z-10 pb-2">
         <div className="grid grid-cols-2 gap-10 w-full px-10 h-min">
           <div className="hidden lg:flex items-start justify-start pl-5">
@@ -75,11 +119,12 @@ export default function RepositoryPage() {
             </div>
             <div className="px-2 py-2 backdrop-blur-lg border-[1px] border-white/10 rounded-lg">
               <ActionButton
+                ref={copyBtnRef}
                 icon={<Copy size={18} />}
                 onClick={handleCopyToClipboard}
                 disabled={!latestMarkdownId}
               >
-                Copy
+                Copy (C)
               </ActionButton>
             </div>
           </div>
@@ -91,6 +136,7 @@ export default function RepositoryPage() {
           messages={messages}
           loading={loadingMessage}
           setLoading={setLoadingMessage}
+          chatInputRef={chatInputRef}
         />
       </div>
       <div className="hidden lg:block overflow-hidden pr-8">

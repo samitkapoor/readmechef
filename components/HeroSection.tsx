@@ -9,6 +9,7 @@ import BrowserWindow from './ui/browser-window';
 import TypewriterMarkdown from './TypewriterMarkdown';
 import ShineButton from './ui/ShineButton';
 import MovingBorderCard from './ui/MovingBorderCard';
+import HintText from './ui/HintText';
 
 const HeroSection = () => {
   const router = useRouter();
@@ -77,13 +78,14 @@ const HeroSection = () => {
             </h1>
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-2">
+          <div className="mt-8 flex items-center justify-center gap-2 relative">
             <GradientButton onClick={() => router.push('/login')} className="hover:scale-105">
               Get started
             </GradientButton>
             <ShineButton onClick={scrollToDemo} className="shadow-xl shadow-primary/30">
               Watch Demo
             </ShineButton>
+            <HintText text={'Press G'} className="absolute top-full left-0 ml-1 mt-1" />
           </div>
         </div>
 

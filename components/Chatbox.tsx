@@ -1,9 +1,10 @@
 import { CornerDownLeft, Loader } from 'lucide-react';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, RefObject } from 'react';
 import { ClientMessage } from '@/types/ai.types';
 import ShinyText from './ui/ShinyText';
 import CopyButton from './ui/CopyButton';
 import EverythingMarkdown from 'everything-markdown';
+import HintText from './ui/HintText';
 
 const isWindows = navigator.platform.includes('Win');
 
@@ -11,12 +12,14 @@ const Chatbox = ({
   handleSendMessage,
   messages,
   loading,
-  setLoading
+  setLoading,
+  chatInputRef
 }: {
   handleSendMessage: (message: string) => Promise<void>;
   messages: ClientMessage[];
   loading: boolean;
   setLoading: (loading: boolean) => void;
+  chatInputRef?: RefObject<HTMLTextAreaElement | null>;
 }) => {
   const divRef = useRef<HTMLDivElement>(null);
 
@@ -110,12 +113,13 @@ const Chatbox = ({
       </div>
 
       <div className="sticky bottom-0 py-0 px-2">
-        <div className="flex items-end gap-4 rounded-lg bg-[#222222] border-[1px] border-white/40">
+        <div className="flex items-end gap-4 rounded-lg bg-[#222222] border-[1px] border-white/40 relative">
           <textarea
+            ref={chatInputRef}
             onKeyDown={handleKeyDown}
             id="message"
-            className="w-full m-4 border border-gray-700 resize-none outline-none border-none text-white placeholder-gray-400 h-[80px] bg-transparent scrollbar-hide rounded-lg"
-            placeholder="Type your message here..."
+            className="w-full m-4 border border-gray-700 resize-none outline-none border-none text-white placeholder-gray-400 h-[80px] bg-transparent scrollbar-hide"
+            placeholder={'Type a message...'}
           ></textarea>
 
           <button
@@ -136,10 +140,9 @@ const Chatbox = ({
             )}
           </button>
         </div>
-        <div className="flex justify-center mt-2">
-          <p className="text-xs text-white/40">
-            {isWindows ? 'Press Ctrl + Enter to send' : 'Press ⌘ + Enter to send'}
-          </p>
+        <div className="flex justify-between mt-1">
+          <HintText text={'Press /'} />
+          <HintText text={isWindows ? 'Press CTRL + Enter to send' : 'Press ⌘ + Enter to send'} />
         </div>
       </div>
     </div>
