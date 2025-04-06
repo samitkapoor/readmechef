@@ -44,6 +44,24 @@ export function useChat(repository: Repository | null) {
         throw new Error(`API request failed with status ${response.status}`);
       }
 
+      if (response.status === 201) {
+        const body = await response.json();
+        const { message } = body;
+
+        setMessages((currentMessages) => [
+          ...currentMessages,
+          {
+            id: generateId(),
+            role: 'assistant',
+            display: message,
+            timestamp: dayjs().format('DD/MM hh:mm A')
+          }
+        ]);
+
+        setIsProcessing(false);
+        return;
+      }
+
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
       let result = '';

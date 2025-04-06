@@ -1,7 +1,7 @@
 'use server';
 
 import { google } from '@ai-sdk/google';
-import { streamText } from 'ai';
+import { generateText, streamText } from 'ai';
 import { NextRequest, NextResponse } from 'next/server';
 import { Repository, RepoDetails } from '@/types/github.types';
 import { ClientMessage } from '@/types/ai.types';
@@ -350,6 +350,25 @@ export const POST = async (request: NextRequest) => {
     }
 
     createUser(session.user);
+
+    const isReadmePrompt = await generateText({
+      model: google('gemini-2.0-flash-001'),
+      prompt: `Check if this prompt is about generating a README file or related to project documentation. 
+Reply only with "YES" or "NO".
+
+Prompt: ${input}`
+    });
+    const isReadmePromptResult = isReadmePrompt.text;
+
+    if (isReadmePromptResult.toLowerCase().trim().startsWith('no')) {
+      return NextResponse.json(
+        {
+          message:
+            'This chef only knows how to spice up README files—other dishes are above my pay grade!'
+        },
+        { status: 201 }
+      );
+    }
 
     const messages = history.map((his) => ({ role: his.role, content: his.display }));
 
