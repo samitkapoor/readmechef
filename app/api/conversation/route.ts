@@ -360,11 +360,21 @@ Prompt: ${input}`
     });
     const isReadmePromptResult = isReadmePrompt.text;
 
+    const responses = [
+      "I'd love to help, but I left my 'answer anything' apron at home. README files only!",
+      'This chef only knows how to spice up README files—other dishes are above my pay grade!',
+      "Oven's not preheated for that request! Let's stick to README goodness.",
+      "Ask me about README files and I'll serve it hot. Anything else? That's off the grill!",
+      "That's beyond my kitchen counter! But I've got all the spices for a killer README.",
+      "I tried answering that once... the pot boiled over. Stick to READMEs, it's safer.",
+      "I only cook what's in the README cookbook—no substitutions, no fancy desserts!",
+      "I'm not a generalist, I'm a README specialist. Ask me about README files only!"
+    ];
+
     if (isReadmePromptResult.toLowerCase().trim().startsWith('no')) {
       return NextResponse.json(
         {
-          message:
-            'This chef only knows how to spice up README files—other dishes are above my pay grade!'
+          message: responses[Math.floor(Math.random() * responses.length)]
         },
         { status: 201 }
       );
