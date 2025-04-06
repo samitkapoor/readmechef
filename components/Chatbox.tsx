@@ -89,7 +89,7 @@ const Chatbox = ({
                 </div>
               ) : (
                 <>
-                  <div className="text-white rounded-2xl rounded-tl-sm text-xs md:text-sm w-full py-5 px-2 sm:px-0 overflow-x-auto bg-[#151515] scrollbar-hide border-[1px] border-white/20 shadow-md max-w-[85%] tracking-tight relative">
+                  <div className="text-white group rounded-2xl rounded-tl-sm text-xs md:text-sm w-full py-5 px-2 sm:px-0 overflow-x-auto bg-[#151515] scrollbar-hide border-[1px] border-white/20 shadow-md max-w-[85%] tracking-tight relative">
                     <CopyButton text={message.display} />
                     <EverythingMarkdown
                       content={
