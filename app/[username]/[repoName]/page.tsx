@@ -90,9 +90,9 @@ export default function RepositoryPage() {
       tabIndex={0}
       className="grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden h-screen outline-none"
     >
-      <div className="col-span-2 h-min fixed top-[100px] w-full z-10 pb-2">
+      <div className="col-span-2 h-min fixed top-[100px] w-full z-10 pb-2 pointer-events-none">
         <div className="grid grid-cols-2 gap-10 w-full px-10 h-min">
-          <div className="hidden lg:flex items-start justify-start pl-5">
+          <div className="hidden lg:flex items-center justify-start pl-5">
             <div className="flex items-start justify-start gap-3 px-2 py-2 backdrop-blur-lg border-[1px] border-white/10 rounded-lg">
               <div className="h-10 w-10 border border-primary/30 rounded-lg flex items-center justify-center shadow-sm shadow-primary/10">
                 <MessageCircle size={22} className="text-primary" />
@@ -117,18 +117,18 @@ export default function RepositoryPage() {
                 <p className="text-sm text-white/60 leading-none">README.md</p>
               </div>
             </div>
-            <div className="px-2 py-2 backdrop-blur-lg border-[1px] border-white/10 rounded-lg">
-              <ActionButton
-                ref={copyBtnRef}
-                icon={<Copy size={18} />}
-                onClick={handleCopyToClipboard}
-                disabled={!latestMarkdownId}
-              >
-                Copy (C)
-              </ActionButton>
-            </div>
           </div>
         </div>
+      </div>
+      <div className="hidden lg:block px-2 py-2 backdrop-blur-lg border-[1px] border-white/10 rounded-lg absolute right-16 top-[100px] mr-1 mt-2.5">
+        <ActionButton
+          ref={copyBtnRef}
+          icon={<Copy size={18} />}
+          onClick={handleCopyToClipboard}
+          disabled={!latestMarkdownId}
+        >
+          Copy (C)
+        </ActionButton>
       </div>
       <div className="overflow-y-auto col-span-2 lg:col-span-1 h-full scrollbar-hide md:pr-5 md:pl-10 md:pb-5 bg-background/50">
         <Chatbox

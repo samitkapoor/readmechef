@@ -75,7 +75,7 @@ const Chatbox = ({
               key={message.id}
               className={`mb-6 shrink-0 flex-col flex scrollbar-hide ${
                 message.role === 'user' ? 'items-end max-w-full' : 'items-start max-w-full'
-              } ${i === 0 ? 'mt-[170px]' : 'mt-[16px]'}`}
+              } ${i === 0 ? 'mt-[170px]' : 'mt-[0px]'}`}
             >
               <div className={`text-xs mb-1.5 text-white/40 flex font-light items-center gap-1.5`}>
                 <p>{message.role === 'user' ? 'You' : 'ReadmeChef'}</p>
@@ -84,8 +84,22 @@ const Chatbox = ({
               </div>
 
               {message.role === 'user' ? (
-                <div className="text-white bg-[#198d49] py-4 px-5 rounded-2xl rounded-tr-sm shadow-sm max-w-[65%] text-xs md:text-[15px] tracking-tight">
-                  {message.display}
+                <div className="group flex flex-col max-w-[65%] w-full items-end justify-end">
+                  <div className="flex flex-col items-end justify-end">
+                    <div className="text-white bg-[#198d49] py-4 px-5 rounded-2xl rounded-tr-sm shadow-sm text-xs md:text-[15px] tracking-tight">
+                      {message.display}
+                    </div>
+                    <div className="group-hover:opacity-100 opacity-0 transition-opacity duration-200 flex items-center justify-end gap-2 mr-1 mt-1">
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(message.display);
+                        }}
+                        className="text-white/40 text-xs hover:underline"
+                      >
+                        Copy
+                      </button>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <>

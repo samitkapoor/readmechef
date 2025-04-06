@@ -355,7 +355,7 @@ export const POST = async (request: NextRequest) => {
       model: google('gemini-2.0-flash-001'),
       prompt: `Check if this prompt is about generating a README file or related to project documentation. 
 Reply only with "YES" or "NO"
-If the user is thanking you, reply only with "Thanks".
+If the user is only thanking you and is not asking anything related to README file or related to project documentation, reply only with "Thanks".
 
 Prompt: ${input}`
     });
