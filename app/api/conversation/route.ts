@@ -354,7 +354,8 @@ export const POST = async (request: NextRequest) => {
     const isReadmePrompt = await generateText({
       model: google('gemini-2.0-flash-001'),
       prompt: `Check if this prompt is about generating a README file or related to project documentation. 
-Reply only with "YES" or "NO".
+Reply only with "YES" or "NO"
+If the user is thanking you, reply only with "Thanks".
 
 Prompt: ${input}`
     });
@@ -375,6 +376,13 @@ Prompt: ${input}`
       return NextResponse.json(
         {
           message: responses[Math.floor(Math.random() * responses.length)]
+        },
+        { status: 201 }
+      );
+    } else if (isReadmePromptResult.toLowerCase().trim().startsWith('thanks')) {
+      return NextResponse.json(
+        {
+          message: "You're welcome!"
         },
         { status: 201 }
       );
