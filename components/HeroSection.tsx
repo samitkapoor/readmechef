@@ -10,6 +10,7 @@ import TypewriterMarkdown from './TypewriterMarkdown';
 import ShineButton from './ui/ShineButton';
 import MovingBorderCard from './ui/MovingBorderCard';
 import HintText from './ui/HintText';
+import Image from 'next/image';
 
 const HeroSection = () => {
   const router = useRouter();
@@ -71,8 +72,22 @@ const HeroSection = () => {
       </div>
       <div className="w-screen max-h-screen flex flex-col items-center justify-center z-10 px-4">
         <div className="flex flex-col items-center justify-center w-full lg:w-1/2 pl-0 lg:pl-10 z-10 pb-10 lg:pb-0 mb-20 md:mb-0">
+          <div
+            onClick={() => {
+              router.push('https://peerlist.io/samitkapoor/project/readmechef');
+            }}
+            className="mt-10 backdrop-blur-xl px-5 py-3 rounded-lg cursor-pointer bg-gradient-to-br bg-white/15 to-black/20"
+          >
+            <Image
+              src="/peerlist-launch.svg"
+              height={200}
+              width={150}
+              alt="peerlist"
+              className=""
+            />
+          </div>
           <div>
-            <h1 className="text-center text-3xl lg:text-4xl xl:text-5xl text-white/90 font-light mt-20">
+            <h1 className="text-center text-3xl lg:text-4xl xl:text-5xl text-white/90 font-light mt-10">
               Cooking the perfect README
               <span className="block mt-2 font-medium text-primary">Every Single Time</span>
             </h1>
