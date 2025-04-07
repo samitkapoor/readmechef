@@ -10,7 +10,7 @@ const CtaSection = () => {
 
   return (
     <section className="w-full pt-[200px] flex flex-col items-center justify-center bg-primary/10">
-      <div className="py-36 mx-auto relative text-center flex flex-col items-center justify-center border-[1px] bg-background border-neutral-700 border-b-0 max-w-[1300px] w-full">
+      <div className="py-36 mx-auto relative text-center flex flex-col items-center justify-center border-[1px] bg-background border-neutral-700 border-b-0 max-w-[1200px] w-full">
         <div className="absolute inset-0 h-full w-full overflow-hidden">
           <MatrixCell beamsPerCell={20} />
         </div>

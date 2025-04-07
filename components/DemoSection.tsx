@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useState, useRef, useEffect, memo, useCallback } from 'react';
-import { motion } from 'framer-motion';
 import { Play, Pause, Loader2 } from 'lucide-react';
 import LandingText from './ui/LandingText';
-import MovingBorderCard from './ui/MovingBorderCard';
+import BrowserWindow from './ui/browser-window';
 
 // Video player component
 const VideoPlayer = memo(
@@ -195,38 +194,24 @@ const DemoSection = () => {
   }, [videoSourceAdded, isVideoLoaded]);
 
   return (
-    <section
-      style={{
-        backgroundColor: '#000000',
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23198d49' fill-opacity='0.15'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-      }}
-      className="relative flex flex-col items-center justify-start w-full"
-    >
+    <section className="relative flex flex-col items-center justify-start w-full pb-10">
       <div
         id="demo-section"
-        className="flex flex-col items-center justify-center max-w-[1300px] w-full"
+        className="flex flex-col items-center justify-center max-w-[1200px] w-full pb-10"
       >
-        <div className="border-[1px] border-primary/40 w-full border-y-0 bg-background">
-          <LandingText>
-            What if I told you that you could create
-            <br />a perfect README in just one step?
-            <br />
-            <span className="text-sm text-white/60">(Watch the video 👇🏻)</span>
+        <div className="w-full border-y-0 bg-background">
+          <LandingText className="!border-none">
+            What if I told you that you could create a perfect README in just one step?
           </LandingText>
         </div>
 
-        {/* Video Player with scroll animation */}
-        <MovingBorderCard speed={10} wrapperClassName="!p-[1px]">
-          <motion.div
+        <BrowserWindow className="rounded-lg" url={'readmechef.com/demo'}>
+          <div
             ref={videoContainerRef}
             style={{
               perspective: '1000px'
             }}
-            className="w-full aspect-video bg-card overflow-hidden relative group border-[1px] border-primary/40 border-y-0"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true, margin: '-10%' }}
+            className="w-full aspect-video bg-card overflow-hidden relative group"
           >
             <VideoPlayer
               videoRef={videoRef}
@@ -234,8 +219,8 @@ const DemoSection = () => {
               isBuffering={isBuffering}
               handlePlayClick={handlePlayClick}
             />
-          </motion.div>
-        </MovingBorderCard>
+          </div>
+        </BrowserWindow>
       </div>
     </section>
   );

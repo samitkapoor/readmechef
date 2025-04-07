@@ -116,7 +116,7 @@ const WhyReadmeSection = () => {
 
   return (
     <section className="w-full flex flex-col items-center justify-center border-b-[1px] border-primary/40">
-      <div className="max-w-[1300px] w-full">
+      <div className="max-w-[1200px] w-full">
         <LandingText className="border-y-0 !border-b-[1px] border-[1px] border-neutral-700 w-full ">
           Why Every Project Needs a Great README?
         </LandingText>

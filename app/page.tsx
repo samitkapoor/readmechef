@@ -74,7 +74,7 @@ export default function Home() {
       >
         {/* Critical path rendering - load immediately */}
         <HeroSection />
-        <GridDivider enableBackground={false} />
+        <GridDivider />
 
         {/* Features can load early since it doesn't have heavy assets */}
         <FeaturesSection />

@@ -132,3 +132,5 @@ dist
 .vscode
 
 prompts.txt
+
+.DS_Store
