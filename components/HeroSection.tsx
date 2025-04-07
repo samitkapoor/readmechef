@@ -27,25 +27,25 @@ const HeroSection = () => {
       height: 500,
       width: 500,
       className: 'border-y-4 blur-md border-neutral-400',
-      animation: 'spin 6s linear infinite'
+      animation: 'spin 7s linear infinite'
     },
     {
       height: 700,
       width: 700,
       className: 'border-l-4 blur-md border-neutral-400',
-      animation: 'spin 6s linear infinite'
+      animation: 'spin 7s linear infinite'
     },
     {
       height: 300,
       width: 300,
       className: 'border-r-4 blur-md border-neutral-400',
-      animation: 'spin 1s linear infinite'
+      animation: 'spin 2s linear infinite'
     },
     {
       height: 900,
       width: 900,
       className: 'border-l-4 blur-md border-neutral-400',
-      animation: 'spin 2s linear infinite'
+      animation: 'spin 10s linear infinite'
     }
   ];
 
