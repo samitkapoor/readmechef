@@ -84,6 +84,13 @@ export default function RepositoryPage() {
             }
           }
           break;
+        case 'd':
+          if (latestMarkdownId) {
+            if (downloadBtnRef.current) {
+              downloadBtnRef.current.click();
+            }
+          }
+          break;
         case '/':
           event.preventDefault();
           if (chatInputRef.current) {
