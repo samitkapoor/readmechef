@@ -43,14 +43,12 @@ video {
   justify-content: center;
   background: linear-gradient(
     var(--angle),
-    #00ff04,
-    transparent,
-    transparent,
-    transparent,
-    transparent,
-    transparent,
-    transparent,
-    #00ff04
+    #e9ffde 1%,
+    #00ff04ad 2%,
+    black 10%,
+    black 90%,
+    #00ff04ad 98%,
+    #e9ffde 99%
   );
   animation: moveGradient 4s linear infinite;
 }

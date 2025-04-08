@@ -62,7 +62,7 @@ const MatrixCell = memo(({ matrixChars, beamsPerCell = 7 }: MatrixCellProps) => 
   return (
     <div
       ref={containerRef}
-      className="bg-black relative flex justify-around overflow-hidden h-full w-full"
+      className="bg-black relative flex rounded-2xl justify-around overflow-hidden h-full w-full"
       style={{
         willChange: 'contents', // Hint to browser for optimization
         contain: 'content' // Improve rendering performance

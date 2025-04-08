@@ -14,7 +14,7 @@ type BenefitProps = {
 
 const Benefit = ({ title, description, icon }: BenefitProps) => {
   return (
-    <div className="flex flex-col gap-5 items-start bg-gradient-to-tr from-black to-black h-full w-full hover:bg-gradient-to-tr hover:from-[#1c1c1c] hover:via-black hover:to-[#1c1c1c] transition-all duration-300 p-5 lg:p-12">
+    <div className="flex flex-col gap-5 items-start bg-gradient-to-tr from-black to-black h-full w-full hover:bg-gradient-to-tr hover:from-[#1c1c1c] hover:via-black hover:to-[#1c1c1c] transition-all duration-300 p-5 lg:p-12 rounded-2xl">
       <div className="p-4 bg-primary/20 rounded-full">{icon}</div>
       <div className="flex flex-col gap-2">
         <h3 className="text-xl lg:text-2xl font-semibold text-white/90">{title}</h3>
@@ -117,11 +117,9 @@ const WhyReadmeSection = () => {
   return (
     <section className="w-full flex flex-col items-center justify-center border-b-[1px] border-primary/40">
       <div className="max-w-[1200px] w-full">
-        <LandingText className="border-y-0 !border-b-[1px] border-[1px] border-neutral-700 w-full ">
-          Why Every Project Needs a Great README?
-        </LandingText>
+        <LandingText className="w-full ">Why Every Project Needs a Great README?</LandingText>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-[1px] border-neutral-700 border-t-0 gap-[1px] bg-neutral-700 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-[1px] border-neutral-900/40 gap-2 p-2 bg-neutral-900/40 w-full rounded-3xl">
           {layoutPattern.flat().map((cell, index) => {
             const rowIndex = Math.floor(index / 3);
             const colIndex = index % 3;
@@ -149,7 +147,7 @@ const WhyReadmeSection = () => {
             );
           })}
         </div>
-        <LandingText className="border-y-0 border-[1px] border-primary/40 border-b-0 w-full">
+        <LandingText className="w-full">
           A well-crafted README is essential for your project&apos;s success.
         </LandingText>
       </div>
