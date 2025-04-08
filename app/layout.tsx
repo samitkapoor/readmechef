@@ -36,10 +36,10 @@ export const metadata: Metadata = {
     siteName: 'ReadmeChef',
     images: [
       {
-        url: '/readmechef-logo.png',
+        url: 'https://readmechef.com/readmechef-poster.png',
         width: 1200,
         height: 630,
-        alt: 'ReadmeChef Logo'
+        alt: 'ReadmeChef - AI-powered README generator'
       }
     ],
     locale: 'en_US',
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     description:
       'AI-powered README generator that helps you create professional documentation for your projects in minutes.',
     creator: '@samitkapoorr',
-    images: ['/readmechef-logo.png']
+    images: ['https://readmechef.com/readmechef-poster.png']
   },
   robots: {
     index: true,
