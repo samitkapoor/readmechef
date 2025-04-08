@@ -22,7 +22,8 @@ export default function RepositoryPage() {
   const { repository, isLoading } = useRepository(
     session?.user?.username || '',
     repositoryName,
-    accessToken || ''
+    accessToken || '',
+    session?.user?.platform || ''
   );
   const { messages, latestMarkdownId, sendMessage } = useChat(repository);
 

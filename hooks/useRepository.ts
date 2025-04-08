@@ -1,46 +1,57 @@
 import { useState, useEffect } from 'react';
-import { Repository } from '@/types/github.types';
 import { signOut } from 'next-auth/react';
+import { Repository, normalizeGitHubRepo, normalizeGitLabRepo } from '@/types/repository.types';
+import { fetchGitHubRepository } from '@/services/githubApi';
+import { fetchGitLabRepository } from '@/services/gitlabApi';
 
-export function useRepository(username: string, repositoryName: string, accessToken?: string) {
+export function useRepository(
+  username: string,
+  repositoryName: string,
+  accessToken: string,
+  platform: string
+) {
   const [repository, setRepository] = useState<Repository | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const fetchRepository = async () => {
-      if (!accessToken) {
+      if (!accessToken || !platform) {
         setIsLoading(false);
         return;
       }
 
       try {
         setIsLoading(true);
-        const res = await fetch(`https://api.github.com/repos/${username}/${repositoryName}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            Accept: 'application/vnd.github+json'
-          }
-        });
+        let normalizedRepo: Repository;
 
-        if (!res.ok) {
-          signOut({ callbackUrl: '/login' });
-          throw new Error(`Failed to fetch repository details: ${res.status}`);
+        if (platform === 'github') {
+          const githubRepo = await fetchGitHubRepository(username, repositoryName, accessToken);
+          normalizedRepo = normalizeGitHubRepo(githubRepo);
+        } else if (platform === 'gitlab') {
+          const gitlabRepo = await fetchGitLabRepository(repositoryName, accessToken);
+          normalizedRepo = normalizeGitLabRepo(gitlabRepo);
+        } else {
+          throw new Error(`Unsupported platform: ${platform}`);
         }
 
-        const data = await res.json();
-        setRepository(data);
+        setRepository(normalizedRepo);
         setError(null);
       } catch (err) {
         console.error('Error fetching repository:', err);
         setError(err instanceof Error ? err : new Error('An unknown error occurred'));
+
+        // Sign out if the error is due to authentication
+        if (err instanceof Error && err.message.includes('401')) {
+          signOut({ callbackUrl: '/login' });
+        }
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchRepository();
-  }, [username, repositoryName, accessToken]);
+  }, [username, repositoryName, accessToken, platform]);
 
   return { repository, isLoading, error };
 }

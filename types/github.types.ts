@@ -1,15 +1,24 @@
-export type GitHubRepo = {
+export interface GitHubRepo {
   id: number;
   name: string;
+  full_name: string;
   description: string | null;
+  html_url: string;
+  default_branch: string;
+  created_at: string;
   language: string | null;
   stargazers_count: number;
   private: boolean;
   open_issues_count: number;
   forks: number;
+  forks_count: number;
   topics: string[];
   license?: {
     name: string;
+  };
+  owner: {
+    login: string;
+    avatar_url: string;
   };
   updated_at: string;
   visibility:
@@ -22,7 +31,7 @@ export type GitHubRepo = {
     | 'can_be_sponsored'
     | 'mirrors'
     | 'templates';
-};
+}
 
 export type Repository = {
   owner: {

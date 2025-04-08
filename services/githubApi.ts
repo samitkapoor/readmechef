@@ -45,3 +45,24 @@ export async function fetchGitHubRepos(
     throw error;
   }
 }
+
+export async function fetchGitHubRepository(
+  username: string,
+  repositoryName: string,
+  accessToken: string
+): Promise<GitHubRepo> {
+  const projectPath = encodeURIComponent(`${username}/${repositoryName}`);
+
+  const response = await fetch(`https://api.github.com/repos/${projectPath}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: 'application/vnd.github+json'
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch GitHub repository: ${response.status}`);
+  }
+
+  return response.json();
+}

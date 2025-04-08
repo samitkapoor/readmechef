@@ -3,7 +3,7 @@ import { generateId } from 'ai';
 import dayjs from 'dayjs';
 
 import { ClientMessage } from '@/types/ai.types';
-import { Repository } from '@/types/github.types';
+import { Repository } from '@/types/repository.types';
 
 export function useChat(repository: Repository | null) {
   const [messages, setMessages] = useState<ClientMessage[]>([]);

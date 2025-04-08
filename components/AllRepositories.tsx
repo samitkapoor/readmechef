@@ -79,7 +79,8 @@ function AllRepositories() {
             perPage,
             debouncedSearch,
             visibilityFilter,
-            languageFilter
+            languageFilter,
+            session?.user?.scope || ''
           );
         }
 
