@@ -1,4 +1,7 @@
+'use server';
+
 import { GitLabRepo } from '@/types/gitlab.types';
+import { signOut } from 'next-auth/react';
 
 async function getUserId(accessToken: string): Promise<string> {
   const userDetails = await fetch('https://gitlab.com/api/v4/user', {
@@ -7,6 +10,7 @@ async function getUserId(accessToken: string): Promise<string> {
     }
   });
   if (!userDetails.ok) {
+    signOut({ callbackUrl: '/login' });
     throw new Error('Failed to fetch user details');
   }
   const { id: userId } = await userDetails.json();
@@ -104,6 +108,7 @@ export async function fetchGitLabRepository(
   const repoDetailsResponse = await getRepos(userId, `search=${repositoryName}`, accessToken);
   const repos = await repoDetailsResponse.json();
   if (repos.length === 0) {
+    signOut({ callbackUrl: '/login' });
     throw new Error(`Repository not found`);
   }
   const repo = repos[0];
@@ -115,6 +120,7 @@ export async function fetchGitLabRepository(
   });
 
   if (!response.ok) {
+    signOut({ callbackUrl: '/login' });
     throw new Error(`Failed to fetch GitLab repository: ${response.status}`);
   }
 

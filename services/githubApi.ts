@@ -1,3 +1,5 @@
+'use server';
+
 import { GitHubRepo } from '@/types/github.types';
 
 /**
@@ -51,7 +53,7 @@ export async function fetchGitHubRepository(
   repositoryName: string,
   accessToken: string
 ): Promise<GitHubRepo> {
-  const projectPath = encodeURIComponent(`${username}/${repositoryName}`);
+  const projectPath = `${username}/${repositoryName}`;
 
   const response = await fetch(`https://api.github.com/repos/${projectPath}`, {
     headers: {
