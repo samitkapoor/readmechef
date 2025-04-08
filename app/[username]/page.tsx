@@ -9,6 +9,11 @@ import Image from 'next/image';
 export default function DashboardPage() {
   const { data: session } = useSession();
 
+  const isGitlab = session?.user?.platform === 'gitlab';
+
+  const imageUrl =
+    (isGitlab ? session?.user?.image?.replace(/\?s=\d+/, '?s=450') : session?.user?.image) || '';
+
   return (
     <div className="container mx-auto max-w-7xl flex flex-col md:grid md:grid-cols-4 gap-10 px-4 py-[100px]">
       <div className="col-span-1 flex flex-col items-start justify-start relative">
@@ -17,7 +22,7 @@ export default function DashboardPage() {
             {session?.user?.image && (
               <div className="h-full w-full overflow-hidden rounded-full hover:animate-spin p-1 border-[10px] border-neutral-900 ">
                 <Image
-                  src={session.user.image}
+                  src={imageUrl}
                   alt={session.user.name || 'User'}
                   width={1080}
                   height={1080}

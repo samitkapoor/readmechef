@@ -46,13 +46,13 @@ const SearchAndFilter = ({
         options={[
           { value: 'all', label: 'All' },
           { value: 'public', label: 'Public' },
-          { value: 'private', label: 'Private' },
-          { value: 'sources', label: 'Sources' },
-          { value: 'forks', label: 'Forks' },
-          { value: 'archived', label: 'Archived' },
-          { value: 'can_be_sponsored', label: 'Can be sponsored' },
-          { value: 'mirrors', label: 'Mirrors' },
-          { value: 'templates', label: 'Templates' }
+          { value: 'private', label: 'Private' }
+          // { value: 'sources', label: 'Sources' },
+          // { value: 'forks', label: 'Forks' },
+          // { value: 'archived', label: 'Archived' },
+          // { value: 'can_be_sponsored', label: 'Can be sponsored' },
+          // { value: 'mirrors', label: 'Mirrors' },
+          // { value: 'templates', label: 'Templates' }
         ]}
         placeholder="Type"
       />
