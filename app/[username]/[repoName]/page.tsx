@@ -8,7 +8,7 @@ import Chatbox from '@/components/Chatbox';
 import MarkdownPreview from '@/components/MarkdownPreview';
 import { useRepository } from '@/hooks/useRepository';
 import { useChat } from '@/hooks/useChat';
-import { Copy, Eye, MessageCircle } from 'lucide-react';
+import { Copy, Download, Eye, MessageCircle } from 'lucide-react';
 import ActionButton from '@/components/ui/ActionButton';
 
 export const maxDuration = 30;
@@ -31,6 +31,7 @@ export default function RepositoryPage() {
   const mainDivRef = useRef<HTMLDivElement>(null);
   const chatInputRef = useRef<HTMLTextAreaElement | null>(null);
   const copyBtnRef = useRef<HTMLButtonElement | null>(null);
+  const downloadBtnRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     if (repository && !hasRequestedReadme && !isLoading && !loadingMessage) {
@@ -49,8 +50,26 @@ export default function RepositoryPage() {
   }, []);
 
   const handleCopyToClipboard = () => {
-    const content = messages.find((message) => message.id === latestMarkdownId)?.display || '';
+    const content = (
+      messages.find((message) => message.id === latestMarkdownId)?.display || ''
+    ).replace('```markdown', '');
     navigator.clipboard.writeText(content);
+  };
+
+  const handleDownload = () => {
+    // ? Function to download the README.md file
+    const content = (
+      messages.find((message) => message.id === latestMarkdownId)?.display || ''
+    ).replace('```markdown', '');
+    const blob = new Blob([content], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'README.md';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -120,7 +139,15 @@ export default function RepositoryPage() {
           </div>
         </div>
       </div>
-      <div className="hidden lg:block px-2 py-2 backdrop-blur-lg border-[1px] border-white/10 rounded-lg absolute right-16 top-[100px] mr-1 mt-2.5">
+      <div className="hidden lg:flex px-2 py-2 backdrop-blur-lg border-[1px] border-white/10 rounded-lg absolute right-16 top-[100px] mr-1 mt-2.5 items-center gap-2">
+        <ActionButton
+          ref={downloadBtnRef}
+          icon={<Download size={18} />}
+          onClick={handleDownload}
+          disabled={!latestMarkdownId}
+        >
+          Download (D)
+        </ActionButton>
         <ActionButton
           ref={copyBtnRef}
           icon={<Copy size={18} />}

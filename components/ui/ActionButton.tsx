@@ -23,9 +23,9 @@ const ActionButton = ({ icon, ref, children, onClick, ...props }: ActionButtonPr
           setClicked(false);
         }, 2000);
       }}
-      className="flex items-center gap-2 border bg-primary/10 border-primary/50 rounded-md px-3 py-2 text-primary hover:border-primary transition-all cursor-pointer"
+      className="flex items-center gap-2 border bg-primary/10 border-primary/50 rounded-md px-3 py-2 text-primary hover:border-primary disabled:border-gray-700 disabled:cursor-not-allowed disabled:text-gray-700 disabled:bg-black transition-all cursor-pointer"
     >
-      {clicked ? <Check size={20} /> : icon} {children}
+      {clicked ? <Check size={20} /> : icon} <div className="hidden xl:block">{children}</div>
     </button>
   );
 };
