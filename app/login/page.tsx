@@ -1,6 +1,6 @@
 'use client';
 
-import { LucideGithub, Gitlab } from 'lucide-react';
+import { LucideGithub, Gitlab, LucideIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
@@ -12,7 +12,7 @@ const LoginButton = ({
   color = 'primary'
 }: {
   onClick: () => void;
-  icon: any;
+  icon: LucideIcon;
   text: string;
   color?: 'primary' | 'gitlab';
 }) => (
