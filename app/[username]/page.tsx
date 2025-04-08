@@ -2,7 +2,7 @@
 
 import AllRepositories from '@/components/AllRepositories';
 import Hyperlink from '@/components/ui/Hyperlink';
-import { Github } from 'lucide-react';
+import { Github, GitlabIcon } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 
@@ -13,7 +13,7 @@ export default function DashboardPage() {
     <div className="container mx-auto max-w-7xl flex flex-col md:grid md:grid-cols-4 gap-10 px-4 py-[100px]">
       <div className="col-span-1 flex flex-col items-start justify-start relative">
         <div className="flex md:flex-col items-start justify-start sticky top-[100px]">
-          <div>
+          <div className="flex items-center justify-center">
             {session?.user?.image && (
               <div className="h-full w-full overflow-hidden rounded-full hover:animate-spin p-1 border-[10px] border-neutral-900 ">
                 <Image
@@ -30,11 +30,20 @@ export default function DashboardPage() {
             <p className="text-xl font-bold mt-5 leading-none">{session?.user?.name}</p>
             <p className="text-xl text-white/70">{session?.user?.username}</p>
             <div className="mt-5">
-              <Hyperlink
-                href={'https://github.com/' + session?.user?.username}
-                prefixIcon={<Github size={16} className="mr-0.5" />}
-                text="GitHub"
-              />
+              {session?.user.platform === 'github' && (
+                <Hyperlink
+                  href={'https://github.com/' + session?.user?.username}
+                  prefixIcon={<Github size={16} className="mr-0.5" />}
+                  text="GitHub"
+                />
+              )}
+              {session?.user.platform === 'gitlab' && (
+                <Hyperlink
+                  href={'https://gitlab.com/' + session?.user?.username}
+                  prefixIcon={<GitlabIcon size={16} className="mr-0.5" />}
+                  text="GitLab"
+                />
+              )}
             </div>
           </div>
         </div>

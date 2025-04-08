@@ -7,13 +7,19 @@ import SearchAndFilter from './SearchAndFilter';
 import RepositoryCard from './RepositoryCard';
 import { VisibilityFilter } from '@/types/filters.types';
 import { GitHubRepo } from '@/types/github.types';
+import { GitLabRepo } from '@/types/gitlab.types';
 import { Github } from 'lucide-react';
 import useDebounce from '@/hooks/useDebounce';
+import { fetchGitHubRepos } from '@/services/githubApi';
+import { fetchGitLabRepos } from '@/services/gitlabApi';
+
+// Union type for repositories from either platform
+type Repo = GitHubRepo | GitLabRepo;
 
 function AllRepositories() {
   const { data: session } = useSession();
 
-  const [repos, setRepos] = useState<GitHubRepo[]>([]);
+  const [repos, setRepos] = useState<Repo[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMorePages, setHasMorePages] = useState(true);
@@ -43,45 +49,58 @@ function AllRepositories() {
 
       try {
         setLoading(true);
-        const params = new URLSearchParams({
-          ...(debouncedSearch && { q: debouncedSearch }),
-          per_page: debouncedSearch ? '100' : '10',
-          page: pageNumber.toString(),
-          ...(visibilityFilter !== 'all' && { visibility: visibilityFilter }),
-          ...(languageFilter !== 'all' && { language: languageFilter }),
-          affiliation: 'owner',
-          sort: 'updated' // Default sort by last updated time
-        });
 
-        const res = await fetch(`https://api.github.com/user/repos?${params}`, {
-          headers: {
-            Authorization: `Bearer ${session.user.accessToken}`,
-            Accept: 'application/vnd.github+json'
-          }
-        });
+        // Determine which API to use based on the platform
+        const isGitHub = session.user.platform === 'github';
+        const isGitLab = session.user.platform === 'gitlab';
 
-        if (!res.ok) {
-          throw new Error('Failed to fetch repositories');
+        if (!isGitHub && !isGitLab) {
+          console.error('Unknown platform:', session.user.platform);
+          return;
         }
 
-        const newRepos = await res.json();
+        const perPage = debouncedSearch ? 100 : 10;
 
-        const linkHeader = res.headers.get('Link');
-        if (linkHeader) {
-          setHasMorePages(linkHeader.includes('rel="next"'));
+        let result;
+
+        if (isGitHub) {
+          result = await fetchGitHubRepos(
+            session.user.accessToken,
+            pageNumber,
+            perPage,
+            debouncedSearch,
+            visibilityFilter,
+            languageFilter
+          );
         } else {
-          setHasMorePages(newRepos.length === 30);
+          result = await fetchGitLabRepos(
+            session.user.accessToken,
+            pageNumber,
+            perPage,
+            debouncedSearch,
+            visibilityFilter,
+            languageFilter
+          );
         }
+
+        const { repos: newRepos, hasMore } = result;
 
         // Update repos - either append or replace based on parameter
         setRepos((prevRepos) => (append ? [...prevRepos, ...newRepos] : newRepos));
+        setHasMorePages(hasMore);
       } catch (err) {
         console.error('Error fetching repositories:', err);
       } finally {
         setLoading(false);
       }
     },
-    [session?.user?.accessToken, visibilityFilter, languageFilter, debouncedSearch]
+    [
+      session?.user?.accessToken,
+      session?.user?.platform,
+      visibilityFilter,
+      languageFilter,
+      debouncedSearch
+    ]
   );
 
   // Filter repos based on search query and language
@@ -98,48 +117,42 @@ function AllRepositories() {
       );
     }
 
-    // Apply language filter
-    if (languageFilter !== 'all') {
-      filtered = filtered.filter((repo) => repo.language === languageFilter);
-    }
-
-    // Apply visibility filter
-    if (visibilityFilter !== 'all') {
-      filtered = filtered.filter((repo) => repo.visibility === visibilityFilter);
-    }
-
     return filtered;
-  }, [repos, debouncedSearch, languageFilter]);
+  }, [repos, debouncedSearch]);
 
   useEffect(() => {
-    if (session?.user?.username) {
-      setCurrentPage(1);
-      fetchRepos(1, false);
-    }
-  }, [session?.user?.username, visibilityFilter, languageFilter, fetchRepos]);
-
-  // Load more repos when the last component is in view
-  useEffect(() => {
-    if (lastComponent.current && !loading && hasMorePages) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          const [entry] = entries;
-          if (entry.isIntersecting) {
-            handleLoadMore();
-          }
-        },
-        {
-          root: null,
-          rootMargin: '20px',
-          threshold: 0.1
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMorePages && !loading) {
+          setCurrentPage((prev) => prev + 1);
         }
-      );
+      },
+      { threshold: 0.5 }
+    );
 
+    if (lastComponent.current) {
       observer.observe(lastComponent.current);
-
-      return () => observer.disconnect();
     }
-  }, [lastComponent, loading, hasMorePages]);
+
+    return () => {
+      if (lastComponent.current) {
+        observer.unobserve(lastComponent.current);
+      }
+    };
+  }, [hasMorePages, loading, currentPage]);
+
+  // Effect for fetching repositories
+  useEffect(() => {
+    // Only append if page > 1, otherwise replace
+    const shouldAppend = currentPage > 1;
+    fetchRepos(currentPage, shouldAppend);
+  }, [fetchRepos, currentPage]);
+
+  // Reset page and fetch when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+    // This will trigger the fetch effect above with page 1
+  }, [debouncedSearch, visibilityFilter, languageFilter]);
 
   useEffect(() => {
     if (mainRef.current) {
@@ -147,11 +160,11 @@ function AllRepositories() {
     }
   }, []);
 
-  const handleLoadMore = useCallback(() => {
-    const nextPage = currentPage + 1;
-    setCurrentPage(nextPage);
-    fetchRepos(nextPage, true);
-  }, [currentPage, fetchRepos]);
+  const handleRepoClick = (repo: Repo) => {
+    if (session?.user?.username) {
+      router.push(`/${session.user.username}/${repo.name}`);
+    }
+  };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const noModifiers = !event.altKey && !event.shiftKey && !event.metaKey && !event.ctrlKey;
@@ -201,7 +214,7 @@ function AllRepositories() {
       />
 
       {loading && currentPage === 1 ? (
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-l-2 border-secondary mt-5"></div>
+        <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-l-2 border-secondary mt-10"></div>
       ) : (
         <>
           <div className="grid grid-cols-1 gap-[1px] border-slate-800">
@@ -212,14 +225,14 @@ function AllRepositories() {
                     ref={lastComponent}
                     key={repo.id}
                     repo={repo}
-                    onClick={() => router.push(`/${session?.user?.username}/${repo.name}`)}
+                    onClick={() => handleRepoClick(repo)}
                     index={i}
                   />
                 ) : (
                   <RepositoryCard
                     key={repo.id}
                     repo={repo}
-                    onClick={() => router.push(`/${session?.user?.username}/${repo.name}`)}
+                    onClick={() => handleRepoClick(repo)}
                     index={i}
                   />
                 )
@@ -232,7 +245,7 @@ function AllRepositories() {
           {hasMorePages && (
             <div className="mt-6 flex justify-center">
               <button
-                onClick={handleLoadMore}
+                onClick={() => fetchRepos(currentPage, true)}
                 disabled={loading}
                 className="rounded-md bg-primary px-6 py-2 text-white hover:bg-primary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
               >

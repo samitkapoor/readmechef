@@ -5,18 +5,20 @@ import ShinyText from './ShinyText';
 const HintText = ({
   text,
   className,
-  shine = true
+  shine = true,
+  textClassName
 }: {
   text: string;
   className?: string;
   shine?: boolean;
+  textClassName?: string;
 }) => {
   return (
     <div className={cn('text-xs', className)}>
       {shine ? (
-        <ShinyText className="!text-secondary/70" text={text} speed={2} />
+        <ShinyText className={cn('!text-secondary/70', textClassName)} text={text} speed={2} />
       ) : (
-        <p className="text-secondary/70">{text}</p>
+        <p className={cn('text-secondary/70', textClassName)}>{text}</p>
       )}
     </div>
   );
