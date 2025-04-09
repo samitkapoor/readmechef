@@ -59,8 +59,8 @@ export const options: NextAuthOptions = {
       authorization: {
         url: 'https://gitlab.com/oauth/authorize',
         params: {
-          scope: 'read_user read_api',
-          redirect_uri: process.env.NEXTAUTH_URL + '/api/auth/callback/gitlab'
+          scope: 'read_user read_api'
+          // redirect_uri: process.env.NEXTAUTH_URL + '/api/auth/callback/gitlab'
         }
       },
       profile(profile, tokens) {
