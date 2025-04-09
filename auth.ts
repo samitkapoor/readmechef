@@ -106,8 +106,21 @@ export const options: NextAuthOptions = {
       return token;
     },
     async redirect({ url, baseUrl }) {
-      if (url.includes('error=')) {
+      // For debugging
+      console.log('Redirect URL:', url);
+      console.log('Base URL:', baseUrl);
+
+      // Handle GitLab callback errors differently
+      if (url.includes('error=') && url.includes('gitlab')) {
+        // Retry the GitLab login but force using non-www domain
+        return 'https://readmechef.com/login/gitlab';
+      } else if (url.includes('error=')) {
         return `${baseUrl}/login`;
+      }
+
+      // For successful GitLab callbacks
+      if (url.includes('/api/auth/callback/gitlab')) {
+        return 'https://readmechef.com'; // Redirect to the non-www domain after successful login
       }
 
       if (url.startsWith(`${baseUrl}/api/auth/callback`)) {

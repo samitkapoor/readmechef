@@ -27,6 +27,17 @@ export default function GitlabLogin() {
   }, []);
 
   const handleGitlabLogin = () => {
+    // Redirect to non-www domain for GitLab auth to match registered callback
+    if (typeof window !== 'undefined' && window.location.hostname.startsWith('www.')) {
+      // Get the current URL and create a non-www version
+      const currentUrl = window.location.href;
+      const nonWwwUrl = currentUrl.replace('www.', '');
+
+      // Navigate to the non-www domain for login
+      window.location.href = nonWwwUrl;
+      return;
+    }
+
     signIn('gitlab');
   };
 
