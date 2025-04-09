@@ -59,7 +59,10 @@ export const options: NextAuthOptions = {
       authorization: {
         url: 'https://gitlab.com/oauth/authorize',
         params: {
-          scope: 'read_user read_api'
+          scope: 'read_api read_user',
+          redirect_uri: process.env.NEXTAUTH_URL
+            ? `${process.env.NEXTAUTH_URL}/api/auth/callback/gitlab`
+            : 'https://readmechef.com/api/auth/callback/gitlab'
         }
       },
       profile(profile, tokens) {
@@ -109,8 +112,8 @@ export const options: NextAuthOptions = {
         return `${baseUrl}/login`;
       }
 
-      if (url.includes('/api/auth/callback')) {
-        return baseUrl;
+      if (url.startsWith(`${baseUrl}/api/auth/callback`)) {
+        return url;
       }
 
       if (url.startsWith('/')) return `${baseUrl}${url}`;
