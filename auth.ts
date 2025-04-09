@@ -60,7 +60,7 @@ export const options: NextAuthOptions = {
         url: 'https://gitlab.com/oauth/authorize',
         params: {
           scope: 'read_api read_user',
-          redirect_uri: 'https://readmechef.com/api/auth/callback/gitlab'
+          redirect_uri: 'https://www.readmechef.com/api/auth/callback/gitlab'
         }
       },
       profile(profile, tokens) {
@@ -110,26 +110,9 @@ export const options: NextAuthOptions = {
       console.log('Redirect URL:', url);
       console.log('Base URL:', baseUrl);
 
-      // Extract the hostname from baseUrl
-      let hostname;
-      try {
-        hostname = new URL(baseUrl).hostname;
-      } catch (e) {
-        hostname = '';
-      }
-
       // Handle error cases by redirecting to login
       if (url.includes('error=')) {
         return `${baseUrl}/login`;
-      }
-
-      // Special handling for GitLab callbacks to match registered callback URL
-      if (url.includes('/api/auth/callback/gitlab')) {
-        // If we're on www but registered without www, redirect to the non-www domain
-        if (hostname.startsWith('www.')) {
-          const nonWwwBaseUrl = baseUrl.replace('www.', '');
-          return url.replace(baseUrl, nonWwwBaseUrl);
-        }
       }
 
       if (url.startsWith(`${baseUrl}/api/auth/callback`)) {
