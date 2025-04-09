@@ -1,6 +1,6 @@
 'use client';
 
-import { GitlabIcon, Lock, Unlock } from 'lucide-react';
+import { GitlabIcon, Unlock } from 'lucide-react';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { KeyboardEventHandler, useEffect, useRef } from 'react';
@@ -75,7 +75,7 @@ export default function GitlabLogin() {
                   </p>
                   <div className="mb-0">
                     <h3 className="text-white/80 text-sm font-medium mb-2">
-                      What you're authorizing:
+                      What you&apos;re authorizing:
                     </h3>
                     <ul className="text-white/60 text-sm space-y-2 mb-6">
                       <li className="flex items-center gap-2">
