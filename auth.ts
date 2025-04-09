@@ -57,7 +57,11 @@ export const options: NextAuthOptions = {
       clientId: process.env.GITLAB_ID || '',
       clientSecret: process.env.GITLAB_SECRET || '',
       authorization: {
-        params: { scope: 'read_user read_api' }
+        url: 'https://gitlab.com/oauth/authorize',
+        params: {
+          scope: 'read_user read_api',
+          redirect_uri: process.env.NEXTAUTH_URL + '/api/auth/callback/gitlab'
+        }
       },
       profile(profile, tokens) {
         return {
