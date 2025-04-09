@@ -63,10 +63,9 @@ export async function fetchGitLabRepos(
       params.append('search', search);
     }
 
-    const visibilityFilter = scope?.includes('read_repository') ? visibility : 'public';
     // Add visibility filter if provided
-    if (visibilityFilter && visibilityFilter !== 'all') {
-      params.append('visibility', visibilityFilter);
+    if (visibility && visibility !== 'all') {
+      params.append('visibility', visibility);
     }
 
     // GitLab doesn't have a direct language filter in the API

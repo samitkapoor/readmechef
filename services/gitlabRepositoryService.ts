@@ -1,5 +1,14 @@
 'use server';
 
+function formatBase64String(str: string, lineLength = 60) {
+  let result = '';
+  for (let i = 0; i < str.length; i += lineLength) {
+    result += `'${str.slice(i, i + lineLength)}' +\n`;
+  }
+  // Remove the last '+' and add a semicolon
+  return result.replace(/\+\n$/, ';\n');
+}
+
 /**
  * Fetches a single file from a GitLab repository
  */
@@ -7,14 +16,16 @@ export const fetchRepoFiles = async (projectId: number, accessToken: string, fil
   try {
     const url = `https://gitlab.com/api/v4/projects/${projectId}/repository/files/${encodeURIComponent(
       fileName
-    )}`;
+    )}?ref=main`;
     const response = await fetch(url, {
       headers: { Authorization: `Bearer ${accessToken}` }
     });
     if (!response.ok) {
       return null;
     }
-    return response.json();
+    const body = await response.json();
+    body.content = formatBase64String(body.content);
+    return body;
   } catch (error) {
     console.error(`Error fetching ${fileName}:`, error);
     return null;
