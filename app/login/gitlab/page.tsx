@@ -68,7 +68,7 @@ export default function GitlabLogin() {
                     </h2>
                   </div>
                   <p className="text-white/70 text-sm mb-4">
-                    ReadMeChef needs access to your GitLab repositories to analyze your code and
+                    ReadmeChef needs access to your GitLab repositories to analyze your code and
                     generate professional READMEs automatically.
                   </p>
                   <div className="mb-0">

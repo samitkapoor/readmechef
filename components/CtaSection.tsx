@@ -24,7 +24,7 @@ const CtaSection = () => {
           Ready to Cook Up Perfect READMEs?
         </h2>
         <p className="sm:text-xl text-white/90 mb-12 max-w-3xl mx-auto z-10">
-          Join the developers who save time and improve their projects with ReadMeChef.
+          Join the developers who save time and improve their projects with ReadmeChef.
         </p>
 
         <ShineButton
