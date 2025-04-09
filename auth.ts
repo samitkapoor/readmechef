@@ -106,6 +106,9 @@ export const options: NextAuthOptions = {
       return token;
     },
     async redirect({ url, baseUrl }) {
+      if (url.includes('/api/auth/callback')) {
+        return baseUrl;
+      }
       if (url.startsWith('/')) return `${baseUrl}${url}`;
       else if (new URL(url).origin === baseUrl) return url;
       return baseUrl;
