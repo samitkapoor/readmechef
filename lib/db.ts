@@ -42,7 +42,7 @@ export async function createUser(user: User) {
   }
 
   await pg.query(
-    `INSERT INTO users (name, email, image, username, subscribed, scope) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+    `INSERT INTO users (name, email, image, username, subscribed, scope, platform) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
     {
       params: [
         user.name,
