@@ -58,7 +58,7 @@ export default function GithubLogin() {
                   </div>
                 </div>
 
-                <p className="text-2xl font-bold text-primary tracking-tight mb-2">GitLab</p>
+                <p className="text-2xl font-bold text-primary tracking-tight mb-2">GitHub</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
