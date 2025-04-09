@@ -47,19 +47,6 @@ export default function GithubLogin() {
       onKeyDown={handleKeyDown}
       className="flex min-h-screen flex-col items-center justify-center px-4 relative outline-none border-none"
     >
-      <div
-        style={{
-          background: 'radial-gradient(circle at center, transparent, rgba(0, 0, 0, 0.5))'
-        }}
-        className="absolute inset-0 z-0"
-      />
-      <div
-        style={{
-          background:
-            'radial-gradient(circle at center, transparent 20%, rgba(0, 255, 0, 0.07), transparent 60%)'
-        }}
-        className="absolute inset-0 z-0 opacity-70"
-      />
       <div className="z-10 relative">
         <div className="h-full w-full overflow-hidden rounded-3xl">
           <div className="flex flex-col items-center justify-center z-10 p-2 md:p-18 md:px-22 rounded-3xl backdrop-blur-xl relative">

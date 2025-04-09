@@ -26,17 +26,15 @@ export default function GitlabLogin() {
     }
   }, []);
 
-  const handleGitlabLogin = (scope: 'basic' | 'extended') => {
+  const handleGitlabLogin = () => {
     signIn('gitlab', undefined, {
-      scope: scope === 'basic' ? 'read_user read_api' : 'read_user read_api read_repository'
+      scope: 'read_user read_api'
     });
   };
 
   const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
-    if (event.key === 'b') {
-      handleGitlabLogin('basic');
-    } else if (event.key === 'e') {
-      handleGitlabLogin('extended');
+    if (event.key === 'a') {
+      handleGitlabLogin();
     }
   };
 
@@ -47,19 +45,6 @@ export default function GitlabLogin() {
       onKeyDown={handleKeyDown}
       className="flex min-h-screen flex-col items-center justify-center px-4 relative outline-none border-none"
     >
-      <div
-        style={{
-          background: 'radial-gradient(circle at center, transparent, rgba(0, 0, 0, 0.5))'
-        }}
-        className="absolute inset-0 z-0"
-      />
-      <div
-        style={{
-          background:
-            'radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.07), transparent 60%)'
-        }}
-        className="absolute inset-0 z-0 opacity-70"
-      />
       <div className="z-10 relative">
         <div className="h-full w-full overflow-hidden rounded-3xl">
           <div className="flex flex-col items-center justify-center z-10 p-2 md:p-18 md:px-22 rounded-3xl relative">
@@ -74,50 +59,49 @@ export default function GitlabLogin() {
                 <p className="text-2xl font-bold text-[#FC6D26] tracking-tight mb-2">GitLab</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+              <div className="flex items-center justify-center gap-6 w-full">
                 {/* Basic Access Card */}
-                <div className="flex flex-col p-6 rounded-2xl bg-orange-500/5 border border-orange-500/10 backdrop-blur-sm m-[6px]">
+                <div className="flex flex-col p-6 rounded-2xl bg-orange-500/5 border border-orange-500/10 backdrop-blur-sm m-[6px] max-w-[400px]">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="p-2 rounded-lg bg-[#FC6D26]/10">
                       <Unlock className="w-5 h-5 text-[#FC6D26]" />
                     </div>
-                    <h2 className="text-xl font-semibold text-white">Basic Access</h2>
+                    <h2 className="text-xl font-semibold text-white">Authorize Access</h2>
                   </div>
                   <p className="text-white/70 text-sm mb-4">
-                    Perfect for open-source projects. Generate READMEs for your public repositories
-                    only.
+                    Authorize access to your GitLab repositories to generate READMEs.
                   </p>
                   <ul className="text-white/60 text-sm space-y-2 mb-6">
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#FC6D26]"></span>
-                      Access to public repositories
+                      Access to read API
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#FC6D26]"></span>
-                      Basic repository information
+                      Generate Repository Information
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#FC6D26]"></span>
-                      Limited repository access
+                      Generate READMEs
                     </li>
                   </ul>
                   <GradientButton
-                    onClick={() => handleGitlabLogin('basic')}
+                    onClick={() => handleGitlabLogin()}
                     fullWidth
                     icon={<GitlabIcon className="w-5 h-5" />}
                     className="bg-gradient-to-r from-[#FC6D26] to-[#FC6D26]"
                   >
-                    Connect with Basic Access
+                    Authorize Access
                   </GradientButton>
                   <HintText
                     textClassName="!text-[#FC6D2699]"
-                    text={'Press B'}
+                    text={'Press A'}
                     className="ml-1 mt-1"
                   />
                 </div>
 
                 {/* Extended Access Card */}
-                <div className="flex items-center justify-center p-1 border-2 border-orange-500/20 rounded-[20px]">
+                {/* <div className="flex items-center justify-center p-1 border-2 border-orange-500/20 rounded-[20px]">
                   <div className="flex flex-col p-6 rounded-2xl bg-gradient-to-br from-black/60 via-orange-900/20 to-black/60 border border-[#FC6D26]/20 backdrop-blur-sm relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-[#FC6D26]/10 via-orange-900/5 to-[#FC6D26]/10 animate-gradient-x"></div>
                     <div className="absolute top-0 right-0 w-40 h-40 bg-[#FC6D26]/10 rounded-full blur-3xl"></div>
@@ -168,7 +152,7 @@ export default function GitlabLogin() {
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
