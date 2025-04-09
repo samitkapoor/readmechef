@@ -1,11 +1,20 @@
 import { GitFork, Scale, Star } from 'lucide-react';
 import { GitHubRepo } from '../types/github.types';
+import { GitLabRepo } from '../types/gitlab.types';
 import dayjs from 'dayjs';
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
 import HintText from './ui/HintText';
 
+// Union type for repositories from either platform
+type Repo = GitHubRepo | GitLabRepo;
+
+// Type guard to check if a repo is a GitHub repo
+function isGitHubRepo(repo: Repo): repo is GitHubRepo {
+  return 'stargazers_count' in repo;
+}
+
 type RepositoryCardProps = {
-  repo: GitHubRepo;
+  repo: Repo;
   onClick: () => void;
   index: number;
 } & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
@@ -27,6 +36,15 @@ const RepositoryCard = ({ repo, onClick, index, ...props }: RepositoryCardProps)
     }
   };
 
+  // Get repository properties based on platform
+  const isPrivate = isGitHubRepo(repo) ? repo.private : repo.visibility === 'private';
+  const stars = isGitHubRepo(repo) ? repo.stargazers_count : repo.star_count;
+  const forks = isGitHubRepo(repo) ? repo.forks : repo.forks_count;
+  const openIssues = isGitHubRepo(repo) ? repo.open_issues_count : undefined;
+  const topics = isGitHubRepo(repo) ? repo.topics : [];
+  const license = isGitHubRepo(repo) ? repo.license : undefined;
+  const updatedAt = isGitHubRepo(repo) ? repo.updated_at : repo.last_activity_at;
+
   return (
     <div className="py-6 border-b border-gray-800" {...props}>
       <div className="flex flex-col gap-3">
@@ -39,7 +57,7 @@ const RepositoryCard = ({ repo, onClick, index, ...props }: RepositoryCardProps)
               {repo.name}
             </h2>
             <span className="ml-3 text-xs px-2 py-0.5 rounded-full bg-[var(--card)] text-gray-400 border border-gray-700">
-              {repo.private ? 'Private' : 'Public'}
+              {isPrivate ? 'Private' : 'Public'}
             </span>
           </div>
           {index <= 9 && <HintText text={`${index}`} className="leading-none" />}
@@ -47,9 +65,9 @@ const RepositoryCard = ({ repo, onClick, index, ...props }: RepositoryCardProps)
           {repo.description && <p className="text-sm mt-1 text-gray-400">{repo.description}</p>}
         </div>
 
-        {repo.topics.length > 0 && (
+        {topics.length > 0 && (
           <div className="flex items-center gap-1 text-sm flex-wrap">
-            {repo.topics.map((topic, i) => {
+            {topics.map((topic, i) => {
               return (
                 <div
                   key={i + Date.now() + topic}
@@ -63,23 +81,23 @@ const RepositoryCard = ({ repo, onClick, index, ...props }: RepositoryCardProps)
         )}
 
         <div className="flex items-center flex-wrap gap-4 text-sm text-gray-400">
-          {repo.stargazers_count > 0 && (
+          {stars > 0 && (
             <div className="flex items-center gap-1.5">
               <Star size={16} />
-              <span>{repo.stargazers_count}</span>
+              <span>{stars}</span>
             </div>
           )}
 
-          {repo.forks > 0 && (
+          {forks > 0 && (
             <div className="flex items-center gap-1.5">
               <GitFork size={16} />
-              <span>{repo.forks}</span>
+              <span>{forks}</span>
             </div>
           )}
 
-          {repo.open_issues_count > 0 && (
+          {openIssues !== undefined && openIssues > 0 && (
             <div className="flex items-center gap-1.5">
-              <span>{repo.open_issues_count} issues need help</span>
+              <span>{openIssues} issues need help</span>
             </div>
           )}
 
@@ -90,14 +108,14 @@ const RepositoryCard = ({ repo, onClick, index, ...props }: RepositoryCardProps)
             </div>
           )}
 
-          {repo.license && (
+          {license && (
             <div className="flex items-center gap-1">
               <Scale size={16} />
-              <span>{repo.license.name}</span>
+              <span>{license.name}</span>
             </div>
           )}
 
-          <span>{getTimeAgo(repo.updated_at)}</span>
+          <span>{getTimeAgo(updatedAt)}</span>
         </div>
       </div>
     </div>

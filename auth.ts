@@ -1,5 +1,6 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
+import GitlabProvider from 'next-auth/providers/gitlab';
 
 declare module 'next-auth' {
   interface Session {
@@ -10,6 +11,7 @@ declare module 'next-auth' {
       username?: string | null;
       accessToken?: string | null;
       scope?: string | null | undefined;
+      platform?: string | null;
     };
   }
 
@@ -17,6 +19,7 @@ declare module 'next-auth' {
     username?: string | null;
     accessToken?: string | null;
     scope?: string | null | undefined;
+    platform?: string | null;
   }
 }
 
@@ -25,6 +28,7 @@ declare module 'next-auth/jwt' {
     username?: string | null;
     accessToken?: string | null;
     scope?: string | null | undefined;
+    platform?: string | null;
   }
 }
 
@@ -44,7 +48,27 @@ export const options: NextAuthOptions = {
           image: profile.avatar_url,
           username: profile.login,
           accessToken: tokens.access_token,
-          scope: tokens.scope
+          scope: tokens.scope,
+          platform: 'github'
+        };
+      }
+    }),
+    GitlabProvider({
+      clientId: process.env.GITLAB_ID || '',
+      clientSecret: process.env.GITLAB_SECRET || '',
+      authorization: {
+        params: { scope: 'read_user read_api' }
+      },
+      profile(profile, tokens) {
+        return {
+          id: profile.id.toString(),
+          name: profile.name || profile.username,
+          email: profile.email,
+          image: profile.avatar_url,
+          username: profile.username,
+          accessToken: tokens.access_token,
+          scope: tokens.scope,
+          platform: 'gitlab'
         };
       }
     })
@@ -62,12 +86,14 @@ export const options: NextAuthOptions = {
         session.user.username = token.username;
         session.user.accessToken = token.accessToken;
         session.user.scope = token.scope as string | null | undefined;
+        session.user.platform = token.platform as string | null;
       }
       return session;
     },
     async jwt({ token, user, account }) {
       if (user) {
         token.username = user.username;
+        token.platform = user.platform;
       }
       if (account) {
         token.accessToken = account.access_token;
