@@ -27,9 +27,15 @@ export default function GitlabLogin() {
   }, []);
 
   const handleGitlabLogin = () => {
-    signIn('gitlab', undefined, {
-      scope: 'read_user read_api'
-    });
+    signIn(
+      'gitlab',
+      {
+        callbackUrl: 'https://readmechef.com/login/gitlab'
+      },
+      {
+        scope: 'read_user read_api'
+      }
+    );
   };
 
   const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
