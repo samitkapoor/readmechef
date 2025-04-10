@@ -26,7 +26,7 @@ const Benefit = ({ title, description, icon }: BenefitProps) => {
 const WhyReadmeSection = () => {
   const benefits = [
     {
-      title: 'Increases Repository Traffic',
+      title: 'Boosts Traffic',
       icon: <TrendingUp className="w-8 h-8 text-secondary" />,
       description: (
         <>
@@ -39,7 +39,7 @@ const WhyReadmeSection = () => {
       )
     },
     {
-      title: 'Boosts Contribution Rates',
+      title: 'Attracts Contributors',
       icon: <GitPullRequest className="w-8 h-8 text-secondary" />,
       description: (
         <>
@@ -51,7 +51,7 @@ const WhyReadmeSection = () => {
       )
     },
     {
-      title: 'Reduces Onboarding Time by 68%',
+      title: 'Faster Onboarding',
       icon: <Clock className="w-8 h-8 text-secondary" />,
       description: (
         <>
@@ -63,7 +63,7 @@ const WhyReadmeSection = () => {
       )
     },
     {
-      title: 'Builds Project Credibility',
+      title: 'Builds Trust',
       icon: <Award className="w-8 h-8 text-secondary" />,
       description: (
         <>
@@ -76,7 +76,7 @@ const WhyReadmeSection = () => {
       )
     },
     {
-      title: 'Improves Project Maintenance',
+      title: 'Easier Maintenance',
       icon: <Wrench className="w-8 h-8 text-secondary" />,
       description: (
         <>
@@ -88,7 +88,7 @@ const WhyReadmeSection = () => {
       )
     },
     {
-      title: 'Fosters Community Growth',
+      title: 'Grows Community',
       icon: <Users className="w-8 h-8 text-secondary" />,
       description: (
         <>
@@ -110,7 +110,7 @@ const WhyReadmeSection = () => {
           A well-crafted README is essential for your project&apos;s success.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-[1px] border-neutral-900/40 gap-2 w-full rounded-3xl mt-12 pb-36">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-[1px] border-neutral-900/40 gap-10 w-full rounded-3xl mt-12 pb-36">
           {benefits.map((benefit, index) => (
             <Benefit
               key={`benefit-${index}`}
