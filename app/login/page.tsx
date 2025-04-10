@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 
+import HintText from '@/components/ui/HintText';
+
 const LoginButton = ({
   onClick,
   icon: Icon,
@@ -17,7 +19,7 @@ const LoginButton = ({
   color?: 'primary' | 'gitlab';
 }) => (
   <div
-    className="flex items-center justify-center p-2 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 cursor-pointer"
+    className="flex items-center justify-center p-2 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 cursor-pointer mt-2"
     onClick={onClick}
   >
     <div
@@ -47,10 +49,19 @@ export default function LoginPage() {
     router.push('/login/gitlab');
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'g') {
+      handleGitHubLogin();
+    } else if (event.key === 'l') {
+      handleGitLabLogin();
+    }
+  };
+
   return (
     <div
       ref={mainRef}
       tabIndex={0}
+      onKeyDown={handleKeyDown}
       className="flex min-h-screen flex-col items-center justify-center px-4 relative outline-none border-none"
     >
       <div className="z-10 relative">
@@ -77,18 +88,20 @@ export default function LoginPage() {
                 </p>
               </div>
 
-              <div className="flex flex-col gap-4 w-full">
+              <div className="flex flex-col w-full">
                 <LoginButton
                   onClick={handleGitHubLogin}
                   icon={LucideGithub}
                   text="Continue with GitHub"
                 />
+                <HintText text="Press G" className="ml-2 mt-1" />
                 <LoginButton
                   onClick={handleGitLabLogin}
                   icon={Gitlab}
                   text="Continue with GitLab"
                   color="gitlab"
                 />
+                <HintText text="Press L" className="ml-2 mt-1" />
               </div>
             </div>
           </div>
