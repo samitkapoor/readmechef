@@ -8,6 +8,7 @@ import Chatbox from '@/components/Chatbox';
 import MarkdownPreview from '@/components/MarkdownPreview';
 import { useRepository } from '@/hooks/useRepository';
 import { useChat } from '@/hooks/useChat';
+import Loader from '@/components/ui/Loader';
 import { Copy, Download, Eye, MessageCircle } from 'lucide-react';
 import ActionButton from '@/components/ui/ActionButton';
 
@@ -109,6 +110,10 @@ export default function RepositoryPage() {
       }
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div
