@@ -9,6 +9,7 @@ import BrowserWindow from './ui/browser-window';
 import ShineButton from './ui/ShineButton';
 import HintText from './ui/HintText';
 import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
 
 const HeroSection = () => {
   const router = useRouter();
@@ -21,41 +22,97 @@ const HeroSection = () => {
   };
 
   return (
-    <section
-      style={{
-        background:
-          'linear-gradient(-10deg, #57cb5b0A, #020b05), radial-gradient(circle at center left, #57cb5b0A, #020b05)'
-      }}
-      className="relative px-6 md:px-10 pt-[100px] flex flex-col items-center w-screen overflow-hidden bg-background h-full"
-    >
+    <section className="relative px-6 md:px-10 pt-[100px] flex flex-col items-center w-screen max-h-screen overflow-hidden bg-background h-full">
+      <motion.div
+        animate={{
+          background: [
+            'linear-gradient(-10deg, rgba(87, 203, 91, 0.05), rgba(2, 11, 5, 0.8))',
+            'linear-gradient(-20deg, rgba(87, 203, 91, 0.10), rgba(2, 11, 5, 0.2))',
+            'linear-gradient(-15deg, rgba(87, 203, 91, 0.15), rgba(2, 11, 5, 0.6))',
+            'linear-gradient(-10deg, rgba(87, 203, 91, 0.2), rgba(2, 11, 5, 0.5))'
+          ]
+        }}
+        transition={{
+          repeat: Infinity,
+          repeatType: 'reverse',
+          duration: 10,
+          ease: 'easeInOut'
+        }}
+        className="absolute inset-0 w-screen h-screen"
+      />
       <div className="w-screen flex flex-col items-center justify-center z-10 px-4">
-        <div className="flex flex-col items-center justify-center w-full lg:w-1/2 pl-0 lg:pl-10 z-10 pb-10 lg:pb-0 mb-20 md:mb-0">
+        <div className="flex flex-col items-center justify-center w-full pl-0 lg:pl-10 z-10 pb-10 lg:pb-0 mb-20 md:mb-0">
           <div
             onClick={() => {
               router.push('https://peerlist.io/samitkapoor/project/readmechef');
             }}
-            className="mt-10 backdrop-blur-xl px-5 py-3 rounded-lg cursor-pointer bg-gradient-to-br bg-white/15 to-black/20"
+            className="backdrop-blur-xl px-5 py-3 rounded-full cursor-pointer bg-white/10  flex items-center gap-1 group hover:shadow-xl transition-all duration-300 hover:shadow-primary/10 mt-5"
           >
             <Image
-              src="/peerlist-launch.svg"
-              height={200}
-              width={150}
+              src="/contacts/peerlist.svg"
               alt="peerlist"
-              className=""
+              width={20}
+              height={20}
+              className="group-hover:ml-2 transition-all duration-300"
             />
+            <p className="text-sm group-hover:ml-1 transition-all duration-300">Live on peerlist</p>
+            <ArrowRight className="w-4 h-4 -rotate-45 group-hover:ml-1 group-hover:rotate-0 transition-all duration-300" />
           </div>
-          <h1
+          <motion.h1
+            initial={{
+              opacity: 0,
+              y: 10
+            }}
+            animate={{
+              opacity: 1,
+              y: 0
+            }}
+            transition={{
+              duration: 1
+            }}
             style={{
               backgroundImage:
                 'linear-gradient(to right, #FFFFFFD0 10%, #FFFFFFA0 20%, #ffffff 35%, #ffffff 70%, #FFFFFFA0 80%, #FFFFFFA0 85%, #FFFFFFD0)'
             }}
-            className="bg-clip-text text-transparent text-center text-3xl p-2 lg:text-4xl xl:text-5xl font-semibold mt-10"
+            className="bg-clip-text text-transparent text-center text-2xl sm:text-4xl md:text-5xl p-2 lg:text-6xl xl:text-7xl font-semibold mt-14"
           >
             Cooking the perfect README <br />
             <span className="font-bold text-transparent">Every Single Time</span>
-          </h1>
+          </motion.h1>
+          <motion.h4
+            initial={{
+              opacity: 0,
+              y: 10
+            }}
+            animate={{
+              opacity: 1,
+              y: 0
+            }}
+            transition={{
+              duration: 0.8,
+              delay: 0.3
+            }}
+            className="text-xs sm:text-base text-center max-w-[750px] px-3 mt-4"
+          >
+            AI-powered README generation, simplified. Connect your GitHub or GitLab, choose your
+            repository, and let ReadmeChef create a tailored README all without a manual input.
+          </motion.h4>
 
-          <div className="mt-8 flex items-center justify-center gap-2 relative">
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 10
+            }}
+            animate={{
+              opacity: 1,
+              y: 0
+            }}
+            transition={{
+              duration: 0.6,
+              delay: 0.6
+            }}
+            className="mt-8 flex items-center justify-center gap-2 relative"
+          >
             <GradientButton onClick={() => router.push('/login')} className="hover:scale-105">
               Get started
             </GradientButton>
@@ -63,16 +120,10 @@ const HeroSection = () => {
               Watch Demo
             </ShineButton>
             <HintText text={'Press G'} className="absolute top-full left-0 ml-1 mt-1" />
-          </div>
+          </motion.div>
         </div>
 
-        <motion.div
-          initial={{ y: 300 }}
-          whileInView={{ y: 0 }}
-          transition={{ duration: 1, delay: 0.1 }}
-          viewport={{ once: true }}
-          className="w-screen mt-12 relative items-start justify-start z-10 overflow-hidden hidden md:flex"
-        >
+        <div className="w-screen mt-12 relative items-start justify-start z-10 overflow-hidden hidden md:flex">
           <div className="row-span-1 w-screen flex items-start justify-center overflow-hidden">
             <BrowserWindow
               url="readmechef.com"
@@ -87,7 +138,7 @@ const HeroSection = () => {
               />
             </BrowserWindow>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
