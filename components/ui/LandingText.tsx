@@ -9,10 +9,8 @@ const LandingText = ({
   className?: string;
 }) => {
   return (
-    <div className={cn('text-center py-12 w-full', className)}>
-      <div className="text-xl md:text-2xl lg:text-3xl font-medium text-white/90 leading-tight">
-        {children}
-      </div>
+    <div className={cn('text-center w-full', className)}>
+      <div className="text-xl md:text-3xl lg:text-5xl text-white/90 leading-tight">{children}</div>
     </div>
   );
 };

@@ -194,18 +194,17 @@ const DemoSection = () => {
   }, [videoSourceAdded, isVideoLoaded]);
 
   return (
-    <section className="relative flex flex-col items-center justify-start w-full pb-10">
+    <section className="relative flex flex-col items-center justify-start w-full">
       <div
         id="demo-section"
         className="flex flex-col items-center justify-center max-w-[1200px] w-full pb-10"
       >
-        <div className="w-full border-y-0 bg-background">
-          <LandingText className="!border-none">
-            What if I told you that you could create a perfect README in just one step?
-          </LandingText>
-        </div>
+        <LandingText>See it in action</LandingText>
+        <p className="text-sm sm:text-base text-center mt-4 max-w-[700px] text-white/80">
+          What if I told you that you could create a perfect README in just one step?
+        </p>
 
-        <BrowserWindow className="rounded-lg" url={'readmechef.com/demo'}>
+        <BrowserWindow className="rounded-lg mt-12" url={'readmechef.com/demo'}>
           <div
             ref={videoContainerRef}
             style={{

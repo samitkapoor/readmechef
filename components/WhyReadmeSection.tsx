@@ -4,7 +4,6 @@ import React from 'react';
 
 import { TrendingUp, GitPullRequest, Clock, Award, Wrench, Users } from 'lucide-react';
 import LandingText from './ui/LandingText';
-import MatrixCell from './ui/MatrixCell';
 
 type BenefitProps = {
   title: string;
@@ -14,12 +13,12 @@ type BenefitProps = {
 
 const Benefit = ({ title, description, icon }: BenefitProps) => {
   return (
-    <div className="flex flex-col gap-5 items-start bg-gradient-to-tr from-black to-black h-full w-full hover:bg-gradient-to-tr hover:from-[#1c1c1c] hover:via-black hover:to-[#1c1c1c] transition-all duration-300 p-5 lg:p-12 rounded-2xl">
+    <div
+      className={`p-6 flex flex-col rounded-lg border-[2px] border-primary/20 bg-primary/5 items-start gap-4 h-full w-full`}
+    >
       <div className="p-4 bg-primary/20 rounded-full">{icon}</div>
-      <div className="flex flex-col gap-2">
-        <h3 className="text-xl lg:text-2xl font-semibold text-white/90">{title}</h3>
-        <p className="text-white/80 text-sm lg:text-base leading-relaxed">{description}</p>
-      </div>
+      <h3 className="text-xl lg:text-2xl font-semibold text-white/90">{title}</h3>
+      <p className="text-white/80 text-sm lg:text-base leading-relaxed">{description}</p>
     </div>
   );
 };
@@ -103,53 +102,24 @@ const WhyReadmeSection = () => {
     }
   ];
 
-  // Define the layout pattern (1 for benefit, 0 for empty space)
-  const layoutPattern = [
-    [1, 1, 0], // First row
-    [0, 1, 1], // Second row
-    [1, 0, 1] // Third row
-  ];
-
-  // Characters for the Matrix beams
-  const matrixChars =
-    '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#*_-+`~[](){}<>|中文字符';
-
   return (
     <section className="w-full flex flex-col items-center justify-center border-b-[1px] border-primary/40">
-      <div className="max-w-[1200px] w-full">
-        <LandingText className="w-full ">Why Every Project Needs a Great README?</LandingText>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-[1px] border-neutral-900/40 gap-2 p-2 bg-neutral-900/40 w-full rounded-3xl">
-          {layoutPattern.flat().map((cell, index) => {
-            const rowIndex = Math.floor(index / 3);
-            const colIndex = index % 3;
-
-            // Calculate benefit index carefully based on the pattern
-            // Count '1's before this cell
-            let benefitCounter = 0;
-            for (let i = 0; i < index; i++) {
-              if (layoutPattern.flat()[i] === 1) {
-                benefitCounter++;
-              }
-            }
-            const benefitIndex = benefitCounter;
-
-            return cell === 1 ? (
-              <Benefit
-                key={`benefit-${rowIndex}-${colIndex}`}
-                title={benefits[benefitIndex].title}
-                description={benefits[benefitIndex].description}
-                icon={benefits[benefitIndex].icon}
-              />
-            ) : (
-              // Render empty cell with Matrix beams
-              <MatrixCell key={`empty-${rowIndex}-${colIndex}`} matrixChars={matrixChars} />
-            );
-          })}
-        </div>
-        <LandingText className="w-full">
+      <div className="max-w-[1200px] w-full flex flex-col items-center justify-center">
+        <LandingText>Why Every Project Needs a Great README?</LandingText>
+        <p className="text-sm sm:text-base text-center mt-4 max-w-[700px] text-white/80">
           A well-crafted README is essential for your project&apos;s success.
-        </LandingText>
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-[1px] border-neutral-900/40 gap-2 w-full rounded-3xl mt-12 pb-36">
+          {benefits.map((benefit, index) => (
+            <Benefit
+              key={`benefit-${index}`}
+              title={benefit.title}
+              description={benefit.description}
+              icon={benefit.icon}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
