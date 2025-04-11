@@ -77,6 +77,10 @@ export default function RepositoryPage() {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const noModifiers = !event.altKey && !event.shiftKey && !event.metaKey && !event.ctrlKey;
 
+    if (document.activeElement === chatInputRef.current) {
+      return;
+    }
+
     if (noModifiers) {
       switch (event.key.toLowerCase()) {
         case 'c':
