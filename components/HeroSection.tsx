@@ -78,7 +78,7 @@ const HeroSection = () => {
               backgroundImage:
                 'linear-gradient(to right, #FFFFFFD0 10%, #FFFFFFA0 20%, #ffffff 35%, #ffffff 70%, #FFFFFFA0 80%, #FFFFFFA0 85%, #FFFFFFD0)'
             }}
-            className="bg-clip-text text-transparent text-center text-2xl sm:text-4xl md:text-5xl p-2 lg:text-6xl xl:text-7xl font-semibold mt-14"
+            className="bg-clip-text text-transparent text-center text-2xl sm:text-4xl md:text-5xl p-2 lg:text-6xl xl:text-7xl font-semibold mt-5"
           >
             Cooking the perfect README <br />
             <span className="font-bold text-transparent">Every Single Time</span>
@@ -127,7 +127,7 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        <div className="w-screen mt-12 relative items-start justify-start z-10 overflow-hidden hidden md:flex">
+        <div className="w-screen mt-16 relative items-center justify-center z-10 overflow-hidden hidden md:flex flex-col">
           <div className="row-span-1 w-screen flex items-start justify-center overflow-hidden">
             <BrowserWindow
               url="readmechef.com"
