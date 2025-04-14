@@ -44,18 +44,22 @@ const HeroSection = () => {
         <div className="flex flex-col items-center justify-center w-full pl-0 lg:pl-10 z-10 pb-10 lg:pb-0 mb-20 md:mb-0">
           <div
             onClick={() => {
-              router.push('https://peerlist.io/samitkapoor/project/readmechef');
+              router.push(
+                'https://www.producthunt.com/posts/readmechef?utm_source=other&utm_medium=social'
+              );
             }}
-            className="backdrop-blur-xl px-5 py-3 rounded-full cursor-pointer bg-white/10  flex items-center gap-1 group hover:shadow-xl transition-all duration-300 hover:shadow-primary/10 mt-5"
+            className="backdrop-blur-xl px-5 py-3 rounded-full cursor-pointer bg-white/10  flex items-center gap-1 group hover:shadow-xl transition-all duration-300 hover:shadow-[#F9615699] mt-5"
           >
             <Image
-              src="/contacts/peerlist.svg"
+              src="/contacts/producthunt.svg"
               alt="peerlist"
               width={20}
               height={20}
               className="group-hover:ml-2 transition-all duration-300"
             />
-            <p className="text-sm group-hover:ml-1 transition-all duration-300">Live on peerlist</p>
+            <p className="text-sm ml-0.5 group-hover:ml-1.5 transition-all duration-300">
+              Find us on Product Hunt
+            </p>
             <ArrowRight className="w-4 h-4 -rotate-45 group-hover:ml-1 group-hover:rotate-0 transition-all duration-300" />
           </div>
           <motion.h1
