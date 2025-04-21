@@ -9,7 +9,7 @@ import BrowserWindow from './ui/browser-window';
 import ShineButton from './ui/ShineButton';
 import HintText from './ui/HintText';
 import Image from 'next/image';
-import { ArrowRight } from 'lucide-react';
+// import { ArrowRight } from 'lucide-react';
 
 const HeroSection = () => {
   const router = useRouter();
