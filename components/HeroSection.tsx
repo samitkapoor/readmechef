@@ -42,7 +42,7 @@ const HeroSection = () => {
       />
       <div className="w-screen flex flex-col items-center justify-center z-10 px-4">
         <div className="flex flex-col items-center justify-center w-full pl-0 lg:pl-10 z-10 pb-10 lg:pb-0 mb-20 md:mb-0">
-          <div
+          {/* <div
             onClick={() => {
               router.push(
                 'https://www.producthunt.com/posts/readmechef?utm_source=other&utm_medium=social'
@@ -61,7 +61,7 @@ const HeroSection = () => {
               Find us on Product Hunt
             </p>
             <ArrowRight className="w-4 h-4 -rotate-45 group-hover:ml-1 group-hover:rotate-0 transition-all duration-300" />
-          </div>
+          </div> */}
           <motion.h1
             initial={{
               opacity: 0,
@@ -78,7 +78,7 @@ const HeroSection = () => {
               backgroundImage:
                 'linear-gradient(to right, #FFFFFFD0 10%, #FFFFFFA0 20%, #ffffff 35%, #ffffff 70%, #FFFFFFA0 80%, #FFFFFFA0 85%, #FFFFFFD0)'
             }}
-            className="bg-clip-text text-transparent text-center text-2xl sm:text-4xl md:text-5xl p-2 lg:text-6xl xl:text-7xl font-semibold mt-5"
+            className="bg-clip-text text-transparent text-center text-2xl sm:text-4xl md:text-5xl p-2 lg:text-6xl xl:text-7xl font-semibold mt-10"
           >
             Cooking the perfect README <br />
             <span className="font-bold text-transparent">Every Single Time</span>
