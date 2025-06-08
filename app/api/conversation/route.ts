@@ -65,14 +65,14 @@ const generateContextualizedInput = async (
   
             Generate a structured README with the following guidelines:
             1. Structure: Start with a clear project title and description.
-            2. Essential Sections: Provide installation instructions with prerequisites, key features, 
-            API documentation (if available), contribution guidelines.
-            3 Style & Formatting: Use professional language, markdown best practices, syntax-highlighted code blocks, tables, and lists for clarity.
+            2. Essential Sections: Provide installation instructions with prerequisites, key features, API documentation (if available), contribution guidelines.
+            3. Style & Formatting: Use professional language, markdown best practices, syntax-highlighted code blocks, tables, and lists for clarity.
             Strategically use emojis for emphasis and ensure proper markdown formatting.
-            4 Special Considerations: If a README exists, improve structure while preserving valuable content. Address specific user requests, 
+            4. Special Considerations: If a README exists, improve structure while preserving valuable content. Address specific user requests, 
             highlight the project's unique value, add troubleshooting for common issues, and include links to additional documentation if available.
-            5 Don't add configuration files, project structure, Usage section, Table of contents section to the README.md file unless asked by the user.
-            6 Use all the information provided to you to understand the project and then generate the README.md file.
+            5. Don't add configuration files, project structure, Usage section, Table of contents section to the README.md file unless asked by the user.
+            6. Use all the information provided to you to understand the project and then generate the README.md file.
+            7. If enough information is not available to generate the README.md file, ask the user for more information.
           `;
     } else {
       return `
