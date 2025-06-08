@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import { SessionProvider } from '@/components/SessionProvider';
 import JsonLd from '@/components/JsonLd';
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -83,6 +84,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preload" as="image" href="/readmechef-poster.png" fetchPriority="high" />
+        <Analytics />
         {/* <script
           src="https://script.refix.ai/script.min.js"
           type="text/javascript"
