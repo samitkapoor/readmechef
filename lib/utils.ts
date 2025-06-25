@@ -38,9 +38,13 @@ export const extractMarkdownContent = (messageContent: string): string => {
   return '';
 };
 
-export const extractExplanatoryText = (messageContent: string): string => {
+export const extractExplanatoryText = (messageContent: string, isMobile: boolean): string => {
   const startIndex = messageContent.indexOf(startDelimiter);
   const endIndex = messageContent.indexOf(endDelimiter);
+
+  if (isMobile) {
+    return messageContent.replaceAll(startDelimiter, '').replaceAll(endDelimiter, '');
+  }
 
   // If we have start delimiter but no end delimiter (streaming in progress)
   // return empty string to avoid showing explanatory text
