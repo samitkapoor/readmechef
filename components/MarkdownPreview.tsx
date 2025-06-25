@@ -3,6 +3,7 @@ import { Book } from 'lucide-react';
 
 import { ClientMessage } from '@/types/ai.types';
 import RenderMarkdown from './RenderMarkdown';
+import { extractMarkdownContent } from '@/lib/utils';
 
 interface MarkdownPreviewProps {
   messages: ClientMessage[];
@@ -18,19 +19,16 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ messages, latestMarkd
     const message = messages.find((message) => message.id === latestMarkdownId);
     if (!message) return;
 
-    // Extract content between markdown code blocks if present
-    const content = message.display;
-    if (content.includes('```markdown')) {
-      const markdownMatch = content.split('```markdown');
-      setMarkdownContent(markdownMatch.length > 1 ? markdownMatch[1] : content);
-    }
+    // Extract content using the new utility function that handles both formats
+    const content = extractMarkdownContent(message.display);
+    setMarkdownContent(content);
   }, [messages, latestMarkdownId]);
 
   return (
     <div className="h-full w-full overflow-y-auto scrollbar-hide">
-      {latestMarkdownId ? (
+      {latestMarkdownId && markdownContent ? (
         <div className="p-8 pb-14 pt-[80px]">
-          <div className="bg-[#181818] rounded-xl border border-white/50 shadow-lg mt-[140px]">
+          <div className="bg-[#181818] rounded-xl p-8 border border-white/50 shadow-lg mt-[140px]">
             <RenderMarkdown markdown={markdownContent} />
           </div>
         </div>
