@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import EverythingMarkdown from 'everything-markdown';
 import { Book } from 'lucide-react';
 
 import { ClientMessage } from '@/types/ai.types';
+import RenderMarkdown from './RenderMarkdown';
 
 interface MarkdownPreviewProps {
   messages: ClientMessage[];
@@ -31,9 +31,7 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ messages, latestMarkd
       {latestMarkdownId ? (
         <div className="p-8 pb-14 pt-[80px]">
           <div className="bg-[#181818] rounded-xl border border-white/50 shadow-lg mt-[140px]">
-            <div className="py-6 md:py-8 px-2">
-              <EverythingMarkdown className="dark" content={markdownContent} />
-            </div>
+            <RenderMarkdown markdown={markdownContent} />
           </div>
         </div>
       ) : (
