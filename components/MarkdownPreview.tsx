@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Book } from 'lucide-react';
 
 import { ClientMessage } from '@/types/ai.types';
-import RenderMarkdown from './RenderMarkdown';
 import { extractMarkdownContent } from '@/lib/utils';
+import EverythingMarkdown from 'everything-markdown';
 
 interface MarkdownPreviewProps {
   messages: ClientMessage[];
@@ -28,8 +28,8 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ messages, latestMarkd
     <div className="h-full w-full overflow-y-auto scrollbar-hide">
       {latestMarkdownId && markdownContent ? (
         <div className="p-8 pb-14 pt-[80px]">
-          <div className="bg-[#181818] rounded-xl p-8 border border-white/50 shadow-lg mt-[140px]">
-            <RenderMarkdown markdown={markdownContent} />
+          <div className="bg-[#181818] rounded-xl p-8 px-0 border border-white/50 shadow-lg mt-[140px]">
+            <EverythingMarkdown content={markdownContent} className="dark" />
           </div>
         </div>
       ) : (
