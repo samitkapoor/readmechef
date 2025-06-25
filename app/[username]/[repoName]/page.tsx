@@ -11,6 +11,7 @@ import { useChat } from '@/hooks/useChat';
 import Loader from '@/components/ui/Loader';
 import { Copy, Download, Eye, MessageCircle } from 'lucide-react';
 import ActionButton from '@/components/ui/ActionButton';
+import { extractMarkdownContent } from '@/lib/utils';
 
 export const maxDuration = 30;
 
@@ -52,26 +53,41 @@ export default function RepositoryPage() {
   }, []);
 
   const handleCopyToClipboard = () => {
-    const content = (
-      messages.find((message) => message.id === latestMarkdownId)?.display || ''
-    ).replace('```markdown', '');
-    navigator.clipboard.writeText(content);
+    const message = messages.find((message) => message.id === latestMarkdownId);
+    if (message) {
+      const content = extractMarkdownContent(message.display);
+      if (content) {
+        navigator.clipboard.writeText(content);
+      }
+    }
   };
 
   const handleDownload = () => {
-    // ? Function to download the README.md file
-    const content = (
-      messages.find((message) => message.id === latestMarkdownId)?.display || ''
-    ).replace('```markdown', '');
-    const blob = new Blob([content], { type: 'text/markdown' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'README.md';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    // Function to download the README.md file
+    const message = messages.find((message) => message.id === latestMarkdownId);
+    if (message) {
+      const content = extractMarkdownContent(message.display);
+      if (content) {
+        const blob = new Blob([content], { type: 'text/markdown' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'README.md';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    }
+  };
+
+  // Helper function to check if markdown content is available
+  const isMarkdownContentAvailable = () => {
+    if (!latestMarkdownId) return false;
+    const message = messages.find((message) => message.id === latestMarkdownId);
+    if (!message) return false;
+    const content = extractMarkdownContent(message.display);
+    return content.length > 0;
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -161,7 +177,7 @@ export default function RepositoryPage() {
           ref={downloadBtnRef}
           icon={<Download size={18} />}
           onClick={handleDownload}
-          disabled={!latestMarkdownId}
+          disabled={!isMarkdownContentAvailable()}
         >
           Download (D)
         </ActionButton>
@@ -169,7 +185,7 @@ export default function RepositoryPage() {
           ref={copyBtnRef}
           icon={<Copy size={18} />}
           onClick={handleCopyToClipboard}
-          disabled={!latestMarkdownId}
+          disabled={!isMarkdownContentAvailable()}
         >
           Copy (C)
         </ActionButton>

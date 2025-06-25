@@ -112,7 +112,7 @@ const MarkdownImage = ({ src, alt, width, height, ...props }: ImageProps) => {
 
 const RenderMarkdown = ({ markdown }: { markdown: string }) => {
   return (
-    <div className="w-full px-8">
+    <div className="w-full">
       <div className={`${styles.markdownContent} prose prose-invert prose-lg max-w-none`}>
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}

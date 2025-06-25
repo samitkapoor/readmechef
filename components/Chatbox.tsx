@@ -5,6 +5,7 @@ import ShinyText from './ui/ShinyText';
 import CopyButton from './ui/CopyButton';
 import HintText from './ui/HintText';
 import RenderMarkdown from './RenderMarkdown';
+import { extractExplanatoryText } from '@/lib/utils';
 
 const isWindows = navigator.platform.includes('Win');
 
@@ -103,16 +104,10 @@ const Chatbox = ({
                 </div>
               ) : (
                 <>
-                  <div className="text-white group rounded-2xl rounded-tl-sm text-xs md:text-sm w-full overflow-x-auto bg-[#151515] scrollbar-hide border-[1px] border-white/20 shadow-md max-w-[85%] tracking-tight relative">
+                  <div className="text-white group rounded-2xl rounded-tl-sm text-xs p-6 md:text-sm w-full overflow-x-auto bg-[#151515] scrollbar-hide border-[1px] border-white/20 shadow-md max-w-[85%] tracking-tight relative">
                     <CopyButton text={message.display} />
 
-                    <RenderMarkdown
-                      markdown={
-                        message.display.startsWith('```markdown')
-                          ? message.display.replace('```markdown', '').replace('```markdown', '')
-                          : message.display
-                      }
-                    />
+                    <RenderMarkdown markdown={extractExplanatoryText(message.display)} />
                   </div>
                 </>
               )}
