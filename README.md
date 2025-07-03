@@ -1,69 +1,67 @@
-# ReadmeChef 🍳
+# ReadmeChef 🧑‍🍳
 
 > Cooking the perfect README every single time
 
 ReadmeChef is a web application that helps developers and organizations create beautiful, comprehensive README files for their GitHub repositories in minutes.
 
+## Why ReadmeChef?
+
+-   **Save Time**: Stop wasting hours manually writing READMEs. ReadmeChef automates the process, allowing you to focus on coding.
+-   **Professional Quality**: Create polished, professional-looking READMEs that impress potential users and contributors.
+-   **Easy to Use**: Our intuitive interface makes it simple to create and customize your README, even if you're not a Markdown expert.
+-   **Stay Consistent**: Ensure all your projects have consistent, high-quality documentation.
+-   **Attract Contributors**: A well-written README makes your project more accessible and inviting to potential contributors.
+
 ## Features
 
-- **Template Library**: Choose from dozens of professionally designed README templates tailored for different project types
-- **One-Click Import**: Import your project details directly from GitHub to automatically populate your README
-- **Live Preview**: See your README changes in real-time with our live Markdown preview editor
-- **Rate Limiting**: Protected API endpoints with rate limiting to ensure fair usage
+-   **One-Click Generation**: Connect your GitHub account and generate professional, comprehensive READMEs with a single click - no more spending hours on documentation.
+-   **Smart Repository Analysis**: Our AI scans your GitHub repository, analyzes code structure, dependencies, and purpose to craft a perfectly tailored README that accurately represents your project.
+-   **Public & Private Access**: Choose between basic access for public repositories or extended access for both public and private repos, giving you full control over your GitHub integration.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js v20 or higher
-- npm or yarn
+-   Node.js v20 or higher
+-   npm or yarn
 
 ### Installation
 
-1. Clone the repository
+1.  Clone the repository
 
-```bash
-git clone https://github.com/yourusername/readmechef-frontend.git
-cd readmechef-frontend
-```
+    ```bash
+    git clone https://github.com/samitkapoor/readmechef.git
+    cd readmechef
+    ```
 
-2. Install dependencies
+2.  Install dependencies
 
-```bash
-npm install
-# or
-yarn install
-```
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
 
-3. Start the development server
+3.  Start the development server
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application
-
-## Tech Stack
-
-- [Next.js](https://nextjs.org/) - React framework for building the frontend
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
-- [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript
-- [express-rate-limit](https://github.com/express-rate-limit/express-rate-limit) - Rate limiting for API endpoints
-
-## Rate Limiting
-
-The application implements rate limiting to protect API endpoints from abuse:
-
-- All API endpoints: 100 requests per 15 minutes per IP
-
-Rate limiting is implemented in a simple middleware that applies to all API routes. When the rate limit is exceeded, the API returns a 429 status code with a message to try again later.
+4.  Open [http://localhost:3000](http://localhost:3000) in your browser to see the application
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+We welcome contributions to ReadmeChef! Here's how you can contribute:
+
+1.  Create an issue describing the bug or feature request.
+2.  Get assigned to the issue.
+3.  Fork the repository.
+4.  Create a branch for your changes.
+5.  Submit a pull request.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
