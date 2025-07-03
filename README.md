@@ -4,6 +4,8 @@
 
 ReadmeChef is a web application that helps developers and organizations create beautiful, comprehensive README files for their GitHub repositories in minutes.
 
+[![Watch the video](https://github.com/samitkapoor/readmechef/blob/main/public/hero-illustration-image.png)](https://github.com/samitkapoor/readmechef/blob/main/public/readmechef-demo.mp4)
+
 ## Why ReadmeChef?
 
 -   **Save Time**: Stop wasting hours manually writing READMEs. ReadmeChef automates the process, allowing you to focus on coding.
