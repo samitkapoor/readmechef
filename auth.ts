@@ -106,10 +106,6 @@ export const options: NextAuthOptions = {
       return token;
     },
     async redirect({ url, baseUrl }) {
-      // For debugging
-      console.log('Redirect URL:', url);
-      console.log('Base URL:', baseUrl);
-
       // Handle error cases by redirecting to login
       if (url.includes('error=')) {
         return `${baseUrl}/login`;
