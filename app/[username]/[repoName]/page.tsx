@@ -143,7 +143,7 @@ export default function RepositoryPage() {
       className="grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden h-screen outline-none"
     >
       <div className="col-span-2 h-min fixed top-[100px] w-full z-10 pb-2 pointer-events-none">
-        <div className="grid grid-cols-2 gap-10 w-full px-10 h-min">
+        <div className="grid grid-cols-2 gap-10 w-full px-8 h-min">
           <div className="hidden lg:flex items-center justify-start pl-5">
             <div className="flex items-start justify-start gap-3 px-2 py-2 backdrop-blur-lg border-[1px] border-white/10 rounded-lg">
               <div className="h-10 w-10 border border-primary/30 rounded-lg flex items-center justify-center shadow-sm shadow-primary/10">

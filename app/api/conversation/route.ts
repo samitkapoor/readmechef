@@ -118,43 +118,6 @@ export const POST = async (request: NextRequest) => {
 
     createUser(session.user);
 
-    const isReadmePrompt = await generateText({
-      model: google('gemini-2.0-flash-001'),
-      prompt: `Check if this prompt is about generating a README file or related to project documentation. 
-Reply only with "YES" or "NO"
-If the user is only thanking you and is not asking anything related to README file or related to project documentation, reply only with "Thanks".
-
-Prompt: ${input}`
-    });
-    const isReadmePromptResult = isReadmePrompt.text;
-
-    const responses = [
-      "I'd love to help, but I left my 'answer anything' apron at home. README files only!",
-      'This chef only knows how to spice up README files—other dishes are above my pay grade!',
-      "Oven's not preheated for that request! Let's stick to README goodness.",
-      "Ask me about README files and I'll serve it hot. Anything else? That's off the grill!",
-      "That's beyond my kitchen counter! But I've got all the spices for a killer README.",
-      "I tried answering that once... the pot boiled over. Stick to READMEs, it's safer.",
-      "I only cook what's in the README cookbook—no substitutions, no fancy desserts!",
-      "I'm not a generalist, I'm a README specialist. Ask me about README files only!"
-    ];
-
-    if (isReadmePromptResult.toLowerCase().trim().startsWith('no')) {
-      return NextResponse.json(
-        {
-          message: responses[Math.floor(Math.random() * responses.length)]
-        },
-        { status: 201 }
-      );
-    } else if (isReadmePromptResult.toLowerCase().trim().startsWith('thanks')) {
-      return NextResponse.json(
-        {
-          message: "You're welcome!"
-        },
-        { status: 201 }
-      );
-    }
-
     const messages = history.map((his) => ({ role: his.role, content: his.display }));
 
     const isFirstMessage = messages.length === 0;
