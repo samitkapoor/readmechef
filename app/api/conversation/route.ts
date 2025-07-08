@@ -1,7 +1,7 @@
 'use server';
 
 import { google } from '@ai-sdk/google';
-import { generateText, streamText } from 'ai';
+import { streamText } from 'ai';
 import { NextRequest, NextResponse } from 'next/server';
 import { Repository } from '@/types/repository.types';
 import { ClientMessage } from '@/types/ai.types';
